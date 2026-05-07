@@ -1,7 +1,8 @@
 # BuilderHacker - Multi-Framework Support Roadmap
 
 ## Current Status
-- **net10.0**: ✅ Fully supported (Core, Abstraction, Console)
+- **net10.0**: ✅ Supported (Console)
+- **netstandard2.0**: ✅ Fully supported (Core, Abstraction)
 - **net6.0+**: ✅ Supported (Generator via Roslyn)
 - **.NET Framework 4.5+**: 🔄 In Progress
 - **.NET Core 2.0-5.0**: 🔄 In Progress
@@ -10,16 +11,16 @@
 
 ### Projects
 
-#### 1. **BuilderHacker.Abstraction** (net10.0)
+#### 1. **BuilderHacker.Abstraction** (netstandard2.0)
 - Contains: `IBuilder<T>`, `GenerateBuilderHackerAttribute`
 - No external dependencies
-- **Why net10.0 only**: Abstraction layer needs to match consumer frameworks via multi-targeting
+- **Why netstandard2.0**: Provides broad compatibility for both modern and legacy runtimes
 - **Future**: Will target `net452;net461;netstandard2.0;netstandard2.1;net5.0;net6.0;net7.0;net8.0;net9.0;net10.0`
 
-#### 2. **BuilderHacker.Core** (net10.0)
+#### 2. **BuilderHacker.Core** (netstandard2.0)
 - Contains: `EntityBuilder<T>` (reflection-based builder for any framework)
 - No Roslyn dependencies - pure runtime code
-- **Why net10.0 only**: Currently simplified for immediate use
+- **Why netstandard2.0**: Runtime package can be consumed by a wide range of target frameworks
 - **Future**: Will target `net452;net461;netstandard2.0;netstandard2.1;net5.0;net6.0;net7.0;net8.0;net9.0;net10.0`
 
 #### 3. **BuilderHacker.Generator** (net6.0)

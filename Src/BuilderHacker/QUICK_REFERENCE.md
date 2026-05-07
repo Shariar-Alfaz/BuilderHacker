@@ -4,8 +4,8 @@
 
 | Project | Target | Status | Usage |
 |---------|--------|--------|-------|
-| **Abstraction** | net10.0 | ✅ Ready | Interfaces & Attributes |
-| **Core** | net10.0 | ✅ Ready | Reflection-based EntityBuilder<T> |
+| **Abstraction** | netstandard2.0 | ✅ Ready | Interfaces & Attributes |
+| **Core** | netstandard2.0 | ✅ Ready | Reflection-based EntityBuilder<T> |
 | **Generator** | net6.0 | ✅ Ready | Source generator for .NET 6+ |
 | **Console** | net10.0 | ✅ Ready | Example application |
 
@@ -62,13 +62,13 @@ Generator  EntityBuilder<T>
 
 ### BuilderHacker.Abstraction.csproj
 ```xml
-<TargetFramework>net10.0</TargetFramework>
+<TargetFramework>netstandard2.0</TargetFramework>
 ```
 → Future: `net452;net461;netstandard2.0;netstandard2.1;net5.0;net6.0;net10.0`
 
 ### BuilderHacker.Core.csproj
 ```xml
-<TargetFramework>net10.0</TargetFramework>
+<TargetFramework>netstandard2.0</TargetFramework>
 ```
 → Future: `net452;net461;netstandard2.0;netstandard2.1;net5.0;net6.0;net10.0`
 

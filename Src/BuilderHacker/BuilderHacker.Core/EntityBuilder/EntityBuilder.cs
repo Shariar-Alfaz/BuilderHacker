@@ -180,7 +180,7 @@ namespace BuilderHacker.Core.EntityBuilder
         /// <remarks>
         /// Subsequent calls to this method return the same instance unless the builder is reset
         /// or reconfigured. The returned entity may be incomplete if required properties were not set prior to calling this method.
-        /// This method is thread-safe for individual builder instances but each thread should have its own builder instance.
+        /// This builder is mutable and not safe for concurrent access from multiple threads.
         /// </remarks>
         /// <returns>The constructed entity of type T with all applied configurations.</returns>
         public T Build()

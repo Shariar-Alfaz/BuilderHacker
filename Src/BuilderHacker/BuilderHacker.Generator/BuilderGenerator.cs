@@ -89,7 +89,7 @@ namespace BuilderHacker.Generator
 
         /// <summary>
         /// Generates the builder class source code based on the target class.
-        /// Only generates setters for properties that have public or private setters.
+        /// Only generates methods for non-static properties that define a setter.
         /// </summary>
         private static void ExecuteGeneration(SourceProductionContext context, ClassDeclarationSyntax classDeclarationSyntax, SemanticModel model)
         {
@@ -110,7 +110,7 @@ namespace BuilderHacker.Generator
             foreach (var prop in GetAllProperties(symbol))
             {
                 if (prop.SetMethod != null &&
-                    (prop.DeclaredAccessibility == Accessibility.Public || prop.DeclaredAccessibility == Accessibility.Private) &&
+                    !prop.IsStatic &&
                     seenPropertyNames.Add(prop.Name))  // Add returns true only if property was added (first occurrence)
                 {
                     properties.Add(prop);
