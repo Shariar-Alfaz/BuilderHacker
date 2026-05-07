@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BuilderHacker.Abstraction/BuilderHacker.Abstraction.csproj" />
+  <Project Path="BuilderHacker.Console/BuilderHacker.Console.csproj" />
+  <Project Path="BuilderHacker.Core/BuilderHacker.Core.csproj" />
+</Solution>
