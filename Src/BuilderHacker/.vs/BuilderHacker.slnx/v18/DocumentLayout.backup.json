@@ -1,0 +1,92 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\projects\\BuilderHacker\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{648D9FAF-F409-4C90-AD61-03F1CF5DDF63}|BuilderHacker.Core\\BuilderHacker.Core.csproj|e:\\projects\\builderhacker\\builderhacker.core\\buildergenerator\\buildergenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{648D9FAF-F409-4C90-AD61-03F1CF5DDF63}|BuilderHacker.Core\\BuilderHacker.Core.csproj|solutionrelative:builderhacker.core\\buildergenerator\\buildergenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1B5474C2-962A-46BB-83D3-8541B7A29E64}|BuilderHacker.Abstraction\\BuilderHacker.Abstraction.csproj|e:\\projects\\builderhacker\\builderhacker.abstraction\\attributes\\generatebuilderhackerattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1B5474C2-962A-46BB-83D3-8541B7A29E64}|BuilderHacker.Abstraction\\BuilderHacker.Abstraction.csproj|solutionrelative:builderhacker.abstraction\\attributes\\generatebuilderhackerattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{648D9FAF-F409-4C90-AD61-03F1CF5DDF63}|BuilderHacker.Core\\BuilderHacker.Core.csproj|e:\\projects\\builderhacker\\builderhacker.core\\entitybuilder\\entitybuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{648D9FAF-F409-4C90-AD61-03F1CF5DDF63}|BuilderHacker.Core\\BuilderHacker.Core.csproj|solutionrelative:builderhacker.core\\entitybuilder\\entitybuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1B5474C2-962A-46BB-83D3-8541B7A29E64}|BuilderHacker.Abstraction\\BuilderHacker.Abstraction.csproj|e:\\projects\\builderhacker\\builderhacker.abstraction\\engine\\ibuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1B5474C2-962A-46BB-83D3-8541B7A29E64}|BuilderHacker.Abstraction\\BuilderHacker.Abstraction.csproj|solutionrelative:builderhacker.abstraction\\engine\\ibuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BuilderGenerator.cs",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\BuilderHacker.Core\\BuilderGenerator\\BuilderGenerator.cs",
+              "RelativeDocumentMoniker": "BuilderHacker.Core\\BuilderGenerator\\BuilderGenerator.cs",
+              "ToolTip": "E:\\projects\\BuilderHacker\\BuilderHacker.Core\\BuilderGenerator\\BuilderGenerator.cs",
+              "RelativeToolTip": "BuilderHacker.Core\\BuilderGenerator\\BuilderGenerator.cs",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAAGIAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:57:51.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EntityBuilder.cs",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\BuilderHacker.Core\\EntityBuilder\\EntityBuilder.cs",
+              "RelativeDocumentMoniker": "BuilderHacker.Core\\EntityBuilder\\EntityBuilder.cs",
+              "ToolTip": "E:\\projects\\BuilderHacker\\BuilderHacker.Core\\EntityBuilder\\EntityBuilder.cs",
+              "RelativeToolTip": "BuilderHacker.Core\\EntityBuilder\\EntityBuilder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:53:03.279Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IBuilder.cs",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\BuilderHacker.Abstraction\\Engine\\IBuilder.cs",
+              "RelativeDocumentMoniker": "BuilderHacker.Abstraction\\Engine\\IBuilder.cs",
+              "ToolTip": "E:\\projects\\BuilderHacker\\BuilderHacker.Abstraction\\Engine\\IBuilder.cs",
+              "RelativeToolTip": "BuilderHacker.Abstraction\\Engine\\IBuilder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:34:48.539Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GenerateBuilderHackerAttribute.cs",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\BuilderHacker.Abstraction\\Attributes\\GenerateBuilderHackerAttribute.cs",
+              "RelativeDocumentMoniker": "BuilderHacker.Abstraction\\Attributes\\GenerateBuilderHackerAttribute.cs",
+              "ToolTip": "E:\\projects\\BuilderHacker\\BuilderHacker.Abstraction\\Attributes\\GenerateBuilderHackerAttribute.cs",
+              "RelativeToolTip": "BuilderHacker.Abstraction\\Attributes\\GenerateBuilderHackerAttribute.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:31:40.49Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
