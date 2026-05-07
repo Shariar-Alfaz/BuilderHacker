@@ -55,3 +55,14 @@ nunit-*.xml
 
 ## ASP.NET Core specific
 wwwroot/lib/
+
+## Build results (Src structure aware)
+**/bin/
+**/obj/
+**/Bin/
+**/Obj/
+
+Src/**/bin/
+Src/**/obj/
+Src/**/Bin/
+Src/**/Obj/
