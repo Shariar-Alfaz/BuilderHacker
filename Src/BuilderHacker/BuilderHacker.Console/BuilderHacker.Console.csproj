@@ -8,12 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BuilderHacker.Core\BuilderHacker.Core.csproj" />
     <ProjectReference Include="..\BuilderHacker.Abstraction\BuilderHacker.Abstraction.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <CompilerVisibleProperty Include="BuilderHackerGeneratorPath" />
+    <ProjectReference Include="..\BuilderHacker.Core\BuilderHacker.Core.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
 </Project>
