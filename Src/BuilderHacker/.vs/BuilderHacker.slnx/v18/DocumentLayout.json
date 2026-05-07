@@ -4,6 +4,9 @@
   "Documents": [
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
       "AbsoluteMoniker": "D:0:0:{343413F4-ABCF-632A-46B1-54F02ABE0728}|BuilderHacker.Core\\BuilderHacker.Core.csproj|e:\\projects\\builderhacker\\src\\builderhacker\\builderhacker.core\\builderhacker.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{343413F4-ABCF-632A-46B1-54F02ABE0728}|BuilderHacker.Core\\BuilderHacker.Core.csproj|solutionrelative:builderhacker.core\\builderhacker.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
@@ -14,6 +17,7 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Generator\\BuilderGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:BuilderHacker.Generator\\BuilderGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+<<<<<<< Updated upstream
 =======
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Generator\\BuilderGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:BuilderHacker.Generator\\BuilderGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -28,6 +32,10 @@
 >>>>>>> Stashed changes
     },
     {
+=======
+    },
+    {
+>>>>>>> Stashed changes
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\1690689547\\BuilderGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -44,10 +52,16 @@
     },
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
       "AbsoluteMoniker": "D:0:0:{C7B80F91-652A-7933-7B72-8C9743664E4D}|BuilderHacker.Console\\BuilderHacker.Console.csproj|e:\\projects\\builderhacker\\src\\builderhacker\\builderhacker.console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C7B80F91-652A-7933-7B72-8C9743664E4D}|BuilderHacker.Console\\BuilderHacker.Console.csproj|solutionrelative:builderhacker.console\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
       "AbsoluteMoniker": "D:0:0:{C7B80F91-652A-7933-7B72-8C9743664E4D}|BuilderHacker.Console\\BuilderHacker.Console.csproj|e:\\projects\\builderhacker\\src\\builderhacker\\builderhacker.console\\builderhacker.console.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
@@ -102,9 +116,13 @@
         {
           "DockedWidth": 200,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
           "SelectedChildIndex": 9,
 =======
           "SelectedChildIndex": 5,
+>>>>>>> Stashed changes
+=======
+          "SelectedChildIndex": 9,
 >>>>>>> Stashed changes
           "Children": [
             {
@@ -114,9 +132,13 @@
             {
               "$type": "Document",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               "DocumentIndex": 14,
 =======
               "DocumentIndex": 13,
+>>>>>>> Stashed changes
+=======
+              "DocumentIndex": 14,
 >>>>>>> Stashed changes
               "Title": "QUICK_REFERENCE.md",
               "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\QUICK_REFERENCE.md",
@@ -126,18 +148,24 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAOIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
               "WhenOpened": "2026-05-07T18:36:50.896Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 13,
+<<<<<<< Updated upstream
 =======
               "WhenOpened": "2026-05-07T18:36:50.896Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
               "Title": "DEVELOPMENT_GUIDELINES.md",
               "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\DEVELOPMENT_GUIDELINES.md",
@@ -147,18 +175,24 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAJEBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
               "WhenOpened": "2026-05-07T18:36:27.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
+<<<<<<< Updated upstream
 =======
               "WhenOpened": "2026-05-07T18:36:27.498Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
               "Title": "OPTIMIZATION_SUMMARY.md",
               "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\OPTIMIZATION_SUMMARY.md",
@@ -168,18 +202,24 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
               "WhenOpened": "2026-05-07T18:36:05.275Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
+<<<<<<< Updated upstream
 =======
               "WhenOpened": "2026-05-07T18:36:05.275Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
               "Title": "MULTIFRAMEWORK_ROADMAP.md",
               "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\MULTIFRAMEWORK_ROADMAP.md",
@@ -189,12 +229,16 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAMsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
               "WhenOpened": "2026-05-07T18:34:48.77Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+<<<<<<< Updated upstream
 =======
               "WhenOpened": "2026-05-07T18:34:48.77Z"
             },
@@ -202,12 +246,17 @@
               "$type": "Document",
               "DocumentIndex": 0,
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
               "Title": "BuilderGenerator.cs",
               "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Generator\\BuilderGenerator.cs",
               "RelativeDocumentMoniker": "BuilderHacker.Generator\\BuilderGenerator.cs",
               "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Generator\\BuilderGenerator.cs",
               "RelativeToolTip": "BuilderHacker.Generator\\BuilderGenerator.cs",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+              "ViewState": "AgIAALoAAAAAAAAAAAAAAF0AAAA8AAAAAAAAAA==",
+=======
               "ViewState": "AgIAALoAAAAAAAAAAAAAAF0AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-07T18:32:00.868Z",
@@ -302,6 +351,184 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-07T17:31:40.49Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IBuilder.cs",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Abstraction\\Engine\\IBuilder.cs",
+              "RelativeDocumentMoniker": "BuilderHacker.Abstraction\\Engine\\IBuilder.cs",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Abstraction\\Engine\\IBuilder.cs",
+              "RelativeToolTip": "BuilderHacker.Abstraction\\Engine\\IBuilder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+>>>>>>> Stashed changes
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T18:32:00.868Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "COMPLETION_REPORT.md",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\COMPLETION_REPORT.md",
+              "RelativeDocumentMoniker": "COMPLETION_REPORT.md",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\COMPLETION_REPORT.md",
+              "RelativeToolTip": "COMPLETION_REPORT.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALABAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-05-07T18:42:20.175Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "README_INDEX.md",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\README_INDEX.md",
+              "RelativeDocumentMoniker": "README_INDEX.md",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\README_INDEX.md",
+              "RelativeToolTip": "README_INDEX.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-05-07T18:38:23.191Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+<<<<<<< Updated upstream
+              "DocumentIndex": 1,
+              "Title": "BuilderHacker.Abstraction",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Abstraction\\BuilderHacker.Abstraction.csproj",
+              "RelativeDocumentMoniker": "BuilderHacker.Abstraction\\BuilderHacker.Abstraction.csproj",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Abstraction\\BuilderHacker.Abstraction.csproj",
+              "RelativeToolTip": "BuilderHacker.Abstraction\\BuilderHacker.Abstraction.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-07T18:25:30.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BuilderHacker.Core",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Core\\BuilderHacker.Core.csproj",
+              "RelativeDocumentMoniker": "BuilderHacker.Core\\BuilderHacker.Core.csproj",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Core\\BuilderHacker.Core.csproj",
+              "RelativeToolTip": "BuilderHacker.Core\\BuilderHacker.Core.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-07T18:25:36.344Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "SUMMARY.md",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\SUMMARY.md",
+              "RelativeDocumentMoniker": "SUMMARY.md",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\SUMMARY.md",
+              "RelativeToolTip": "SUMMARY.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-05-07T18:37:25.567Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ARCHITECTURE_DIAGRAM.md",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\ARCHITECTURE_DIAGRAM.md",
+              "RelativeDocumentMoniker": "ARCHITECTURE_DIAGRAM.md",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\ARCHITECTURE_DIAGRAM.md",
+              "RelativeToolTip": "ARCHITECTURE_DIAGRAM.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-05-07T18:37:51.684Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GenerateBuilderHackerAttribute.cs",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Abstraction\\Attributes\\GenerateBuilderHackerAttribute.cs",
+              "RelativeDocumentMoniker": "BuilderHacker.Abstraction\\Attributes\\GenerateBuilderHackerAttribute.cs",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Abstraction\\Attributes\\GenerateBuilderHackerAttribute.cs",
+              "RelativeToolTip": "BuilderHacker.Abstraction\\Attributes\\GenerateBuilderHackerAttribute.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+=======
+              "DocumentIndex": 6,
+              "Title": "EntityBuilder.cs",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Core\\EntityBuilder\\EntityBuilder.cs",
+              "RelativeDocumentMoniker": "BuilderHacker.Core\\EntityBuilder\\EntityBuilder.cs",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Core\\EntityBuilder\\EntityBuilder.cs",
+              "RelativeToolTip": "BuilderHacker.Core\\EntityBuilder\\EntityBuilder.cs",
+              "ViewState": "AgIAAJwAAAAAAAAAAAAgwAcAAAAqAAAAAAAAAA==",
+>>>>>>> Stashed changes
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:53:03.279Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Console\\Program.cs",
+              "RelativeDocumentMoniker": "BuilderHacker.Console\\Program.cs",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Console\\Program.cs",
+              "RelativeToolTip": "BuilderHacker.Console\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T18:21:56.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BuilderHacker.Console",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Console\\BuilderHacker.Console.csproj",
+              "RelativeDocumentMoniker": "BuilderHacker.Console\\BuilderHacker.Console.csproj",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Console\\BuilderHacker.Console.csproj",
+              "RelativeToolTip": "BuilderHacker.Console\\BuilderHacker.Console.csproj",
+              "ViewState": "AgIAABIAAAAAAAAAAABBwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-07T18:26:32.627Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BuilderGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\User\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\1690689547\\BuilderGenerator.cs",
+              "ToolTip": "C:\\Users\\User\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\1690689547\\BuilderGenerator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T18:32:04Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "copilot-instructions.md",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\.github\\copilot-instructions.md",
+              "RelativeDocumentMoniker": ".github\\copilot-instructions.md",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\.github\\copilot-instructions.md",
+              "RelativeToolTip": ".github\\copilot-instructions.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-05-07T18:31:26.231Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "BuilderHacker.Generator.csproj",
+              "DocumentMoniker": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Generator\\BuilderHacker.Generator.csproj",
+              "RelativeDocumentMoniker": "BuilderHacker.Generator\\BuilderHacker.Generator.csproj",
+              "ToolTip": "E:\\projects\\BuilderHacker\\Src\\BuilderHacker\\BuilderHacker.Generator\\BuilderHacker.Generator.csproj",
+              "RelativeToolTip": "BuilderHacker.Generator\\BuilderHacker.Generator.csproj",
+              "ViewState": "AgIAAA8AAAAAAAAAAIBJwBEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-07T18:31:49.971Z",
               "EditorCaption": ""
             },
             {
