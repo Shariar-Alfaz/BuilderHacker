@@ -50,7 +50,7 @@ namespace BuilderHacker.Tests.Core
         [Fact]
         public void Set_WithInvalidPropertyName_ThrowsException()
         {
-            var ex = Assert.Throws<Exception>(() =>
+            var ex = Assert.Throws<InvalidOperationException>(() =>
                 EntityBuilder<SimpleUser>.Create()
                     .Set("NonExistent", "value")
                     .Build()
