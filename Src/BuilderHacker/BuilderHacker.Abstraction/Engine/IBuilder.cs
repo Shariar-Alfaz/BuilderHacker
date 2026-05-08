@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BuilderHacker.Abstraction.Engine
+﻿namespace BuilderHacker.Abstraction.Engine
 {
     /// <summary>
     /// Generic builder interface for constructing entities of type T.

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BuilderHacker.Abstraction.Attributes;
+﻿using BuilderHacker.Abstraction.Attributes;
 
 namespace BuilderHacker.Console
 {

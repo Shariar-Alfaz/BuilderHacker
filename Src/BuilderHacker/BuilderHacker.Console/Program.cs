@@ -1,5 +1,3 @@
-using System;
-
 namespace BuilderHacker.Console
 {
     class Program

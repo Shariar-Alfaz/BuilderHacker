@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BuilderHacker.Abstraction.Engine;
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using BuilderHacker.Abstraction.Engine;
 
 namespace BuilderHacker.Core.EntityBuilder
 {
