@@ -15,13 +15,14 @@ Use BuilderHacker to generate fluent builders from an attribute, or use the runt
 - Generates fluent builders from `[GenerateBuilderHacker]`
 - Supports private fields and private setters
 - Traverses inherited instance members
-- Skips static classes and recursive getters with diagnostics
+- Supports source-generation and runtime reflection-based builder workflows
 - Includes a runtime `EntityBuilder<T>` for reflection-based scenarios
 
 ## Projects
 
 - `BuilderHacker.Abstraction` - shared attribute and interfaces
-- `BuilderHacker.Core` - source generator and runtime builder
+- `BuilderHacker.Core` - runtime `EntityBuilder<T>` library
+- `BuilderHacker.Generator` - incremental source generator for attribute-based builders
 - `BuilderHacker.Console` - sample application
 
 ## Usage
@@ -32,15 +33,15 @@ Use BuilderHacker to generate fluent builders from an attribute, or use the runt
 using BuilderHacker.Abstraction.Attributes;
 
 [GenerateBuilderHacker]
-public class TestClass
+public partial class TestClass
 {
     public string Name { get; set; }
     public int Age { get; set; }
 }
 
-var obj = TestClassBuilder.Create()
-    .SetName("John")
-    .SetAge(30)
+var obj = TestClass.Builder()
+    .Name("John")
+    .Age(30)
     .Build();
 ```
 
@@ -68,5 +69,5 @@ dotnet build
 
 ## Notes
 
-- Recursive getters are reported by the generator and skipped.
-- Static classes are skipped by the generator with a warning diagnostic.
+- Types marked with `[GenerateBuilderHacker]` must be declared as `partial`.
+- The generated API follows `YourType.Builder().PropertyName(value)...Build()`.

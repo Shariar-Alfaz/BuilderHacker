@@ -293,9 +293,13 @@ public static MemberExpression GetMember(Expression expression)
 
 // Use it
 var member = GetMember(x => x.Property);
-if (member != null && member.Member is PropertyInfo prop)
+if (member != null)
 {
-    // Use prop
+    var prop = member.Member as PropertyInfo;
+    if (prop != null)
+    {
+        // Use prop
+    }
 }
 ```
 

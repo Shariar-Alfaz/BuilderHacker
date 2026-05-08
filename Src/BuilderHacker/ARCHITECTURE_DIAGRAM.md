@@ -18,12 +18,12 @@
                 │
         ┌───────▼────────┐
         │  BuilderHacker │
-        │     .Core      │ (net10.0)
+        │     .Core      │ (netstandard2.0)
         └────────┬───────┘
                  │
         ┌────────▼─────────┐
         │   BuilderHacker  │
-        │  .Abstraction    │ (net10.0)
+        │  .Abstraction    │ (netstandard2.0)
         └──────────────────┘
 ```
 
@@ -51,14 +51,14 @@
 BuilderHacker/
 │
 ├── BuilderHacker.Abstraction/
-│   ├── BuilderHacker.Abstraction.csproj        [net10.0]
+│   ├── BuilderHacker.Abstraction.csproj        [netstandard2.0]
 │   ├── Attributes/
 │   │   └── GenerateBuilderHackerAttribute.cs   (11 lines, minimal)
 │   └── Engine/
 │       └── IBuilder.cs                         (12 lines, interface)
 │
 ├── BuilderHacker.Core/
-│   ├── BuilderHacker.Core.csproj               [net10.0]
+│   ├── BuilderHacker.Core.csproj               [netstandard2.0]
 │   ├── EntityBuilder/
 │   │   └── EntityBuilder.cs                    (241 lines, fully documented)
 │   │       ├─ Create() → Static factory

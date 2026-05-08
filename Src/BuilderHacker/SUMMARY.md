@@ -169,14 +169,14 @@ var user = EntityBuilder<User>.Create()
 
 ```
 BuilderHacker.Abstraction
-  ├─ Target: net10.0
+  ├─ Target: netstandard2.0
   ├─ Status: ✅ Optimized
   └─ Files: 2
      ├─ IBuilder.cs (interface)
      └─ GenerateBuilderHackerAttribute.cs (attribute)
 
 BuilderHacker.Core
-  ├─ Target: net10.0
+  ├─ Target: netstandard2.0
   ├─ Status: ✅ Optimized
   └─ Files: 1
      └─ EntityBuilder.cs (241 lines, fully documented)
