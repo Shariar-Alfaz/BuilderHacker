@@ -3,4 +3,5 @@
   <Project Path="BuilderHacker.Console/BuilderHacker.Console.csproj" />
   <Project Path="BuilderHacker.Core/BuilderHacker.Core.csproj" />
   <Project Path="BuilderHacker.Generator/BuilderHacker.Generator.csproj" />
+  <Project Path="BuilderHacker.Tests/BuilderHacker.Tests.csproj" />
 </Solution>

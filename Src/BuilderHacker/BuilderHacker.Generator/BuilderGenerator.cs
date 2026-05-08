@@ -1,4 +1,5 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace BuilderHacker.Generator
                 transform: static (ctx, _) => GetSemanticTargetForGeneration(ctx)
             ).Where(static m => m.source is not null);
 
-            context.RegisterSourceOutput(provider, static (spc, source) => ExecuteGeneration(spc, source.source, source.model));
+            context.RegisterSourceOutput(provider, static (spc, source) => ExecuteGeneration(spc, source.source, source.model, source.createPartial));
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace BuilderHacker.Generator
         /// Retrieves semantic information for a class declaration.
         /// Returns null if the class doesn't have the GenerateBuilderHacker attribute.
         /// </summary>
-        private static (ClassDeclarationSyntax source, SemanticModel model) GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
+        private static (ClassDeclarationSyntax source, SemanticModel model, bool createPartial) GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
         {
             var classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
 
@@ -77,20 +78,22 @@ namespace BuilderHacker.Generator
                         var containingType = attributeSymbol.ContainingType;
                         if (containingType != null && containingType.ToDisplayString() == GeneratorAttributeFullName)
                         {
-                            return (classDeclarationSyntax, context.SemanticModel);
+                            var createPartial = false;
+                            TryGetCreatePartialValue(attributeSyntax, out createPartial);
+                            return (classDeclarationSyntax, context.SemanticModel, createPartial);
                         }
                     }
                 }
             }
 
-            return (null, context.SemanticModel);
+            return (null, context.SemanticModel, false);
         }
 
         /// <summary>
         /// Generates the builder class source code based on the target class.
         /// Only generates methods for non-static properties that define a setter.
         /// </summary>
-        private static void ExecuteGeneration(SourceProductionContext context, ClassDeclarationSyntax classDeclarationSyntax, SemanticModel model)
+        private static void ExecuteGeneration(SourceProductionContext context, ClassDeclarationSyntax classDeclarationSyntax, SemanticModel model, bool createPartial)
         {
             if (classDeclarationSyntax == null)
                 return;
@@ -102,19 +105,31 @@ namespace BuilderHacker.Generator
             var className = symbol.Name;
             var @namespace = symbol.ContainingNamespace.ToDisplayString();
 
-            // Use HashSet-based deduplication for cross-framework compatibility (instead of DistinctBy which requires .NET 7+)
-            var seenPropertyNames = new HashSet<string>();
-            var properties = new List<IPropertySymbol>();
+            // Use dictionary to track properties by name, preferring the most derived version
+            // This handles the 'new' keyword shadowing case correctly
+            var propertiesByName = new Dictionary<string, IPropertySymbol>();
+            var allProps = GetAllProperties(symbol).ToList();
 
-            foreach (var prop in GetAllProperties(symbol))
+            // Process properties in reverse order (from most derived to base)
+            // to ensure we keep the most derived version when shadowing occurs
+            for (int i = allProps.Count - 1; i >= 0; i--)
             {
-                if (prop.SetMethod != null &&
-                    !prop.IsStatic &&
-                    seenPropertyNames.Add(prop.Name))  // Add returns true only if property was added (first occurrence)
+                var prop = allProps[i];
+
+                if (prop.SetMethod == null || prop.IsStatic)
+                    continue;
+
+                if (!createPartial && !CanBeSetFromStandaloneBuilder(prop))
+                    continue;
+
+                // Only add if we haven't seen this property name yet (first/most-derived wins)
+                if (!propertiesByName.ContainsKey(prop.Name))
                 {
-                    properties.Add(prop);
+                    propertiesByName[prop.Name] = prop;
                 }
             }
+
+            var properties = propertiesByName.Values.ToList();
 
             if (properties.Count == 0)
                 return;
@@ -124,41 +139,110 @@ namespace BuilderHacker.Generator
             // Use string.Format() instead of interpolation for potential future .NET Framework support
             sb.AppendLine(string.Format("namespace {0}", @namespace));
             sb.AppendLine("{");
-            sb.AppendLine(string.Format("    public partial class {0}", className));
-            sb.AppendLine("    {");
-            sb.AppendLine(string.Format("        public static {0}Builder Builder() => new {0}Builder();", className));
-            sb.AppendLine();
-            sb.AppendLine(string.Format("        public class {0}Builder", className));
-            sb.AppendLine("        {");
-            sb.AppendLine(string.Format("            private readonly {0} obj = new {0}();", className));
-            sb.AppendLine();
 
-            foreach (var prop in properties)
+            if (createPartial)
             {
-                var propertyTypeName = prop.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-                sb.AppendLine("            /// <summary>");
-                sb.AppendLine(string.Format("            /// Sets the {0} property of the {1} instance.", prop.Name, className));
-                sb.AppendLine("            /// </summary>");
-                sb.AppendLine(string.Format("            /// <param name=\"value\">The value to set for {0}.</param>", prop.Name));
-                sb.AppendLine("            /// <returns>The current builder instance for method chaining.</returns>");
-                sb.AppendLine(string.Format("            public {0}Builder {1}({2} value)", className, prop.Name, propertyTypeName));
-                sb.AppendLine("            {");
-                sb.AppendLine(string.Format("                obj.{0} = value;", prop.Name));
-                sb.AppendLine("                return this;");
-                sb.AppendLine("            }");
+                sb.AppendLine(string.Format("    public partial class {0}", className));
+                sb.AppendLine("    {");
+                sb.AppendLine(string.Format("        public static {0}Builder Builder() => new {0}Builder();", className));
                 sb.AppendLine();
+                sb.AppendLine(string.Format("        public class {0}Builder", className));
+                sb.AppendLine("        {");
+                sb.AppendLine(string.Format("            private readonly {0} obj = new {0}();", className));
+                sb.AppendLine();
+
+                AppendBuilderMembers(sb, className, properties, "            ", "                ", "obj", "obj");
+
+                sb.AppendLine("        }");
+                sb.AppendLine("    }");
+            }
+            else
+            {
+                sb.AppendLine(string.Format("    public class {0}Builder : {0}", className));
+                sb.AppendLine("    {");
+                sb.AppendLine(string.Format("        public static {0}Builder Create() => new {0}Builder();", className));
+                sb.AppendLine();
+
+                AppendBuilderMembers(sb, className, properties, "        ", "            ", "base", "this");
+
+                sb.AppendLine("    }");
             }
 
-            sb.AppendLine("            /// <summary>");
-            sb.AppendLine(string.Format("            /// Builds and returns the constructed {0} instance.", className));
-            sb.AppendLine("            /// </summary>");
-            sb.AppendLine("            /// <returns>The constructed instance.</returns>");
-            sb.AppendLine(string.Format("            public {0} Build() => obj;", className));
-            sb.AppendLine("        }");
-            sb.AppendLine("    }");
             sb.AppendLine("}");
 
             context.AddSource(string.Format("{0}.Builder.g.cs", className), sb.ToString());
+        }
+
+        private static void AppendBuilderMembers(StringBuilder sb, string className, IEnumerable<IPropertySymbol> properties, string memberIndent, string bodyIndent, string targetExpression, string buildExpression)
+        {
+            foreach (var prop in properties)
+            {
+                var propertyTypeName = prop.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+                sb.AppendLine(string.Format("{0}/// <summary>", memberIndent));
+                sb.AppendLine(string.Format("{0}/// Sets the {1} property of the {2} instance.", memberIndent, prop.Name, className));
+                sb.AppendLine(string.Format("{0}/// </summary>", memberIndent));
+                sb.AppendLine(string.Format("{0}/// <param name=\"value\">The value to set for {1}.</param>", memberIndent, prop.Name));
+                sb.AppendLine(string.Format("{0}/// <returns>The current builder instance for method chaining.</returns>", memberIndent));
+                sb.AppendLine(string.Format("{0}public {1}Builder {2}({3} value)", memberIndent, className, prop.Name, propertyTypeName));
+                sb.AppendLine(string.Format("{0}{{", memberIndent));
+                sb.AppendLine(string.Format("{0}{1}.{2} = value;", bodyIndent, targetExpression, prop.Name));
+                sb.AppendLine(string.Format("{0}return this;", bodyIndent));
+                sb.AppendLine(string.Format("{0}}}", memberIndent));
+                sb.AppendLine();
+            }
+
+            sb.AppendLine(string.Format("{0}/// <summary>", memberIndent));
+            sb.AppendLine(string.Format("{0}/// Builds and returns the constructed {1} instance.", memberIndent, className));
+            sb.AppendLine(string.Format("{0}/// </summary>", memberIndent));
+            sb.AppendLine(string.Format("{0}/// <returns>The constructed instance.</returns>", memberIndent));
+            sb.AppendLine(string.Format("{0}public {1} Build() => {2};", memberIndent, className, buildExpression));
+        }
+
+        private static bool TryGetCreatePartialValue(AttributeSyntax attributeSyntax, out bool createPartial)
+        {
+            createPartial = false;
+
+            var argumentList = attributeSyntax.ArgumentList;
+            if (argumentList == null)
+                return false;
+
+            foreach (var argument in argumentList.Arguments)
+            {
+                var nameEquals = argument.NameEquals;
+                if (nameEquals != null && nameEquals.Name.Identifier.ValueText == "CreatePartial")
+                {
+                    return TryReadBooleanLiteral(argument.Expression, out createPartial);
+                }
+            }
+
+            if (argumentList.Arguments.Count > 0)
+            {
+                return TryReadBooleanLiteral(argumentList.Arguments[0].Expression, out createPartial);
+            }
+
+            return false;
+        }
+
+        private static bool TryReadBooleanLiteral(ExpressionSyntax expression, out bool value)
+        {
+            var literal = expression as LiteralExpressionSyntax;
+            if (literal != null)
+            {
+                if (literal.IsKind(SyntaxKind.TrueLiteralExpression))
+                {
+                    value = true;
+                    return true;
+                }
+
+                if (literal.IsKind(SyntaxKind.FalseLiteralExpression))
+                {
+                    value = false;
+                    return true;
+                }
+            }
+
+            value = false;
+            return false;
         }
 
         /// <summary>
@@ -181,6 +265,24 @@ namespace BuilderHacker.Generator
                 }
 
                 current = current.BaseType;
+            }
+        }
+
+        private static bool CanBeSetFromStandaloneBuilder(IPropertySymbol prop)
+        {
+            var setter = prop.SetMethod;
+            if (setter == null)
+                return false;
+
+            switch (setter.DeclaredAccessibility)
+            {
+                case Accessibility.Public:
+                case Accessibility.Internal:
+                case Accessibility.Protected:
+                case Accessibility.ProtectedOrInternal:
+                    return true;
+                default:
+                    return false;
             }
         }
     }
