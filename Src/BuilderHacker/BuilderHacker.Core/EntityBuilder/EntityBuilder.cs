@@ -1,18 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BuilderHacker.Abstraction.Engine;
+using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using BuilderHacker.Abstraction.Engine;
 
 namespace BuilderHacker.Core.EntityBuilder
 {
+    /// <summary>
+    /// Generic entity builder for fluently constructing instances of type T with optional strict mode.
+    /// Compatible with: .NET Framework 4.5+, .NET Standard 2.0+, .NET Core 2.0+, .NET 5+, .NET 6+.
+    /// </summary>
+    /// <remarks>
+    /// This builder uses reflection to dynamically set properties and fields on runtime objects.
+    /// It provides a fluent API for building entities without requiring source generation.
+    /// For .NET 6.0+ projects, consider using GenerateBuilderHacker attribute with the source generator instead.
+    /// </remarks>
+    /// <typeparam name="T">The type of entity to build. Must have a parameterless constructor.</typeparam>
     public class EntityBuilder<T> : IBuilder<T> where T : new()
     {
         private readonly T _entity = new T();
-
         private bool _strictMode = false;
-        public static EntityBuilder<T> Create() => new();
+
+        /// <summary>
+        /// Creates a new instance of the EntityBuilder for type T.
+        /// </summary>
+        /// <returns>A new EntityBuilder instance.</returns>
+        public static EntityBuilder<T> Create() => new EntityBuilder<T>();
 
         /// <summary>
         /// Enables or disables strict mode for the entity builder.
@@ -31,14 +43,19 @@ namespace BuilderHacker.Core.EntityBuilder
         /// Sets the value of a property or, if strict mode is disabled, a field on the entity being built by name.
         /// </summary>
         /// <remarks>If strict mode is enabled, only properties can be set; fields are ignored. If strict
-        /// mode is disabled, the method will attempt to set a field if a matching property is not found.</remarks>
+        /// mode is disabled, the method will attempt to set a field if a matching property is not found.
+        /// This method is compatible with all supported .NET frameworks.</remarks>
         /// <typeparam name="TProp">The type of the value to assign to the property or field.</typeparam>
         /// <param name="name">The name of the property or field to set. The search is case-insensitive.</param>
         /// <param name="value">The value to assign to the specified property or field.</param>
         /// <returns>The current instance of the builder, enabling method chaining.</returns>
+        /// <exception cref="ArgumentException">Thrown when property or field name is null or empty.</exception>
         /// <exception cref="Exception">Thrown if no property or (when strict mode is off) field with the specified name exists on the entity type.</exception>
         public EntityBuilder<T> Set<TProp>(string name, TProp value)
         {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Property or field name cannot be null or empty", nameof(name));
+
             var type = typeof(T);
 
             // 1. Try property first
@@ -70,40 +87,43 @@ namespace BuilderHacker.Core.EntityBuilder
                 }
             }
 
-            throw new Exception($"Property or field '{name}' not found on {type.Name}");
+            throw new Exception(string.Format("Property or field '{0}' not found on {1}", name, type.Name));
         }
 
-
         /// <summary>
-        /// Sets the value of the specified property or field on the entity being built.
+        /// Sets the value of the specified property or field on the entity being built using an expression.
         /// </summary>
         /// <remarks>Only direct properties or fields of the entity type are supported. This method
-        /// enables fluent configuration of entity values.</remarks>
+        /// enables fluent configuration of entity values with compile-time safety.
+        /// Compatible with .NET Framework 4.5+, .NET Standard 2.0+, and all newer .NET versions.</remarks>
         /// <typeparam name="TProp">The type of the property or field to set.</typeparam>
-        /// <param name="expression">An expression that identifies the property or field to set. Must refer to a direct property or field of the
-        /// entity.</param>
+        /// <param name="expression">An expression that identifies the property or field to set. Must refer to a direct property or field of the entity.</param>
         /// <param name="value">The value to assign to the specified property or field.</param>
         /// <returns>The current instance of the builder for method chaining.</returns>
-        /// <exception cref="Exception">Thrown if the expression does not refer to a valid property or field of the entity, or if the member is not
-        /// supported.</exception>
-        public EntityBuilder<T> Set<TProp>(
-            Expression<Func<T, TProp>> expression,
-            TProp value)
+        /// <exception cref="ArgumentNullException">Thrown when expression is null.</exception>
+        /// <exception cref="Exception">Thrown if the expression does not refer to a valid property or field of the entity, or if the member is not supported.</exception>
+        public EntityBuilder<T> Set<TProp>(Expression<Func<T, TProp>> expression, TProp value)
         {
-            var member = GetMemberExpression(expression);
+            if (expression == null)
+                throw new ArgumentNullException(nameof(expression));
+
+            var member = GetMemberExpression(expression.Body);
 
             if (member == null)
                 throw new Exception("Invalid expression");
 
             var memberInfo = member.Member;
 
-            if (memberInfo is PropertyInfo prop)
+            // Using 'as' operator for compatibility with all .NET versions (no pattern matching)
+            var prop = memberInfo as PropertyInfo;
+            if (prop != null)
             {
                 SetProperty(prop, value);
                 return this;
             }
 
-            if (memberInfo is FieldInfo field)
+            var field = memberInfo as FieldInfo;
+            if (field != null)
             {
                 field.SetValue(_entity, value);
                 return this;
@@ -112,15 +132,17 @@ namespace BuilderHacker.Core.EntityBuilder
             throw new Exception("Only fields or properties are supported");
         }
 
-        private void SetProperty<TProp>(System.Reflection.PropertyInfo prop, TProp value)
+        private void SetProperty<TProp>(PropertyInfo prop, TProp value)
         {
+            if (prop == null)
+                throw new ArgumentNullException(nameof(prop));
+
             if (!prop.CanWrite)
             {
-                // try private setter
                 var setter = prop.GetSetMethod(true);
 
                 if (setter == null)
-                    throw new Exception($"Property '{prop.Name}' has no setter");
+                    throw new Exception(string.Format("Property '{0}' has no setter", prop.Name));
 
                 setter.Invoke(_entity, new object[] { value });
                 return;
@@ -131,24 +153,37 @@ namespace BuilderHacker.Core.EntityBuilder
 
         private MemberExpression GetMemberExpression(Expression expression)
         {
-            return expression switch
+            // Traditional if/else chains for maximum framework compatibility
+            if (expression == null)
+                return null;
+
+            var member = expression as MemberExpression;
+            if (member != null)
+                return member;
+
+            var unary = expression as UnaryExpression;
+            if (unary != null)
             {
-                MemberExpression member => member,
+                member = unary.Operand as MemberExpression;
+                if (member != null)
+                    return member;
+            }
 
-                UnaryExpression unary when unary.Operand is MemberExpression member =>
-                    member,
-
-                _ => null
-            };
+            return null;
         }
 
         /// <summary>
         /// Builds and returns the configured entity instance of type T.
         /// </summary>
-        /// <remarks>Subsequent calls to this method return the same instance unless the builder is reset
-        /// or reconfigured. The returned entity may be incomplete if required properties were not set prior to calling
-        /// this method.</remarks>
+        /// <remarks>
+        /// Subsequent calls to this method return the same instance unless the builder is reset
+        /// or reconfigured. The returned entity may be incomplete if required properties were not set prior to calling this method.
+        /// This builder is mutable and not safe for concurrent access from multiple threads.
+        /// </remarks>
         /// <returns>The constructed entity of type T with all applied configurations.</returns>
-        public T Build() => _entity;
+        public T Build()
+        {
+            return _entity;
+        }
     }
 }
