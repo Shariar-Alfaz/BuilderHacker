@@ -5,7 +5,7 @@
     <LangVersion>latest</LangVersion>
     <Deterministic>true</Deterministic>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>BuilderHacker.Abstraction</PackageId>
+    <PackageId>SAProduction.BuilderHacker.Abstraction</PackageId>
     <Title>BuilderHacker Abstraction</Title>
     <Description>Abstraction layer for BuilderHacker - a code generator for builder pattern implementation.</Description>
     <Authors>BuilderHacker Contributors</Authors>
