@@ -4,6 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Deterministic>true</Deterministic>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SAProduction.BuilderHacker.Generator</PackageId>
+    <Title>BuilderHacker Generator</Title>
+    <Description>Roslyn-based code generator for BuilderHacker - automatically generates builder pattern implementations for your classes.</Description>
+    <Authors>BuilderHacker Contributors</Authors>
+    <PackageProjectUrl>https://github.com/Shariar-Alfaz/BuilderHacker</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>builder;pattern;code-generation;roslyn;analyzer;dotnet</PackageTags>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
