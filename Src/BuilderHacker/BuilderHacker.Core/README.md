@@ -1,4 +1,3 @@
----
 
 # EntityBuilder<T>
 
@@ -16,8 +15,6 @@ It provides:
 - Cross-platform compatibility
 
 Unlike source-generated builders, `EntityBuilder<T>` works without code generation and can be used immediately in any supported .NET project.
-
----
 
 # Table of Contents
 
