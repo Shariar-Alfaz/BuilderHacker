@@ -10,7 +10,7 @@ namespace BuilderHacker.Core.EntityBuilder
     /// </summary>
     internal static class ReflectionMemberCache
     {
-        private static readonly Dictionary<(Type, string), MemberInfo> _cache = 
+        private static readonly Dictionary<(Type, string), MemberInfo> _cache =
             new Dictionary<(Type, string), MemberInfo>();
         private static readonly object _lock = new object();
 

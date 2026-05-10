@@ -158,7 +158,7 @@ namespace BuilderHacker.Core.EntityBuilder
                 {
                     // Unwrap the inner exception for clarity
                     throw new InvalidOperationException(
-                        $"Error setting property '{prop.Name}': {ex.InnerException?.Message}", 
+                        $"Error setting property '{prop.Name}': {ex.InnerException?.Message}",
                         ex.InnerException);
                 }
                 return;
@@ -171,7 +171,7 @@ namespace BuilderHacker.Core.EntityBuilder
             catch (TargetInvocationException ex)
             {
                 throw new InvalidOperationException(
-                    $"Error setting property '{prop.Name}': {ex.InnerException?.Message}", 
+                    $"Error setting property '{prop.Name}': {ex.InnerException?.Message}",
                     ex.InnerException);
             }
         }
