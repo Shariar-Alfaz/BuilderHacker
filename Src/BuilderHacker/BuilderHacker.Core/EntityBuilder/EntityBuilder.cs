@@ -44,50 +44,49 @@ namespace BuilderHacker.Core.EntityBuilder
         /// </summary>
         /// <remarks>If strict mode is enabled, only properties can be set; fields are ignored. If strict
         /// mode is disabled, the method will attempt to set a field if a matching property is not found.
-        /// This method is compatible with all supported .NET frameworks.</remarks>
+        /// This method is compatible with all supported .NET frameworks.
+        /// Note: Member lookups are cached for performance. The cache is per-process and shared across all EntityBuilder instances.</remarks>
         /// <typeparam name="TProp">The type of the value to assign to the property or field.</typeparam>
         /// <param name="name">The name of the property or field to set. The search is case-insensitive.</param>
         /// <param name="value">The value to assign to the specified property or field.</param>
         /// <returns>The current instance of the builder, enabling method chaining.</returns>
         /// <exception cref="ArgumentException">Thrown when property or field name is null or empty.</exception>
-        /// <exception cref="Exception">Thrown if no property or (when strict mode is off) field with the specified name exists on the entity type.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if no property or (when strict mode is off) field with the specified name exists on the entity type.</exception>
         public EntityBuilder<T> Set<TProp>(string name, TProp value)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Property or field name cannot be null or empty", nameof(name));
 
             var type = typeof(T);
+            MemberInfo member;
 
-            // 1. Try property first
-            var prop = type.GetProperty(name,
-                BindingFlags.Public |
-                BindingFlags.NonPublic |
-                BindingFlags.Instance |
-                BindingFlags.IgnoreCase);
-
-            if (prop != null)
+            // Use cached reflection lookup for performance
+            if (ReflectionMemberCache.TryGetMember(type, name, out member))
             {
-                SetProperty(prop, value);
-                return this;
-            }
+                var prop = member as PropertyInfo;
+                if (prop != null)
+                {
+                    SetProperty(prop, value);
+                    return this;
+                }
 
-            // 2. Try field (only if strict mode is OFF)
-            if (!_strictMode)
-            {
-                var field = type.GetField(name,
-                    BindingFlags.NonPublic |
-                    BindingFlags.Public |
-                    BindingFlags.Instance |
-                    BindingFlags.IgnoreCase);
-
-                if (field != null)
+                var field = member as FieldInfo;
+                if (field != null && !_strictMode)
                 {
                     field.SetValue(_entity, value);
                     return this;
                 }
+
+                // If in strict mode and member is a field, skip it
+                if (_strictMode && field != null)
+                {
+                    throw new InvalidOperationException(
+                        $"Property or field '{name}' is a field, but strict mode is enabled. Only properties can be set in strict mode.");
+                }
             }
 
-            throw new Exception(string.Format("Property or field '{0}' not found on {1}", name, type.Name));
+            throw new InvalidOperationException(
+                $"Property or field '{name}' not found on type '{type.Name}'.");
         }
 
         /// <summary>
@@ -110,7 +109,8 @@ namespace BuilderHacker.Core.EntityBuilder
             var member = GetMemberExpression(expression.Body);
 
             if (member == null)
-                throw new Exception("Invalid expression");
+                throw new InvalidOperationException(
+                    "Invalid expression. Only direct property or field access is supported.");
 
             var memberInfo = member.Member;
 
@@ -125,11 +125,16 @@ namespace BuilderHacker.Core.EntityBuilder
             var field = memberInfo as FieldInfo;
             if (field != null)
             {
+                if (_strictMode)
+                    throw new InvalidOperationException(
+                        $"Field '{field.Name}' cannot be set in strict mode. Only properties are allowed.");
+
                 field.SetValue(_entity, value);
                 return this;
             }
 
-            throw new Exception("Only fields or properties are supported");
+            throw new InvalidOperationException(
+                $"Unsupported member type '{memberInfo.MemberType}'. Only properties and fields are supported.");
         }
 
         private void SetProperty<TProp>(PropertyInfo prop, TProp value)
@@ -142,13 +147,33 @@ namespace BuilderHacker.Core.EntityBuilder
                 var setter = prop.GetSetMethod(true);
 
                 if (setter == null)
-                    throw new Exception(string.Format("Property '{0}' has no setter", prop.Name));
+                    throw new InvalidOperationException(
+                        $"Property '{prop.Name}' on type '{prop.DeclaringType?.Name}' has no setter.");
 
-                setter.Invoke(_entity, new object[] { value });
+                try
+                {
+                    setter.Invoke(_entity, new object[] { value });
+                }
+                catch (TargetInvocationException ex)
+                {
+                    // Unwrap the inner exception for clarity
+                    throw new InvalidOperationException(
+                        $"Error setting property '{prop.Name}': {ex.InnerException?.Message}", 
+                        ex.InnerException);
+                }
                 return;
             }
 
-            prop.SetValue(_entity, value);
+            try
+            {
+                prop.SetValue(_entity, value);
+            }
+            catch (TargetInvocationException ex)
+            {
+                throw new InvalidOperationException(
+                    $"Error setting property '{prop.Name}': {ex.InnerException?.Message}", 
+                    ex.InnerException);
+            }
         }
 
         private MemberExpression GetMemberExpression(Expression expression)
@@ -178,7 +203,21 @@ namespace BuilderHacker.Core.EntityBuilder
         /// <remarks>
         /// Subsequent calls to this method return the same instance unless the builder is reset
         /// or reconfigured. The returned entity may be incomplete if required properties were not set prior to calling this method.
-        /// This builder is mutable and not safe for concurrent access from multiple threads.
+        /// 
+        /// THREAD SAFETY WARNING: This builder is NOT thread-safe. Each thread must have its own builder instance.
+        /// If sharing builders across threads is necessary, use synchronization:
+        /// <code>
+        /// lock (builderInstance)
+        /// {
+        ///     builderInstance.PropertyName(value).Build();
+        /// }
+        /// </code>
+        /// 
+        /// Alternatively, use ThreadLocal&lt;T&gt; for thread-local builders:
+        /// <code>
+        /// private static readonly ThreadLocal&lt;EntityBuilder&lt;MyEntity&gt;&gt; _builder = 
+        ///     new ThreadLocal&lt;EntityBuilder&lt;MyEntity&gt;&gt;(() => EntityBuilder&lt;MyEntity&gt;.Create());
+        /// </code>
         /// </remarks>
         /// <returns>The constructed entity of type T with all applied configurations.</returns>
         public T Build()

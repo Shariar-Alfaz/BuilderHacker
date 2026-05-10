@@ -9,5 +9,18 @@ namespace BuilderHacker.Abstraction.Attributes
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public class GenerateBuilderHackerAttribute : Attribute
     {
+        /// <summary>
+        /// Gets a value indicating whether the generator should create a partial-class-based builder.
+        /// </summary>
+        public bool CreatePartial { get; }
+
+        /// <summary>
+        /// Creates a new instance of the attribute.
+        /// </summary>
+        /// <param name="createPartial">true to generate a partial class builder entry point; false to generate a standalone builder type.</param>
+        public GenerateBuilderHackerAttribute(bool createPartial = false)
+        {
+            CreatePartial = createPartial;
+        }
     }
 }

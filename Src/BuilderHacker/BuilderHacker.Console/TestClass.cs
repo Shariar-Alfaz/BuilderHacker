@@ -8,7 +8,7 @@ namespace BuilderHacker.Console
     }
 
     [GenerateBuilderHacker]
-    public partial class TestClass : IO
+    public class TestClass : IO
     {
         private int a;
 

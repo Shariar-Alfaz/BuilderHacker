@@ -7,10 +7,10 @@ namespace BuilderHacker.Console
             System.Console.WriteLine("BuilderHacker Console Application");
             System.Console.WriteLine("Supports: .NET Framework 4.5+, .NET Core 2.0+, and modern .NET 5-10");
 
-            var obj = TestClass.Builder()
+            var obj = TestClassBuilder.Create()
                 .Name("John")
                 .Age(30)
-                .Id(1)
+                .Id(2)
                 .Build();
 
             System.Console.WriteLine($"Name: {obj.Name}, Age: {obj.Age}, A: {obj.A}, Id: {obj.GetId}");
