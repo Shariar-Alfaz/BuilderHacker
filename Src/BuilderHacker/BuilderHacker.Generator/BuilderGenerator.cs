@@ -110,19 +110,17 @@ namespace BuilderHacker.Generator
             var propertiesByName = new Dictionary<string, IPropertySymbol>();
             var allProps = GetAllProperties(symbol).ToList();
 
-            // Process properties in reverse order (from most derived to base)
-            // to ensure we keep the most derived version when shadowing occurs
-            for (int i = allProps.Count - 1; i >= 0; i--)
+            // Process properties from most derived to base
+            // only keeping the first occurrence (most-derived) of each property name
+            foreach (var prop in allProps)
             {
-                var prop = allProps[i];
-
                 if (prop.SetMethod == null || prop.IsStatic)
                     continue;
 
                 if (!createPartial && !CanBeSetFromStandaloneBuilder(prop))
                     continue;
 
-                // Only add if we haven't seen this property name yet (first/most-derived wins)
+                // Only add if we haven't seen this property name yet (most-derived version wins)
                 if (!propertiesByName.ContainsKey(prop.Name))
                 {
                     propertiesByName[prop.Name] = prop;
@@ -137,6 +135,7 @@ namespace BuilderHacker.Generator
             var sb = new StringBuilder();
 
             // Use string.Format() instead of interpolation for potential future .NET Framework support
+            sb.AppendLine("using BuilderHacker.Abstraction.Engine;");
             sb.AppendLine(string.Format("namespace {0}", @namespace));
             sb.AppendLine("{");
 
@@ -146,24 +145,24 @@ namespace BuilderHacker.Generator
                 sb.AppendLine("    {");
                 sb.AppendLine(string.Format("        public static {0}Builder Builder() => new {0}Builder();", className));
                 sb.AppendLine();
-                sb.AppendLine(string.Format("        public class {0}Builder", className));
+                sb.AppendLine(string.Format("        public class {0}Builder : IBuilder<{0}>", className));
                 sb.AppendLine("        {");
                 sb.AppendLine(string.Format("            private readonly {0} obj = new {0}();", className));
                 sb.AppendLine();
 
-                AppendBuilderMembers(sb, className, properties, "            ", "                ", "obj", "obj");
+                AppendBuilderMembers(sb, className, properties, "            ", "                ", "obj", "obj", false);
 
                 sb.AppendLine("        }");
                 sb.AppendLine("    }");
             }
             else
             {
-                sb.AppendLine(string.Format("    public class {0}Builder : {0}", className));
+                sb.AppendLine(string.Format("    public class {0}Builder : {0}, IBuilder<{0}>", className));
                 sb.AppendLine("    {");
                 sb.AppendLine(string.Format("        public static {0}Builder Create() => new {0}Builder();", className));
                 sb.AppendLine();
 
-                AppendBuilderMembers(sb, className, properties, "        ", "            ", "base", "this");
+                AppendBuilderMembers(sb, className, properties, "        ", "            ", "base", "this", true);
 
                 sb.AppendLine("    }");
             }
@@ -173,7 +172,7 @@ namespace BuilderHacker.Generator
             context.AddSource(string.Format("{0}.Builder.g.cs", className), sb.ToString());
         }
 
-        private static void AppendBuilderMembers(StringBuilder sb, string className, IEnumerable<IPropertySymbol> properties, string memberIndent, string bodyIndent, string targetExpression, string buildExpression)
+        private static void AppendBuilderMembers(StringBuilder sb, string className, IEnumerable<IPropertySymbol> properties, string memberIndent, string bodyIndent, string targetExpression, string buildExpression, bool useNewKeyword)
         {
             foreach (var prop in properties)
             {
@@ -183,7 +182,7 @@ namespace BuilderHacker.Generator
                 sb.AppendLine(string.Format("{0}/// </summary>", memberIndent));
                 sb.AppendLine(string.Format("{0}/// <param name=\"value\">The value to set for {1}.</param>", memberIndent, prop.Name));
                 sb.AppendLine(string.Format("{0}/// <returns>The current builder instance for method chaining.</returns>", memberIndent));
-                sb.AppendLine(string.Format("{0}public {1}Builder {2}({3} value)", memberIndent, className, prop.Name, propertyTypeName));
+                sb.AppendLine(string.Format("{0}public {4}{1}Builder {2}({3} value)", memberIndent, className, prop.Name, propertyTypeName, useNewKeyword ? "new " : ""));
                 sb.AppendLine(string.Format("{0}{{", memberIndent));
                 sb.AppendLine(string.Format("{0}{1}.{2} = value;", bodyIndent, targetExpression, prop.Name));
                 sb.AppendLine(string.Format("{0}return this;", bodyIndent));

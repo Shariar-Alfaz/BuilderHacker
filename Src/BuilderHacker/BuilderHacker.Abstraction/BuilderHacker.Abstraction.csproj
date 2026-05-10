@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -8,13 +8,21 @@
     <PackageId>SAProduction.BuilderHacker.Abstraction</PackageId>
     <Title>BuilderHacker Abstraction</Title>
     <Description>Abstraction layer for BuilderHacker - a code generator for builder pattern implementation.</Description>
-    <Authors>BuilderHacker Contributors</Authors>
+	  <Authors>Shariar Alfaz</Authors>
+	  <Company>SA Production</Company>
     <PackageProjectUrl>https://github.com/Shariar-Alfaz/BuilderHacker</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>builder;pattern;code-generation;dotnet</PackageTags>
     <Version>1.0.0</Version>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\logo.png" Pack="true" PackagePath="\" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>
