@@ -14,14 +14,14 @@ namespace BuilderHacker.Tests.Core
         {
             // Setup DI container
             var services = new ServiceCollection();
-            
+
             // Register the generated builder as IBuilder<SimpleUser>
             // Note: SimpleUserBuilder is generated and now implements IBuilder<SimpleUser>
             services.AddTransient<IBuilder<SimpleUser>, SimpleUserBuilder>();
-            
+
             // Register the factory
             services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-            
+
             var serviceProvider = services.BuildServiceProvider();
             var factory = serviceProvider.GetRequiredService<IBuilderHackerFactory>();
 
@@ -45,7 +45,7 @@ namespace BuilderHacker.Tests.Core
             // Setup DI container
             var services = new ServiceCollection();
             services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-            
+
             var serviceProvider = services.BuildServiceProvider();
             var factory = serviceProvider.GetRequiredService<IBuilderHackerFactory>();
 

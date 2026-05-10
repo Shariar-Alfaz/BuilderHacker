@@ -879,3 +879,229 @@ Console.WriteLine(user.Name);
 # Summary
 
 `DefaultBuilderHackerFactory` provides a flexible and dependency-injection-friendly way to resolve builders dynamically across all modern .NET platforms.
+
+---
+
+# IServiceFactory Documentation
+
+---
+
+# Overview
+
+`IServiceFactory` provides a lightweight abstraction over `IServiceProvider` to resolve services dynamically using a factory pattern.
+
+It is designed for:
+
+- Clean architecture applications
+- Plugin-based systems
+- Strategy pattern implementations
+- Runtime service resolution
+- Multi-implementation services
+
+---
+
+# Table of Contents
+
+- [Core Concept](#core-concept)
+- [Interface Definition](#interface-definition)
+- [Default Implementation](#default-implementation)
+- [Dependency Injection Setup](#dependency-injection-setup)
+- [Basic Usage](#basic-usage)
+- [Real-World Example](#real-world-example)
+- [When to Use](#when-to-use)
+- [Best Practices](#best-practices)
+
+---
+
+# Core Concept
+
+Instead of directly using `IServiceProvider`, `IServiceFactory` provides:
+
+- Centralized service resolution
+- Generic access to services
+- Support for multiple implementations
+- Type-safe factory-based creation
+
+---
+
+# Interface Definition
+
+```csharp
+public interface IServiceFactory
+{
+    TService Create<TService>()
+        where TService : class;
+
+    TImplementation Create<TService, TImplementation>()
+        where TService : class
+        where TImplementation : class, TService;
+}
+```
+
+---
+
+# Default Implementation (Summary)
+
+The default implementation wraps `IServiceProvider`:
+
+- Resolves services dynamically
+- Throws clear exceptions when services are not registered
+- Supports both abstraction and concrete implementation resolution
+
+---
+
+# Dependency Injection Setup
+
+## .NET 6+ / ASP.NET Core
+
+```csharp
+builder.Services.AddTransient<IExampleService, ExampleService>();
+
+builder.Services.AddSingleton<IServiceFactory, DefaultServiceFactory>();
+```
+
+---
+
+# Basic Usage
+
+## Resolve Service by Interface
+
+```csharp
+var service = serviceFactory.Create<IExampleService>();
+
+service.Execute();
+```
+
+---
+
+## Resolve Specific Implementation
+
+```csharp
+var service = serviceFactory.Create<IExampleService, ExampleService>();
+
+service.Execute();
+```
+
+---
+
+# Real-World Example
+
+This demonstrates how multiple implementations can be resolved dynamically.
+
+---
+
+## Service Contract
+
+```csharp
+public interface IPaymentService
+{
+    void Pay(decimal amount);
+}
+```
+
+---
+
+## Implementation A
+
+```csharp
+public class StripePaymentService : IPaymentService
+{
+    public void Pay(decimal amount)
+    {
+        Console.WriteLine($"Stripe processed payment: {amount}");
+    }
+}
+```
+
+---
+
+## Implementation B
+
+```csharp
+public class PaypalPaymentService : IPaymentService
+{
+    public void Pay(decimal amount)
+    {
+        Console.WriteLine($"PayPal processed payment: {amount}");
+    }
+}
+```
+
+---
+
+## Usage via Factory
+
+```csharp
+IPaymentService stripe = factory.Create<IPaymentService, StripePaymentService>();
+stripe.Pay(100);
+
+IPaymentService paypal = factory.Create<IPaymentService, PaypalPaymentService>();
+paypal.Pay(200);
+```
+
+---
+
+## Runtime Selection Example
+
+```csharp
+string provider = "stripe";
+
+IPaymentService payment = provider switch
+{
+    "stripe" => factory.Create<IPaymentService, StripePaymentService>(),
+    "paypal" => factory.Create<IPaymentService, PaypalPaymentService>(),
+    _ => throw new InvalidOperationException("Unknown provider")
+};
+
+payment.Pay(150);
+```
+
+---
+
+# When to Use IServiceFactory
+
+Use `IServiceFactory` when:
+
+- Multiple implementations exist for the same interface
+- Runtime selection is required
+- You are building plugin-based architecture
+- You want to avoid direct `IServiceProvider` usage
+- You need a clean abstraction layer over DI
+
+---
+
+# When NOT to Use It
+
+Avoid using it when:
+
+- Only one implementation exists
+- Constructor injection is sufficient
+- You want minimal abstraction layers
+
+---
+
+# Best Practices
+
+- Prefer constructor injection for simple services
+- Use factory only for dynamic resolution scenarios
+- Register services with correct lifetimes (`Transient` recommended for implementations)
+- Avoid overusing factory as a service locator replacement
+- Keep factory usage limited to composition root or infrastructure layer
+
+---
+
+# Benefits
+
+- Clean abstraction over `IServiceProvider`
+- Better testability
+- Easier runtime flexibility
+- Supports multiple implementations naturally
+- Improves architecture consistency
+
+---
+
+# Summary
+
+`IServiceFactory` is a lightweight, flexible abstraction designed to simplify service resolution in complex applications where multiple implementations or runtime selection is required.
+
+It bridges the gap between dependency injection and dynamic service creation while keeping the code clean and maintainable.

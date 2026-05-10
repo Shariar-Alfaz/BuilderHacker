@@ -28,7 +28,7 @@ namespace BuilderHacker.Core.Builder
         public TBuilder CreateBuilder<T, TBuilder>() where TBuilder : IBuilder<T>
         {
             var builder = _serviceProvider.GetService(typeof(TBuilder));
-            
+
             // Fallback to trying to resolve IBuilder<T> and casting
             if (builder == null)
             {
