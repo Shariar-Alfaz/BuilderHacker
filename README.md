@@ -69,5 +69,6 @@ dotnet build
 
 ## Notes
 
-- Types marked with `[GenerateBuilderHacker]` must be declared as `partial`.
+- Types marked with `[GenerateBuilderHacker]` generate a standalone builder by default.
+- To generate a partial class entry point instead, use `[GenerateBuilderHacker(true)]`.
 - The generated API follows `YourType.Builder().PropertyName(value)...Build()`.
