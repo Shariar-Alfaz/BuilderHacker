@@ -1,1107 +1,148 @@
+# SAProduction.BuilderHacker.Core
 
-# EntityBuilder<T>
+`SAProduction.BuilderHacker.Core` provides two main capabilities:
 
-## Overview
-
-`EntityBuilder<T>` is a lightweight, reflection-based generic builder designed for dynamically constructing entities at runtime.
-
-It provides:
-
-- Fluent API support
-- Property and field mapping
-- Optional strict mode
-- Expression-based property configuration
-- Runtime reflection support
-- Cross-platform compatibility
-
-Unlike source-generated builders, `EntityBuilder<T>` works without code generation and can be used immediately in any supported .NET project.
-
-# Table of Contents
-
-- [Overview](#overview)
-- [Supported Platforms](#supported-platforms)
-- [Creating a Builder](#creating-a-builder)
-- [Strict Mode](#strict-mode)
-- [Set By Property Name](#set-by-property-name)
-- [Set By Expression](#set-by-expression)
-- [Build Entity](#build-entity)
-- [Complete Example](#complete-example)
-- [.NET Framework Example](#net-framework-example)
-- [.NET Core / .NET 6+ Example](#net-core--net-6-example)
-- [.NET MAUI Example](#net-maui-example)
-- [Blazor Example](#blazor-example)
-- [Thread Safety](#thread-safety)
-- [Best Practices](#best-practices)
+1. **EntityBuilder<T>** (runtime, reflection-based)
+2. **HTML Builder (UI)** (fluent HTML composition with type-safe child validation for table/media)
 
 ---
 
-# Supported Platforms
+## Install
 
-| Platform | Supported |
-|---|---|
-| .NET Framework 4.5+ | ✅ |
-| .NET Standard 2.0+ | ✅ |
-| .NET Core 2.0+ | ✅ |
-| .NET 5+ | ✅ |
-| .NET 6+ | ✅ |
-| ASP.NET MVC | ✅ |
-| ASP.NET Core | ✅ |
-| .NET MAUI | ✅ |
-| Blazor | ✅ |
-| WPF | ✅ |
-| WinForms | ✅ |
-| Console Apps | ✅ |
-
----
-
-# Creating a Builder
-
-## Using Static Create()
-
-```csharp
-var builder = EntityBuilder<User>.Create();
+```powershell
+Install-Package SAProduction.BuilderHacker.Core
 ```
 
 ---
 
-# Strict Mode
+## Supported Targets
 
-Strict mode allows only properties to be set.
-
-Fields are ignored and will throw exceptions if accessed.
-
-## Enable Strict Mode
-
-```csharp
-var builder = EntityBuilder<User>
-    .Create()
-    .StrictMode();
-```
+- .NET Standard 2.0+
+- .NET Core / .NET 5+
+- .NET Framework (via compatible target graphs)
 
 ---
 
-## Disable Strict Mode
+## 1) EntityBuilder<T>
+
+A runtime builder for dynamic object construction.
+
+### Features
+
+- Fluent API
+- Set by expression (`Set(x => x.Name, value)`) for compile-time safety
+- Set by property/field name (`Set("Name", value)`) for dynamic scenarios
+- Optional strict mode (property-only assignments)
+- Reflection member caching for better repeated performance
+
+### Example (Expression-based)
 
 ```csharp
-var builder = EntityBuilder<User>
-    .Create()
-    .StrictMode(false);
-```
+using BuilderHacker.Core.EntityBuilder;
 
----
-
-# Set By Property Name
-
-Dynamically set a property or field using its name.
-
-## Example
-
-```csharp
-var user = EntityBuilder<User>
-    .Create()
-    .Set("Name", "John")
-    .Set("Age", 25)
-    .Build();
-```
-
----
-
-## Case Insensitive Support
-
-```csharp
-var user = EntityBuilder<User>
-    .Create()
-    .Set("name", "Alice")
-    .Build();
-```
-
----
-
-# Set By Expression
-
-Expression-based configuration provides compile-time safety.
-
-## Example
-
-```csharp
-var user = EntityBuilder<User>
-    .Create()
-    .Set(x => x.Name, "Bob")
+var user = EntityBuilder<User>.Create()
+    .Set(x => x.Name, "Alice")
     .Set(x => x.Age, 30)
     .Build();
 ```
 
----
-
-# Build Entity
-
-Returns the constructed entity instance.
-
-## Example
+### Example (String-based)
 
 ```csharp
-var user = builder.Build();
+var user = EntityBuilder<User>.Create()
+    .Set("Name", "Bob")
+    .Set("Age", 25)
+    .Build();
 ```
 
----
-
-# Complete Example
-
-## Entity
+### Strict mode
 
 ```csharp
-public class User
-{
-    public string Name { get; set; }
-
-    public int Age { get; set; }
-
-    public string Email;
-}
-```
-
----
-
-## Usage
-
-```csharp
-var user = EntityBuilder<User>
-    .Create()
-    .Set(x => x.Name, "Shariar")
-    .Set(x => x.Age, 25)
-    .Set("Email", "admin@example.com")
+var user = EntityBuilder<User>.Create()
+    .StrictMode(true)
+    .Set(x => x.Name, "Safe")
     .Build();
 ```
 
 ---
 
-# .NET Framework Example
+## 2) HTML Builder (UI)
 
-## Install Package
+Use `BuilderHacker.Core.HtmlBuilder.UI` to create HTML trees fluently.
 
-```bash
-Install-Package BuilderHacker.Core
-```
+### Highlights
 
----
+- Broad HTML tag coverage (inline, semantic, form, media, embed, table)
+- Type-safe composition for tags that require specific children
+- Render to string with `Render()`
 
-## Usage
+### Type-safe composition rules
 
-```csharp
-using BuilderHacker.Core.EntityBuilder;
+#### Table
 
-var user = EntityBuilder<User>
-    .Create()
-    .Set("Name", "Framework User")
-    .Set("Age", 20)
-    .Build();
-```
+- `UI.Tr(...)` returns `ITableRow`
+- `UI.THead(...)`, `UI.TBody(...)`, `UI.TFoot(...)` accept only `ITableRow[]`
 
----
+#### Media
 
-# .NET Core / .NET 6+ Example
+- `UI.Video(...)` accepts only `IVideoContent` children (`UI.Source`, `UI.Track`)
+- `UI.Audio(...)` accepts only `IAudioContent` children (`UI.Source`, `UI.Track`)
+- `UI.Picture(...)` accepts only `IPictureContent` children (`UI.Source`, `UI.Img`)
 
-## Usage
+### Full table example
 
 ```csharp
-using BuilderHacker.Core.EntityBuilder;
+using BuilderHacker.Core.HtmlBuilder;
 
-var user = EntityBuilder<User>
-    .Create()
-    .Set(x => x.Name, "Core User")
-    .Set(x => x.Age, 35)
-    .Build();
+var table = UI.Table(
+    UI.TableCaption(UI.TextNode("Employee Directory")),
+    UI.THead(UI.Tr(UI.Th("Name"), UI.Th("Age"), UI.Th("Department"))),
+    UI.TBody(
+        UI.Tr(UI.Td("Alice"), UI.Td("31"), UI.Td("Engineering")),
+        UI.Tr(UI.Td("Bob"), UI.Td("28"), UI.Td("Product"))
+    ),
+    UI.TFoot(UI.Tr(UI.Td("Total"), UI.Td("2"), UI.Td("Employees")))
+);
+
+string html = table.Render();
 ```
 
----
-
-# ASP.NET Core Web API Example
-
-## Controller Example
+### Video example
 
 ```csharp
-[ApiController]
-[Route("api/users")]
-public class UsersController : ControllerBase
-{
-    [HttpGet]
-    public IActionResult Get()
-    {
-        var user = EntityBuilder<User>
-            .Create()
-            .Set(x => x.Name, "API User")
-            .Set(x => x.Age, 22)
-            .Build();
+var video = UI.Video(
+    "video.mp4",
+    UI.Source("video.webm", "video/webm"),
+    UI.Track("subtitles", "captions.vtt", "en", "English")
+);
 
-        return Ok(user);
-    }
-}
+string html = video.Render();
 ```
 
----
-
-# .NET MAUI Example
-
-## ViewModel Example
+### Picture example
 
 ```csharp
-public class MainViewModel
-{
-    public User CreateUser()
-    {
-        return EntityBuilder<User>
-            .Create()
-            .Set(x => x.Name, "MAUI User")
-            .Set(x => x.Age, 28)
-            .Build();
-    }
-}
+var picture = UI.Picture(
+    UI.Source("banner.webp", "image/webp"),
+    UI.Img("banner.png", "Banner")
+);
 ```
 
 ---
 
-# Blazor Example
+## Thread Safety
 
-## Razor Component
-
-```razor
-<button @onclick="CreateUser">
-    Create User
-</button>
-
-@code {
-
-    private User user;
-
-    private void CreateUser()
-    {
-        user = EntityBuilder<User>
-            .Create()
-            .Set(x => x.Name, "Blazor User")
-            .Set(x => x.Age, 18)
-            .Build();
-    }
-}
-```
+`EntityBuilder<T>` instances are **not thread-safe**. Use one builder instance per thread/request.
 
 ---
 
-# Console Application Example
+## Related Packages
 
-```csharp
-using BuilderHacker.Core.EntityBuilder;
-
-class Program
-{
-    static void Main()
-    {
-        var user = EntityBuilder<User>
-            .Create()
-            .Set("Name", "Console User")
-            .Set("Age", 40)
-            .Build();
-
-        Console.WriteLine(user.Name);
-    }
-}
-```
+- `SAProduction.BuilderHacker.Abstraction`
+- `SAProduction.BuilderHacker.Generator`
 
 ---
 
-# Reflection Support
+## Source & Issues
 
-`EntityBuilder<T>` uses reflection internally to dynamically locate and assign:
-
-- Properties
-- Fields
-- Private setters
-- Runtime members
-
-Reflection member lookups are cached for better performance.
-
----
-
-# Source Generator Recommendation
-
-For modern .NET applications (`.NET 6+`), using source-generated builders with:
-
-```csharp
-[GenerateBuilderHacker]
-```
-
-is recommended for:
-
-- Better performance
-- Compile-time generation
-- Strong typing
-- Reduced reflection usage
-
----
-
-# Error Handling
-
-## Invalid Property
-
-```csharp
-EntityBuilder<User>
-    .Create()
-    .Set("UnknownProperty", "Value");
-```
-
-Throws:
-
-```text
-InvalidOperationException
-```
-
----
-
-## Strict Mode Field Access
-
-```csharp
-EntityBuilder<User>
-    .Create()
-    .StrictMode()
-    .Set("Email", "test@example.com");
-```
-
-Throws:
-
-```text
-InvalidOperationException
-```
-
-if `Email` is a field.
-
----
-
-# Thread Safety
-
-> WARNING:
->
-> `EntityBuilder<T>` is NOT thread-safe.
-
-Each thread should use its own builder instance.
-
----
-
-## Recommended Pattern
-
-```csharp
-var builder = EntityBuilder<User>.Create();
-```
-
-Avoid sharing the same builder across multiple threads.
-
----
-
-# Best Practices
-
-- Prefer expression-based setters
-- Use strict mode in production environments
-- Use source generators for high-performance applications
-- Avoid sharing builders across threads
-- Keep entities simple and focused
-
----
-
-# Comparison
-
-| Feature | EntityBuilder<T> | Source Generated Builder |
-|---|---|---|
-| Reflection Based | ✅ | ❌ |
-| Runtime Dynamic | ✅ | ❌ |
-| Compile-Time Safe | Partial | ✅ |
-| Performance | Medium | High |
-| Requires Generator | ❌ | ✅ |
-| Works on .NET Framework | ✅ | Limited |
-
----
-
-# Summary
-
-`EntityBuilder<T>` provides a flexible and fluent way to dynamically construct entities across all supported .NET platforms without requiring source generation.
-
-It is ideal for:
-
-- Rapid development
-- Dynamic object creation
-- Legacy framework support
-- Runtime mapping scenarios
-- Reflection-driven systems
-
-
-# DefaultBuilderHackerFactory
-
-## Overview
-
-`DefaultBuilderHackerFactory` is the default implementation of `IBuilderHackerFactory` in BuilderHacker.
-
-It uses `IServiceProvider` to dynamically resolve registered builders from the dependency injection container.
-
-Supports:
-
-- .NET Framework
-- .NET Core
-- .NET 6+
-- ASP.NET MVC
-- ASP.NET Core
-- .NET MAUI
-- Blazor
-- Console Apps
-- Worker Services
-- WPF
-- WinForms
-
----
-
-# Table of Contents
-
-- [Installation](#installation)
-- [Factory Overview](#factory-overview)
-- [Methods](#methods)
-- [Basic Builder Example](#basic-builder-example)
-- [.NET Framework Example](#net-framework-example)
-- [.NET Core / .NET 6+ Example](#net-core--net-6-example)
-- [ASP.NET Core Web API Example](#aspnet-core-web-api-example)
-- [.NET MAUI Example](#net-maui-example)
-- [Blazor Example](#blazor-example)
-- [Console Application Example](#console-application-example)
-- [Best Practices](#best-practices)
-- [Supported Platforms](#supported-platforms)
-
----
-
-# Installation
-
-## NuGet
-
-```bash
-Install-Package SAProduction.BuilderHacker.Core
-```
-
-Or using .NET CLI:
-
-```bash
-dotnet add package SAProduction.BuilderHacker.Core
-```
-
----
-
-# Factory Overview
-
-```csharp
-using BuilderHacker.Core.Builder;
-
-public class DefaultBuilderHackerFactory : IBuilderHackerFactory
-{
-    private readonly IServiceProvider _serviceProvider;
-
-    public DefaultBuilderHackerFactory(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider 
-            ?? throw new ArgumentNullException(nameof(serviceProvider));
-    }
-
-    public IBuilder<T> CreateBuilder<T>()
-    {
-        var builder = _serviceProvider.GetService(typeof(IBuilder<T>)) as IBuilder<T>;
-
-        if (builder == null)
-        {
-            throw new InvalidOperationException(
-                $"No builder registered for type {typeof(T).FullName}.");
-        }
-
-        return builder;
-    }
-
-    public TBuilder CreateBuilder<T, TBuilder>()
-        where TBuilder : IBuilder<T>
-    {
-        var builder = _serviceProvider.GetService(typeof(TBuilder));
-
-        if (builder == null)
-        {
-            builder = _serviceProvider.GetService(typeof(IBuilder<T>));
-        }
-
-        if (builder == null)
-        {
-            throw new InvalidOperationException(
-                $"No builder registered for type {typeof(TBuilder).FullName}.");
-        }
-
-        if (!(builder is TBuilder))
-        {
-            throw new InvalidCastException(
-                $"Registered builder is not of type {typeof(TBuilder).FullName}.");
-        }
-
-        return (TBuilder)builder;
-    }
-}
-```
-
----
-
-# Methods
-
-## CreateBuilder<T>()
-
-Resolves a builder registered as `IBuilder<T>`.
-
-### Example
-
-```csharp
-var builder = factory.CreateBuilder<User>();
-```
-
----
-
-## CreateBuilder<T, TBuilder>()
-
-Resolves a strongly typed builder implementation.
-
-### Example
-
-```csharp
-var builder = factory.CreateBuilder<User, UserBuilder>();
-```
-
----
-
-# Basic Builder Example
-
-## Entity
-
-```csharp
-public class User
-{
-    public string Name { get; set; }
-
-    public int Age { get; set; }
-}
-```
-
----
-
-## Builder Interface
-
-```csharp
-public interface IBuilder<T>
-{
-    T Build();
-}
-```
-
----
-
-## Builder Implementation
-
-```csharp
-public class UserBuilder : IBuilder<User>
-{
-    private readonly User _user = new User();
-
-    public UserBuilder WithName(string name)
-    {
-        _user.Name = name;
-        return this;
-    }
-
-    public UserBuilder WithAge(int age)
-    {
-        _user.Age = age;
-        return this;
-    }
-
-    public User Build()
-    {
-        return _user;
-    }
-}
-```
-
----
-
-# .NET Framework Example
-
-## Install DI Package
-
-```bash
-Install-Package Microsoft.Extensions.DependencyInjection
-```
-
----
-
-## Configure Services
-
-```csharp
-using Microsoft.Extensions.DependencyInjection;
-
-var services = new ServiceCollection();
-
-services.AddTransient<IBuilder<User>, UserBuilder>();
-
-services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-
-var provider = services.BuildServiceProvider();
-```
-
----
-
-## Usage
-
-```csharp
-var factory = provider.GetRequiredService<IBuilderHackerFactory>();
-
-var builder = factory.CreateBuilder<User, UserBuilder>();
-
-var user = builder
-    .WithName("John")
-    .WithAge(25)
-    .Build();
-```
-
----
-
-# .NET Core / .NET 6+ Example
-
-## Program.cs
-
-```csharp
-builder.Services.AddTransient<IBuilder<User>, UserBuilder>();
-
-builder.Services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-```
-
----
-
-## Service Usage
-
-```csharp
-public class UserService
-{
-    private readonly IBuilderHackerFactory _factory;
-
-    public UserService(IBuilderHackerFactory factory)
-    {
-        _factory = factory;
-    }
-
-    public User Create()
-    {
-        var builder = _factory.CreateBuilder<User, UserBuilder>();
-
-        return builder
-            .WithName("Alice")
-            .WithAge(30)
-            .Build();
-    }
-}
-```
-
----
-
-# ASP.NET Core Web API Example
-
-## Registration
-
-```csharp
-builder.Services.AddTransient<IBuilder<User>, UserBuilder>();
-
-builder.Services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-```
-
----
-
-## Controller Example
-
-```csharp
-[ApiController]
-[Route("api/users")]
-public class UsersController : ControllerBase
-{
-    private readonly IBuilderHackerFactory _factory;
-
-    public UsersController(IBuilderHackerFactory factory)
-    {
-        _factory = factory;
-    }
-
-    [HttpGet]
-    public IActionResult Get()
-    {
-        var builder = _factory.CreateBuilder<User, UserBuilder>();
-
-        var user = builder
-            .WithName("API User")
-            .WithAge(22)
-            .Build();
-
-        return Ok(user);
-    }
-}
-```
-
----
-
-# .NET MAUI Example
-
-## MauiProgram.cs
-
-```csharp
-builder.Services.AddTransient<IBuilder<User>, UserBuilder>();
-
-builder.Services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-```
-
----
-
-## ViewModel Example
-
-```csharp
-public class MainViewModel
-{
-    private readonly IBuilderHackerFactory _factory;
-
-    public MainViewModel(IBuilderHackerFactory factory)
-    {
-        _factory = factory;
-    }
-
-    public User CreateUser()
-    {
-        var builder = _factory.CreateBuilder<User, UserBuilder>();
-
-        return builder
-            .WithName("MAUI User")
-            .WithAge(28)
-            .Build();
-    }
-}
-```
-
----
-
-# Blazor Example
-
-## Registration
-
-```csharp
-builder.Services.AddTransient<IBuilder<User>, UserBuilder>();
-
-builder.Services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-```
-
----
-
-## Razor Component
-
-```razor
-@inject IBuilderHackerFactory Factory
-
-<button @onclick="CreateUser">Create User</button>
-
-@code {
-    private User user;
-
-    private void CreateUser()
-    {
-        var builder = Factory.CreateBuilder<User, UserBuilder>();
-
-        user = builder
-            .WithName("Blazor User")
-            .WithAge(18)
-            .Build();
-    }
-}
-```
-
----
-
-# Console Application Example
-
-```csharp
-using Microsoft.Extensions.DependencyInjection;
-
-var services = new ServiceCollection();
-
-services.AddTransient<IBuilder<User>, UserBuilder>();
-
-services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-
-var provider = services.BuildServiceProvider();
-
-var factory = provider.GetRequiredService<IBuilderHackerFactory>();
-
-var builder = factory.CreateBuilder<User, UserBuilder>();
-
-var user = builder
-    .WithName("Console User")
-    .WithAge(40)
-    .Build();
-
-Console.WriteLine(user.Name);
-```
-
----
-
-# Best Practices
-
-- Register builders as `Transient`
-- Keep builders stateless when possible
-- Use constructor injection
-- Use strongly typed builders for complex objects
-- Prefer generic overloads for better type safety
-
----
-
-# Supported Platforms
-
-| Platform | Supported |
-|---|---|
-| .NET Framework | ✅ |
-| .NET Core | ✅ |
-| .NET 6+ | ✅ |
-| ASP.NET MVC | ✅ |
-| ASP.NET Core | ✅ |
-| .NET MAUI | ✅ |
-| Blazor | ✅ |
-| Console Apps | ✅ |
-| Worker Services | ✅ |
-| WPF | ✅ |
-| WinForms | ✅ |
-
----
-
-# Summary
-
-`DefaultBuilderHackerFactory` provides a flexible and dependency-injection-friendly way to resolve builders dynamically across all modern .NET platforms.
-
----
-
-# IServiceFactory Documentation
-
----
-
-# Overview
-
-`IServiceFactory` provides a lightweight abstraction over `IServiceProvider` to resolve services dynamically using a factory pattern.
-
-It is designed for:
-
-- Clean architecture applications
-- Plugin-based systems
-- Strategy pattern implementations
-- Runtime service resolution
-- Multi-implementation services
-
----
-
-# Table of Contents
-
-- [Core Concept](#core-concept)
-- [Interface Definition](#interface-definition)
-- [Default Implementation](#default-implementation)
-- [Dependency Injection Setup](#dependency-injection-setup)
-- [Basic Usage](#basic-usage)
-- [Real-World Example](#real-world-example)
-- [When to Use](#when-to-use)
-- [Best Practices](#best-practices)
-
----
-
-# Core Concept
-
-Instead of directly using `IServiceProvider`, `IServiceFactory` provides:
-
-- Centralized service resolution
-- Generic access to services
-- Support for multiple implementations
-- Type-safe factory-based creation
-
----
-
-# Interface Definition
-
-```csharp
-public interface IServiceFactory
-{
-    TService Create<TService>()
-        where TService : class;
-
-    TImplementation Create<TService, TImplementation>()
-        where TService : class
-        where TImplementation : class, TService;
-}
-```
-
----
-
-# Default Implementation (Summary)
-
-The default implementation wraps `IServiceProvider`:
-
-- Resolves services dynamically
-- Throws clear exceptions when services are not registered
-- Supports both abstraction and concrete implementation resolution
-
----
-
-# Dependency Injection Setup
-
-## .NET 6+ / ASP.NET Core
-
-```csharp
-builder.Services.AddTransient<IExampleService, ExampleService>();
-
-builder.Services.AddSingleton<IServiceFactory, DefaultServiceFactory>();
-```
-
----
-
-# Basic Usage
-
-## Resolve Service by Interface
-
-```csharp
-var service = serviceFactory.Create<IExampleService>();
-
-service.Execute();
-```
-
----
-
-## Resolve Specific Implementation
-
-```csharp
-var service = serviceFactory.Create<IExampleService, ExampleService>();
-
-service.Execute();
-```
-
----
-
-# Real-World Example
-
-This demonstrates how multiple implementations can be resolved dynamically.
-
----
-
-## Service Contract
-
-```csharp
-public interface IPaymentService
-{
-    void Pay(decimal amount);
-}
-```
-
----
-
-## Implementation A
-
-```csharp
-public class StripePaymentService : IPaymentService
-{
-    public void Pay(decimal amount)
-    {
-        Console.WriteLine($"Stripe processed payment: {amount}");
-    }
-}
-```
-
----
-
-## Implementation B
-
-```csharp
-public class PaypalPaymentService : IPaymentService
-{
-    public void Pay(decimal amount)
-    {
-        Console.WriteLine($"PayPal processed payment: {amount}");
-    }
-}
-```
-
----
-
-## Usage via Factory
-
-```csharp
-IPaymentService stripe = factory.Create<IPaymentService, StripePaymentService>();
-stripe.Pay(100);
-
-IPaymentService paypal = factory.Create<IPaymentService, PaypalPaymentService>();
-paypal.Pay(200);
-```
-
----
-
-## Runtime Selection Example
-
-```csharp
-string provider = "stripe";
-
-IPaymentService payment = provider switch
-{
-    "stripe" => factory.Create<IPaymentService, StripePaymentService>(),
-    "paypal" => factory.Create<IPaymentService, PaypalPaymentService>(),
-    _ => throw new InvalidOperationException("Unknown provider")
-};
-
-payment.Pay(150);
-```
-
----
-
-# When to Use IServiceFactory
-
-Use `IServiceFactory` when:
-
-- Multiple implementations exist for the same interface
-- Runtime selection is required
-- You are building plugin-based architecture
-- You want to avoid direct `IServiceProvider` usage
-- You need a clean abstraction layer over DI
-
----
-
-# When NOT to Use It
-
-Avoid using it when:
-
-- Only one implementation exists
-- Constructor injection is sufficient
-- You want minimal abstraction layers
-
----
-
-# Best Practices
-
-- Prefer constructor injection for simple services
-- Use factory only for dynamic resolution scenarios
-- Register services with correct lifetimes (`Transient` recommended for implementations)
-- Avoid overusing factory as a service locator replacement
-- Keep factory usage limited to composition root or infrastructure layer
-
----
-
-# Benefits
-
-- Clean abstraction over `IServiceProvider`
-- Better testability
-- Easier runtime flexibility
-- Supports multiple implementations naturally
-- Improves architecture consistency
-
----
-
-# Summary
-
-`IServiceFactory` is a lightweight, flexible abstraction designed to simplify service resolution in complex applications where multiple implementations or runtime selection is required.
-
-It bridges the gap between dependency injection and dynamic service creation while keeping the code clean and maintainable.
+- Repository: https://github.com/Shariar-Alfaz/BuilderHacker
