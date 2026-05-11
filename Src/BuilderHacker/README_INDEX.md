@@ -5,7 +5,8 @@
 ### 🚀 Getting Started (5-10 minutes)
 1. **[SUMMARY.md](SUMMARY.md)** - Executive summary of all changes ⭐ **START HERE**
 2. **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - One-page usage guide
-3. **[ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md)** - Visual diagrams & flowcharts
+3. **[HTML_BUILDER_GUIDE.md](HTML_BUILDER_GUIDE.md)** - New HTML builder guide with examples
+4. **[ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md)** - Visual diagrams & flowcharts
 
 ### 📖 Detailed Documentation (20-30 minutes)
 1. **[OPTIMIZATION_SUMMARY.md](OPTIMIZATION_SUMMARY.md)** - Complete optimization details
@@ -50,6 +51,21 @@
 - FAQ
 
 **Read if:** You want quick lookups and usage examples
+
+---
+
+### HTML_BUILDER_GUIDE.md
+**What:** Introduction to the new HTML builder
+
+**Contains:**
+- HTML builder overview
+- How it fits into BuilderHacker
+- Benefits of the HTML builder
+- Getting started with HTML builder
+- Common use cases
+- Examples and code snippets
+
+**Read if:** You want to learn about the new HTML builder feature
 
 ---
 
@@ -154,6 +170,12 @@ How to write compatible code for all frameworks
 Step-by-step implementation guide for multi-framework support
 ```
 
+### "I need HTML builder examples and exact valid child tags"
+→ Read: **HTML_BUILDER_GUIDE.md** (10-15 min)
+```
+Type-safe table/media composition with copy-paste examples
+```
+
 ### "I want the complete picture"
 → Read All (90 min)
 ```
@@ -176,6 +198,8 @@ START HERE
 SUMMARY.md (Executive Overview)
     │
     ├─▶ QUICK_REFERENCE.md (How to Use)
+    │
+    ├─▶ HTML_BUILDER_GUIDE.md (New HTML Builder)
     │
     ├─▶ ARCHITECTURE_DIAGRAM.md (Visual Guide)
     │

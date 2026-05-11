@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BuilderHacker.Abstraction.HtmlBuilder;
 using System.Text;
-using BuilderHacker.Abstraction.HtmlBuilder;
 
 namespace BuilderHacker.Core.HtmlBuilder.Base
 {
-    public sealed class HtmlDocument: HtmlNode
+    /// <summary>
+    /// Represents a full HTML document node that renders a doctype and root html element.
+    /// </summary>
+    public sealed class HtmlDocument : HtmlNode
     {
 
         public HtmlDocument(params IHtmlNode[] children)
         {
-            if(children != null)
-               Children.AddRange(children);
+            if (children != null)
+                Children.AddRange(children);
         }
 
         protected override string RenderNode()

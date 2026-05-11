@@ -3,6 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace BuilderHacker.Core.HtmlBuilder.Base
 {
+    /// <summary>
+    /// Provides validation helpers for HTML class, style, and attribute values used by HTML builder nodes.
+    /// </summary>
     internal static class HtmlValidator
     {
         // class="btn primary"

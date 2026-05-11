@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BuilderHacker.Core.HtmlBuilder
 {
+    /// <summary>
+    /// Represents supported HTML heading levels.
+    /// </summary>
     public enum Heading
     {
         H1,
@@ -14,6 +16,9 @@ namespace BuilderHacker.Core.HtmlBuilder
         H6
     }
 
+    /// <summary>
+    /// Provides extension helpers for heading-related conversions.
+    /// </summary>
     public static class HeadingExtensions
     {
         public static string ToTag(this Heading heading)

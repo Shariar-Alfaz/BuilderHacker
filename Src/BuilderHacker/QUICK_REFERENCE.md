@@ -224,3 +224,50 @@ A: See MULTIFRAMEWORK_ROADMAP.md for detailed Phase 1-2 instructions.
 ---
 
 **Built with ❤️ for optimal .NET framework compatibility**
+
+## 🆕 HTML Builder (UI) - Quick Reference
+
+See full guide: **[HTML_BUILDER_GUIDE.md](HTML_BUILDER_GUIDE.md)**
+
+### Type-Safe Composition Rules
+
+- `UI.Tr(...)` → returns `ITableRow`
+- `UI.THead(...)`, `UI.TBody(...)`, `UI.TFoot(...)` → accept only `ITableRow[]`
+
+- `UI.Video(...)` → accepts only `IVideoContent` (`UI.Source`, `UI.Track`)
+- `UI.Audio(...)` → accepts only `IAudioContent` (`UI.Source`, `UI.Track`)
+- `UI.Picture(...)` → accepts only `IPictureContent` (`UI.Source`, `UI.Img`)
+
+### Common Builder Snippets
+
+```csharp
+var video = UI.Video(
+    "video.mp4",
+    UI.Source("video.webm", "video/webm"),
+    UI.Track("subtitles", "captions.vtt", "en", "English")
+);
+
+var picture = UI.Picture(
+    UI.Source("banner.webp", "image/webp"),
+    UI.Img("banner.png", "Banner")
+);
+
+var table = UI.Table(
+    UI.THead(UI.Tr(UI.Th("Name"), UI.Th("Age"))),
+    UI.TBody(UI.Tr(UI.Td("Alice"), UI.Td("31")))
+);
+```
+
+### Newly Added UI Methods (highlights)
+
+- Inline: `Em`, `Small`, `Mark`, `Del`, `Ins`, `S`, `Abbr`, `Time`, `Dfn`, `Kbd`, `Samp`, `Var`, `Q`, `Cite`, `Wbr`, `Pre`
+- Structure: `Figure`, `FigCaption`, `Details`, `Summary`, `Dialog`, `Search`
+- Media/Embed: `Audio`, `Video`, `Source`, `Track`, `Picture`, `IFrame`, `Embed`, `Object`, `Param`
+- Data/Form: `Data`, `Meter`, `Progress`, `Dl`, `Dt`, `Dd`, `Fieldset`, `Legend`, `Select`, `Option`, `OptGroup`, `Datalist`, `Output`
+
+### Validation Status
+
+- Build: ✅
+- HTML Builder tests: ✅ 71/71 passing
+
+---

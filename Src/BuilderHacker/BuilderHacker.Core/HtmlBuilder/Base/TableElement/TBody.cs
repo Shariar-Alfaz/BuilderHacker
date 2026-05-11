@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BuilderHacker.Abstraction.HtmlBuilder;
+﻿using BuilderHacker.Abstraction.HtmlBuilder;
 
 namespace BuilderHacker.Core.HtmlBuilder.Base.TableElement
 {
-    public sealed class TBody: Element, IBaseTable
+    /// <summary>
+    /// Represents an HTML <tbody> table body section element.
+    /// </summary>
+    public sealed class TBody : Element, IBaseTable
     {
-        public TBody(params Tr[] children) : base("tbody", children)
+        public TBody(params ITableRow[] children) : base("tbody", children)
         {
         }
     }

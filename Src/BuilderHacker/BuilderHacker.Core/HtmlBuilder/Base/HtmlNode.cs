@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using BuilderHacker.Abstraction.HtmlBuilder;
+using System.Collections.Generic;
 using System.Text;
-using BuilderHacker.Abstraction.HtmlBuilder;
 
 namespace BuilderHacker.Core.HtmlBuilder.Base
 {
+    /// <summary>
+    /// Base implementation for HTML nodes that supports attributes, child nodes, and rendering.
+    /// </summary>
     public abstract class HtmlNode : IHtmlNode
     {
         private Dictionary<string, string> Attributes { get; } = new Dictionary<string, string>();
         protected List<IHtmlNode> Children { get; } = new List<IHtmlNode>();
-      
+
 
 
         public IHtmlNode Attr(string key, string value)

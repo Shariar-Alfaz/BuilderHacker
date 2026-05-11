@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BuilderHacker.Abstraction.HtmlBuilder
+﻿namespace BuilderHacker.Abstraction.HtmlBuilder
 {
-    public interface IThOrTd: IBaseTable
+    /// <summary>
+    /// Represents a table entity that provides the base functionality defined by the IBaseTable interface.
+    /// </summary>
+    public interface IThOrTd : IBaseTable
     {
     }
 }

@@ -1,8 +1,12 @@
-﻿using System.Text;
-using BuilderHacker.Abstraction.HtmlBuilder;
+﻿using BuilderHacker.Abstraction.HtmlBuilder;
+using System.Text;
 
 namespace BuilderHacker.Core.HtmlBuilder.Base;
 
+/// <summary>
+/// Represents a generic HTML element node with a configurable tag name, optional self-closing behavior,
+/// attributes, and child nodes.
+/// </summary>
 public class Element : HtmlNode
 {
     private readonly string _tag;

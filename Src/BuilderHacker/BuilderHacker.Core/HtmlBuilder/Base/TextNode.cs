@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BuilderHacker.Abstraction.HtmlBuilder;
-
-namespace BuilderHacker.Core.HtmlBuilder.Base
+﻿namespace BuilderHacker.Core.HtmlBuilder.Base
 {
-    internal class TextNode:HtmlNode
+    /// <summary>
+    /// Represents a plain text node in the HTML tree.
+    /// </summary>
+    internal class TextNode : HtmlNode
     {
         private readonly string _text;
 

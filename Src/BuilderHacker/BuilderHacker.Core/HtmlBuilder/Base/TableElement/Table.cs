@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BuilderHacker.Abstraction.HtmlBuilder;
+﻿using BuilderHacker.Abstraction.HtmlBuilder;
 
 namespace BuilderHacker.Core.HtmlBuilder.Base.TableElement
 {
-    public sealed class Table: Element, IBaseTable
+    /// <summary>
+    /// Represents an HTML <table> element containing table-related child nodes.
+    /// </summary>
+    public sealed class Table : Element, IBaseTable
     {
         public Table(params IBaseTable[] children) : base("table", children) { }
-        
+
     }
 }
