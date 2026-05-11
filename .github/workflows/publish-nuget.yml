@@ -5,6 +5,9 @@ on:
     branches:
       - production
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -27,7 +30,7 @@ jobs:
         run: dotnet build Src/BuilderHacker/BuilderHacker.slnx -c Release --no-restore
 
       - name: Test
-        run: dotnet test Src/BuilderHacker/BuilderHacker.Tests/BuilderHacker.Tests.csproj -c Release --no-build --verbosity normal
+        run: dotnet test Src/BuilderHacker/BuilderHacker.Tests/BuilderHacker.Tests.csproj -c Release --no-build
 
       - name: Pack
         run: |
@@ -36,4 +39,8 @@ jobs:
           dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release --no-build -o ./artifacts
 
       - name: Push to NuGet
-        run: dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
+        run: |
+          find ./artifacts -name "*.nupkg" ! -name "*.snupkg" -exec dotnet nuget push {} \
+            --source "https://api.nuget.org/v3/index.json" \
+            --api-key "${{ secrets.NUGET_API_KEY }}" \
+            --skip-duplicate \;
