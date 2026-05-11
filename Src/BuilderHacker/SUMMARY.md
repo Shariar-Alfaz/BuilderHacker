@@ -10,6 +10,36 @@ Your BuilderHacker solution has been successfully optimized for **multi-framewor
 
 **Build Status:** ✅ **SUCCESSFUL**
 
+## 🆕 New in This Update: HTML Builder Expansion & Type-Safe Composition
+
+A major HTML Builder enhancement was added in `BuilderHacker.Core.HtmlBuilder.UI`:
+
+- Large expansion of supported HTML tags (semantic, media, form, data, and embedding tags)
+- Interface-based type-safe composition for tags with strict child requirements
+- XML documentation updates for new and constrained builder methods
+- Full test coverage updates with end-to-end examples
+
+### Type-safe composition added
+
+- **Table composition**
+  - `ITableRow : IBaseTable`
+  - `Tr(...)` returns `ITableRow`
+  - `THead(...)`, `TBody(...)`, `TFoot(...)` accept only `ITableRow[]`
+
+- **Media composition**
+  - `IAudioContent`, `IVideoContent`, `IPictureContent`
+  - `ISourceContent : IVideoContent, IAudioContent, IPictureContent`
+  - `ITrackContent : IVideoContent, IAudioContent`
+  - `Audio(...)`, `Video(...)`, `Picture(...)` now enforce valid child types at compile time
+
+### Detailed guide
+
+See **[HTML_BUILDER_GUIDE.md](HTML_BUILDER_GUIDE.md)** for:
+- complete feature list
+- practical code examples
+- full table and media composition walkthroughs
+- design rationale and migration notes
+
 ## What Was Changed
 
 ### 1. **Architecture Reorganization**

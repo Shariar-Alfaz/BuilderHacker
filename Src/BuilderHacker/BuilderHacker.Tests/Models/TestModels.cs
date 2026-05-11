@@ -328,40 +328,40 @@ namespace BuilderHacker.Tests.Models
         public string Name { get; set; }
     }
 
-         /// <summary>
-         /// Specific int-based generic instance for testing.
-         /// </summary>
-         [GenerateBuilderHacker(false)]
-         public class IntGenericModel
-         {
-             public int Value { get; set; }
-             public string Name { get; set; }
-         }
-
-         /// <summary>
-         /// Base class with properties that will be shadowed in derived class.
-         /// </summary>
-         public class ShadowingBase
-         {
-             public string Name { get; set; }
-             public int Version { get; set; }
-             public string Description { get; set; }
-         }
-
-         /// <summary>
-         /// Derived class that shadows inherited properties using 'new' keyword.
-         /// The generator should use the derived (shadowing) properties, not the base ones.
-         /// </summary>
-         [GenerateBuilderHacker(false)]
-         public class ShadowingDerived : ShadowingBase
-         {
-             // Shadowing the base Name property with new keyword
-             public new string Name { get; set; }
-
-             // Not shadowed - inherited from base
-             // public int Version { get; set; }
-
-             // Adding a new property at this level
-             public string Category { get; set; }
-         }
+    /// <summary>
+    /// Specific int-based generic instance for testing.
+    /// </summary>
+    [GenerateBuilderHacker(false)]
+    public class IntGenericModel
+    {
+        public int Value { get; set; }
+        public string Name { get; set; }
     }
+
+    /// <summary>
+    /// Base class with properties that will be shadowed in derived class.
+    /// </summary>
+    public class ShadowingBase
+    {
+        public string Name { get; set; }
+        public int Version { get; set; }
+        public string Description { get; set; }
+    }
+
+    /// <summary>
+    /// Derived class that shadows inherited properties using 'new' keyword.
+    /// The generator should use the derived (shadowing) properties, not the base ones.
+    /// </summary>
+    [GenerateBuilderHacker(false)]
+    public class ShadowingDerived : ShadowingBase
+    {
+        // Shadowing the base Name property with new keyword
+        public new string Name { get; set; }
+
+        // Not shadowed - inherited from base
+        // public int Version { get; set; }
+
+        // Adding a new property at this level
+        public string Category { get; set; }
+    }
+}

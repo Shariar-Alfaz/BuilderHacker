@@ -496,84 +496,84 @@ namespace BuilderHacker.Tests.Generator
             Assert.Null(model.NullableGuid);
         }
 
-                 [Fact]
-                 public void OverwriteableProperties_AllTypes()
-                 {
-                     var model = NullablePropertiesModelBuilder.Create()
-                         .NonNullable("First")
-                         .NonNullable("Second")
-                         .NonNullable("Third")
-                         .NullableInt(1)
-                         .NullableInt(2)
-                         .NullableInt(3)
-                         .Build();
+        [Fact]
+        public void OverwriteableProperties_AllTypes()
+        {
+            var model = NullablePropertiesModelBuilder.Create()
+                .NonNullable("First")
+                .NonNullable("Second")
+                .NonNullable("Third")
+                .NullableInt(1)
+                .NullableInt(2)
+                .NullableInt(3)
+                .Build();
 
-                     Assert.Equal("Third", model.NonNullable);
-                     Assert.Equal(3, model.NullableInt);
-                 }
-
-                 [Fact]
-                 public void ShadowedProperty_WithNewKeyword_UsesMostDerived()
-                 {
-                     // ShadowingDerived shadows the Name property from ShadowingBase using 'new'
-                     // The builder should use the derived (shadowed) property, not the base one
-                     var model = ShadowingDerivedBuilder.Create()
-                         .Name("DerivedName")
-                         .Version(2)
-                         .Category("Tech")
-                         .Build();
-
-                     Assert.Equal("DerivedName", model.Name);
-                     Assert.Equal(2, model.Version);
-                     Assert.Equal("Tech", model.Category);
-                 }
-
-                 [Fact]
-                 public void ShadowedProperty_WithNewKeyword_BuilderMethodsExist()
-                 {
-                     // Verify that all expected builder methods exist and can be chained
-                     var builder = ShadowingDerivedBuilder.Create();
-
-                     // Should have Name, Version, and Category methods (Name is from derived, not base)
-                     var model = builder
-                         .Name("ShadowedName")
-                         .Version(1)
-                         .Category("Category1")
-                         .Build();
-
-                     Assert.NotNull(model);
-                     Assert.Equal("ShadowedName", model.Name);
-                 }
-
-                 [Fact]
-                 public void ShadowedProperty_WithNewKeyword_PropertyChaining()
-                 {
-                     // Test that builder chaining works correctly with shadowed properties
-                     var model = ShadowingDerivedBuilder.Create()
-                         .Name("First")
-                         .Name("Second")  // Overwrite Name
-                         .Version(10)
-                         .Category("Updated")
-                         .Build();
-
-                     // Last value should win
-                     Assert.Equal("Second", model.Name);
-                     Assert.Equal(10, model.Version);
-                     Assert.Equal("Updated", model.Category);
-                 }
-
-                 [Fact]
-                 public void ShadowedProperty_WithNewKeyword_PartialAssignment()
-                 {
-                     // Test that we can set only some properties (others use defaults)
-                     var model = ShadowingDerivedBuilder.Create()
-                         .Name("OnlyName")
-                         .Build();
-
-                     Assert.Equal("OnlyName", model.Name);
-                     // Version and Category should have default values (null or default(int))
-                     Assert.Equal(0, model.Version);
-                     Assert.Null(model.Category);
-                 }
-             }
+            Assert.Equal("Third", model.NonNullable);
+            Assert.Equal(3, model.NullableInt);
         }
+
+        [Fact]
+        public void ShadowedProperty_WithNewKeyword_UsesMostDerived()
+        {
+            // ShadowingDerived shadows the Name property from ShadowingBase using 'new'
+            // The builder should use the derived (shadowed) property, not the base one
+            var model = ShadowingDerivedBuilder.Create()
+                .Name("DerivedName")
+                .Version(2)
+                .Category("Tech")
+                .Build();
+
+            Assert.Equal("DerivedName", model.Name);
+            Assert.Equal(2, model.Version);
+            Assert.Equal("Tech", model.Category);
+        }
+
+        [Fact]
+        public void ShadowedProperty_WithNewKeyword_BuilderMethodsExist()
+        {
+            // Verify that all expected builder methods exist and can be chained
+            var builder = ShadowingDerivedBuilder.Create();
+
+            // Should have Name, Version, and Category methods (Name is from derived, not base)
+            var model = builder
+                .Name("ShadowedName")
+                .Version(1)
+                .Category("Category1")
+                .Build();
+
+            Assert.NotNull(model);
+            Assert.Equal("ShadowedName", model.Name);
+        }
+
+        [Fact]
+        public void ShadowedProperty_WithNewKeyword_PropertyChaining()
+        {
+            // Test that builder chaining works correctly with shadowed properties
+            var model = ShadowingDerivedBuilder.Create()
+                .Name("First")
+                .Name("Second")  // Overwrite Name
+                .Version(10)
+                .Category("Updated")
+                .Build();
+
+            // Last value should win
+            Assert.Equal("Second", model.Name);
+            Assert.Equal(10, model.Version);
+            Assert.Equal("Updated", model.Category);
+        }
+
+        [Fact]
+        public void ShadowedProperty_WithNewKeyword_PartialAssignment()
+        {
+            // Test that we can set only some properties (others use defaults)
+            var model = ShadowingDerivedBuilder.Create()
+                .Name("OnlyName")
+                .Build();
+
+            Assert.Equal("OnlyName", model.Name);
+            // Version and Category should have default values (null or default(int))
+            Assert.Equal(0, model.Version);
+            Assert.Null(model.Category);
+        }
+    }
+}
