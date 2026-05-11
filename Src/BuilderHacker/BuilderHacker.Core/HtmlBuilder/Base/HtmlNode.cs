@@ -1,30 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using BuilderHacker.Abstraction.HtmlBuilder;
 
-namespace BuilderHacker.Abstraction.HtmlBuilder
+namespace BuilderHacker.Core.HtmlBuilder.Base
 {
-    public abstract class HtmlNode
+    public abstract class HtmlNode : IHtmlNode
     {
-        public Dictionary<string, string> Attributes { get; } = new Dictionary<string, string>();
-        public List<HtmlNode> Children { get; } = new List<HtmlNode>();
+        private Dictionary<string, string> Attributes { get; } = new Dictionary<string, string>();
+        protected List<IHtmlNode> Children { get; } = new List<IHtmlNode>();
       
 
 
-        public HtmlNode Attr(string key, string value)
+        public IHtmlNode Attr(string key, string value)
         {
             HtmlValidator.ValidateAttribute(key, value);
             Attributes[key] = value;
             return this;
         }
 
-        public HtmlNode Style(string value)
+        public IHtmlNode Style(string value)
         {
             HtmlValidator.ValidateStyle(value);
             Attributes["style"] = value;
             return this;
         }
 
-        public HtmlNode Class(string value)
+        public IHtmlNode Class(string value)
         {
             HtmlValidator.ValidateClassName(value);
             Attributes["class"] = value;
@@ -33,7 +34,17 @@ namespace BuilderHacker.Abstraction.HtmlBuilder
 
         public string Render() => RenderNode();
 
-        protected abstract string RenderNode();
+        protected virtual string RenderNode()
+        {
+            var sb = new StringBuilder();
+            sb.Append($"<{GetType().Name.ToLower()}{RenderAttributes()}>");
+
+            foreach (var child in Children)
+                sb.Append(child.Render());
+
+            sb.Append($"</{GetType().Name.ToLower()}>");
+            return sb.ToString();
+        }
 
         protected string RenderAttributes()
         {

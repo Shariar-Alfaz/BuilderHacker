@@ -5,11 +5,11 @@ using BuilderHacker.Abstraction.HtmlBuilder;
 
 namespace BuilderHacker.Core.HtmlBuilder.Base
 {
-    public class TextNode:HtmlNode
+    internal class TextNode:HtmlNode
     {
         private readonly string _text;
 
-        public TextNode(string text)
+        internal TextNode(string text)
         {
             _text = text;
         }

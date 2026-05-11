@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
-namespace BuilderHacker.Abstraction.HtmlBuilder
+namespace BuilderHacker.Core.HtmlBuilder.Base
 {
     internal static class HtmlValidator
     {
