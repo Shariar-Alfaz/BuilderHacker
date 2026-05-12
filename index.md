@@ -96,9 +96,9 @@ public interface IBuilderHackerFactory
 
 // Typical DI registration (Program.cs / Startup)
 services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-services.AddSingleton<IBuilder<SimpleUser>, SimpleUserBuilder>();
+services.AddTransient<IBuilder<SimpleUser>, SimpleUserBuilder>();
 // or register the concrete builder
-services.AddSingleton<SimpleUserBuilder>();
+services.AddTransient<SimpleUserBuilder>();
 
 // Resolve by model type (generic)
 var factory = serviceProvider.GetRequiredService<IBuilderHackerFactory>();

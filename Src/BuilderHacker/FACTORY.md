@@ -29,9 +29,9 @@ Register the default factory and your builders in `Startup` / `Program`:
 services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
 
 // Register generated or handwritten builders
-services.AddSingleton<IBuilder<SimpleUser>, SimpleUserBuilder>();
+services.AddTransient<IBuilder<SimpleUser>, SimpleUserBuilder>();
 // or register the concrete builder type
-services.AddSingleton<SimpleUserBuilder>();
+services.AddTransient<SimpleUserBuilder>();
 ```
 
 `DefaultBuilderHackerFactory` tries to resolve the requested `TBuilder` first; if not found, it will attempt to resolve `IBuilder<T>` and cast.
@@ -56,6 +56,7 @@ var user = typed.Name("Sam").Age(25).Build();
 ## Notes & Best Practices
 
 - Register builders with the DI container so `DefaultBuilderHackerFactory` can resolve them.
+- Register builders as `Transient` (or `Scoped`) because generated builders are stateful.
 - When using generated builders, register the generated concrete type (e.g., `SimpleUserBuilder`) or the `IBuilder<T>` interface.
 - `CreateBuilder<T, TBuilder>()` will throw an informative exception if no suitable registration is found or if the resolved instance cannot be cast to `TBuilder`.
 

@@ -144,7 +144,7 @@ Use `IBuilderHackerFactory` when you want to resolve builders from dependency in
 
 ```csharp
 services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
-services.AddSingleton<IBuilder<SimpleUser>, SimpleUserBuilder>();
+services.AddTransient<IBuilder<SimpleUser>, SimpleUserBuilder>();
 
 var factory = serviceProvider.GetRequiredService<IBuilderHackerFactory>();
 var builder = factory.CreateBuilder<SimpleUser>();
