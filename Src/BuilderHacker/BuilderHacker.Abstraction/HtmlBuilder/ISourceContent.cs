@@ -1,11 +1,17 @@
 namespace BuilderHacker.Abstraction.HtmlBuilder
 {
     /// <summary>
-    /// Represents content that can include video, audio, or picture data.
+    /// Represents media source content that can be used within HTML media elements.
     /// </summary>
-    /// <remarks>This interface combines the capabilities of video, audio, and picture content, allowing
-    /// implementations to provide one or more types of media. It is intended for use in scenarios where content may be
-    /// of multiple media types and should be handled polymorphically.</remarks>
+    /// <remarks>
+    /// This interface combines support for video, audio, and picture media content, allowing implementations
+    /// to be used polymorphically across different HTML media elements.
+    ///
+    /// It is typically used for elements such as &lt;source&gt; that can belong to:
+    /// - &lt;audio&gt;
+    /// - &lt;video&gt;
+    /// - &lt;picture&gt;
+    /// </remarks>
     public interface ISourceContent : IVideoContent, IAudioContent, IPictureContent
     {
     }

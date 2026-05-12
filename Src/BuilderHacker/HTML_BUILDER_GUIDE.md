@@ -282,15 +282,501 @@ var form = UI.Form(
 );
 ```
 
-### Custom Tag Example
+# Full HTML Page Creation Example
+
+This example demonstrates building a complete HTML document using `BuilderHacker.Core.HtmlBuilder.UI`.
+
+Features included:
+
+- Full HTML document
+- Meta tags
+- Inline CSS
+- Navigation bar
+- Hero section
+- Feature cards
+- Contact form
+- Footer
+- JavaScript
+- Fluent styling
+- Attribute chaining
+
+---
+
+```csharp
+using BuilderHacker.Core.HtmlBuilder;
+
+var page = UI.HtmlDocument(
+
+    // HEAD
+    UI.Head(
+
+        UI.Title("BuilderHacker Landing Page"),
+
+        UI.Meta(
+            "viewport",
+            "width=device-width, initial-scale=1"
+        ),
+
+        UI.Meta(
+            "description",
+            "BuilderHacker Full HTML Example"
+        ),
+
+        UI.Link("styles.css"),
+
+        UI.Style(@"
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.navbar {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    margin-bottom: 40px;
+}
+
+.features {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.contact-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background: #222;
+    color: white;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+")
+    ),
+
+    // BODY
+    UI.Body(
+
+        // HEADER
+        UI.Header(
+
+            UI.Div(
+
+                UI.Nav(
+
+                    UI.Ul(
+
+                        UI.Li(
+                            UI.A("/", "_self", UI.TextNode("Home"))
+                        ),
+
+                        UI.Li(
+                            UI.A("/docs", "_self", UI.TextNode("Docs"))
+                        ),
+
+                        UI.Li(
+                            UI.A("/pricing", "_self", UI.TextNode("Pricing"))
+                        ),
+
+                        UI.Li(
+                            UI.A("/contact", "_self", UI.TextNode("Contact"))
+                        )
+                    )
+                    .Class("navbar")
+                )
+
+            ).Class("container")
+        ),
+
+        // MAIN CONTENT
+        UI.Main(
+
+            // HERO SECTION
+            UI.Section(
+
+                UI.Heading(
+                    Heading.H1,
+                    UI.TextNode("Build HTML Faster")
+                ),
+
+                UI.P(
+                    UI.TextNode(
+                        "BuilderHacker provides a fluent and type-safe HTML builder for .NET applications."
+                    )
+                ),
+
+                UI.Button(
+                    UI.TextNode("Get Started")
+                )
+                .Class("btn")
+                .Style("background:#0078ff;color:white;")
+
+            )
+            .Class("hero"),
+
+            // FEATURES
+            UI.Section(
+
+                UI.Div(
+
+                    UI.Div(
+
+                        UI.Heading(
+                            Heading.H3,
+                            UI.TextNode("Type Safe")
+                        ),
+
+                        UI.P(
+                            UI.TextNode(
+                                "Compile-time validation for HTML composition."
+                            )
+                        )
+
+                    ).Class("card"),
+
+                    UI.Div(
+
+                        UI.Heading(
+                            Heading.H3,
+                            UI.TextNode("Fluent API")
+                        ),
+
+                        UI.P(
+                            UI.TextNode(
+                                "Readable and maintainable builder syntax."
+                            )
+                        )
+
+                    ).Class("card"),
+
+                    UI.Div(
+
+                        UI.Heading(
+                            Heading.H3,
+                            UI.TextNode("Fast Rendering")
+                        ),
+
+                        UI.P(
+                            UI.TextNode(
+                                "Efficient rendering pipeline with minimal overhead."
+                            )
+                        )
+
+                    ).Class("card")
+
+                )
+                .Class("features container")
+            ),
+
+            // CONTACT FORM
+            UI.Section(
+
+                UI.Div(
+
+                    UI.Heading(
+                        Heading.H2,
+                        UI.TextNode("Contact Us")
+                    ),
+
+                    UI.Form(
+
+                        UI.Label("Full Name"),
+
+                        UI.Br(),
+
+                        UI.Input("text", "")
+                            .Attr("placeholder", "Enter your name")
+                            .Style("width:100%;padding:10px;margin-bottom:15px;"),
+
+                        UI.Label("Email"),
+
+                        UI.Br(),
+
+                        UI.Input("email", "")
+                            .Attr("placeholder", "Enter your email")
+                            .Style("width:100%;padding:10px;margin-bottom:15px;"),
+
+                        UI.Label("Message"),
+
+                        UI.Br(),
+
+                        UI.TextArea(
+                            UI.TextNode("")
+                        )
+                        .Style("width:100%;height:120px;margin-bottom:15px;"),
+
+                        UI.Button(
+                            UI.TextNode("Send Message")
+                        )
+                        .Class("btn")
+                        .Style("background:#28a745;color:white;")
+
+                    )
+                    .Attr("method", "post")
+                    .Attr("action", "/contact")
+
+                )
+                .Class("contact-form container")
+
+            )
+        ),
+
+        // FOOTER
+        UI.Footer(
+
+            UI.Div(
+
+                UI.P(
+                    UI.TextNode("© 2026 BuilderHacker")
+                ),
+
+                UI.Small(
+                    UI.TextNode(
+                        "Built with BuilderHacker HTML Builder"
+                    )
+                )
+
+            )
+            .Class("footer")
+        ),
+
+        // SCRIPT
+        UI.Script(@"
+console.log('BuilderHacker Loaded');
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Page Ready');
+});
+")
+    )
+);
+
+string html = page.Render();
+```
+
+---
+
+# Custom Tag Usage Example
+
+`Custom(...)` allows creation of arbitrary HTML elements.
+
+This is useful for:
+
+- Web Components
+- Vue Components
+- Angular Components
+- Blazor wrappers
+- Experimental HTML tags
+- Unsupported tags
+- Third-party widgets
+
+---
+
+# Basic Custom Element
 
 ```csharp
 var badge = UI.Custom(
-    "span",
-    children: new[] { UI.TextNode("New") }
-).Class("badge badge-success");
 
-var spacer = UI.Custom("hr", isSelfClosing: true);
+    "badge-component",
+
+    children: new[]
+    {
+        UI.TextNode("Premium User")
+    }
+
+)
+.Class("gold-badge")
+.Attr("data-level", "vip");
+```
+
+Generated HTML:
+
+```html
+<badge-component
+    class="gold-badge"
+    data-level="vip">
+
+    Premium User
+
+</badge-component>
+```
+
+---
+
+# Self-Closing Custom Element
+
+```csharp
+var loader = UI.Custom(
+    "loading-spinner",
+    isSelfClosing: true
+);
+```
+
+Generated HTML:
+
+```html
+<loading-spinner />
+```
+
+---
+
+# Vue Component Example
+
+```csharp
+var vueCard = UI.Custom(
+
+    "user-card",
+
+    children: new[]
+    {
+        UI.TextNode("Vue User Component")
+    }
+
+)
+.Attr(":user-id", "100")
+.Attr("v-if", "isVisible")
+.Attr("@click", "loadProfile");
+```
+
+Generated HTML:
+
+```html
+<user-card
+    :user-id="100"
+    v-if="isVisible"
+    @click="loadProfile">
+
+    Vue User Component
+
+</user-card>
+```
+
+---
+
+# Angular Component Example
+
+```csharp
+var angularCard = UI.Custom(
+
+    "app-user-profile",
+
+    children: new[]
+    {
+        UI.TextNode("Angular Profile")
+    }
+
+)
+.Attr("[userId]", "selectedUserId")
+.Attr("(click)", "openProfile()");
+```
+
+---
+
+# Web Component Example
+
+```csharp
+var webComponent = UI.Custom(
+
+    "pricing-card",
+
+    children: new[]
+    {
+        UI.Heading(
+            Heading.H3,
+            UI.TextNode("Pro Plan")
+        ),
+
+        UI.P(
+            UI.TextNode("$29/month")
+        )
+    }
+
+)
+.Attr("plan", "pro")
+.Class("shadow-lg");
+```
+
+---
+
+# Reusable Custom Component Factory
+
+```csharp
+public static IHtmlNode Alert(
+    string message,
+    string type
+)
+{
+    return UI.Custom(
+
+        "alert-box",
+
+        children: new[]
+        {
+            UI.TextNode(message)
+        }
+
+    )
+    .Attr("type", type);
+}
+```
+
+Usage:
+
+```csharp
+var success = Alert(
+    "Profile Updated",
+    "success"
+);
+
+var error = Alert(
+    "Something Failed",
+    "danger"
+);
+```
+
+Generated HTML:
+
+```html
+<alert-box type="success">
+    Profile Updated
+</alert-box>
+
+<alert-box type="danger">
+    Something Failed
+</alert-box>
 ```
 
 ### Attribute and Style Example

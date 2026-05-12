@@ -3,16 +3,23 @@
 namespace BuilderHacker.Core.HtmlBuilder.Base.TableElement
 {
     /// <summary>
-    /// Represents a column definition element within an HTML table, corresponding to the <col> tag.
+    /// Represents an HTML <c>&lt;col&gt;</c> element used as a column definition inside an HTML table.
     /// </summary>
-    /// <remarks>Use the Col class to specify common attributes for one or more columns in an HTML table. This
-    /// element is typically used to apply styles or attributes to entire columns rather than individual
-    /// cells.</remarks>
+    /// <remarks>
+    /// The <see cref="Col"/> element is used within a <c>&lt;colgroup&gt;</c> to apply shared styling
+    /// and attributes across entire table columns rather than individual cells.
+    /// 
+    /// This helps improve table styling consistency and reduces repetition when defining column-based layouts.
+    /// </remarks>
     public sealed class Col : Element, ITableColumnDef
     {
         /// <summary>
-        /// Initializes a new instance of the Col class representing an HTML <col> element.
+        /// Initializes a new instance of the <see cref="Col"/> class representing an HTML <c>&lt;col&gt;</c> element.
         /// </summary>
+        /// <remarks>
+        /// This element is self-closing and does not support child nodes.
+        /// It is typically used inside a <c>&lt;colgroup&gt;</c> element.
+        /// </remarks>
         public Col() : base("col", true)
         {
         }
