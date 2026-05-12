@@ -1,3 +1,4 @@
+![BuilderHacker logo](Src/logo.png)
 # BuilderHacker
 
 [![.NET](https://img.shields.io/badge/.NET-Standard%202.0%20%7C%20.NET%2010-blue)](https://dotnet.microsoft.com/)
@@ -17,6 +18,11 @@ Use BuilderHacker to generate fluent builders from an attribute, or use the runt
 - Traverses inherited instance members
 - Supports source-generation and runtime reflection-based builder workflows
 - Includes a runtime `EntityBuilder<T>` for reflection-based scenarios
+
+## Links
+
+- Documentation: https://shariar-alfaz.github.io/BuilderHacker/
+- Repository: https://github.com/Shariar-Alfaz/BuilderHacker
 
 ## Projects
 
@@ -39,7 +45,8 @@ public partial class TestClass
     public int Age { get; set; }
 }
 
-var obj = TestClass.Builder()
+// Default generated standalone builder (Create() by default):
+var obj = TestClassBuilder.Create()
     .Name("John")
     .Age(30)
     .Build();
@@ -69,6 +76,6 @@ dotnet build
 
 ## Notes
 
-- Types marked with `[GenerateBuilderHacker]` generate a standalone builder by default.
-- To generate a partial class entry point instead, use `[GenerateBuilderHacker(true)]`.
-- The generated API follows `YourType.Builder().PropertyName(value)...Build()`.
+ - Types marked with `[GenerateBuilderHacker]` generate a standalone builder by default.
+ - To generate a partial class entry point instead, use `[GenerateBuilderHacker(true)]`.
+ - The generated API follows `YourTypeBuilder.Create().PropertyName(value)...Build()` by default, or `YourType.Builder().PropertyName(...)...Build()` when using partial-mode.

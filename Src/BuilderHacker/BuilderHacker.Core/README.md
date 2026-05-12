@@ -130,6 +130,33 @@ var picture = UI.Picture(
 
 ---
 
+## 3) Builder Factory Pattern
+
+Use `IBuilderHackerFactory` when you want to resolve builders from dependency injection.
+
+### What it does
+
+- Resolves `IBuilder<T>` instances from an `IServiceProvider`
+- Resolves a specific `TBuilder` when you know the generated builder type
+- Falls back to `IBuilder<T>` if the concrete builder type is not registered
+
+### Typical usage
+
+```csharp
+services.AddSingleton<IBuilderHackerFactory, DefaultBuilderHackerFactory>();
+services.AddSingleton<IBuilder<SimpleUser>, SimpleUserBuilder>();
+
+var factory = serviceProvider.GetRequiredService<IBuilderHackerFactory>();
+var builder = factory.CreateBuilder<SimpleUser>();
+var user = builder.Name("Sam").Age(25).Build();
+```
+
+### Documentation
+
+- Full factory guide: https://shariar-alfaz.github.io/BuilderHacker/Src/BuilderHacker/FACTORY.html
+
+---
+
 ## Thread Safety
 
 `EntityBuilder<T>` instances are **not thread-safe**. Use one builder instance per thread/request.
@@ -146,3 +173,4 @@ var picture = UI.Picture(
 ## Source & Issues
 
 - Repository: https://github.com/Shariar-Alfaz/BuilderHacker
+- Documentation: https://shariar-alfaz.github.io/BuilderHacker/

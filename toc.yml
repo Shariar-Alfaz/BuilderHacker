@@ -1,0 +1,42 @@
+- name: Home
+  href: index.md
+- name: Introduction
+  href: introduction.md
+- name: Getting Started
+  href: getting-started.md
+- name: Core Documentation
+  items:
+    - name: Quick Reference
+      href: Src/BuilderHacker/QUICK_REFERENCE.md
+    - name: Executive Summary
+      href: Src/BuilderHacker/SUMMARY.md
+    - name: Architecture & Design
+      href: Src/BuilderHacker/ARCHITECTURE_DIAGRAM.md
+- name: Technical Deep Dives
+  items:
+    - name: Optimization Details
+      href: Src/BuilderHacker/OPTIMIZATION_SUMMARY.md
+    - name: Development Guidelines
+      href: Src/BuilderHacker/DEVELOPMENT_GUIDELINES.md
+    - name: Multi-Framework Roadmap
+      href: Src/BuilderHacker/MULTIFRAMEWORK_ROADMAP.md
+    - name: HTML Builder Guide
+      href: Src/BuilderHacker/HTML_BUILDER_GUIDE.md
+- name: Quality & Testing
+  items:
+    - name: Completion Report
+      href: Src/BuilderHacker/COMPLETION_REPORT.md
+    - name: Test Documentation
+      href: Src/BuilderHacker/BuilderHacker.Tests/INDEX.md
+    - name: Security & Performance
+      href: Src/BuilderHacker/BuilderHacker.Tests/SECURITY_PERFORMANCE_INDEX.md
+    - name: Testing Guide
+      href: Src/BuilderHacker/BuilderHacker.Tests/COMPLETE_TESTING_GUIDE.md
+- name: Reference
+  items:
+    - name: Documentation Index
+      href: Src/BuilderHacker/README_INDEX.md
+    - name: Project README
+      href: README.md
+    - name: API Reference
+      href: api/

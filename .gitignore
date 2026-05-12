@@ -66,3 +66,6 @@ Src/**/bin/
 Src/**/obj/
 Src/**/Bin/
 Src/**/Obj/
+
+## DocFX output
+_site/
