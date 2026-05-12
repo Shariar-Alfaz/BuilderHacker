@@ -18,7 +18,7 @@ A production-ready .NET library that provides **fluent, type-safe builders** wit
 🏗️ **Enterprise Architecture**
 - Separated concerns: Generator isolated from Core
 - Multi-framework by design (netstandard2.0)
-- Production-ready with 67+ passing tests
+- Production-ready with comprehensive automated test coverage
 - Comprehensive security & performance audits
 
 🔒 **Battle-Tested**
