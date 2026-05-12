@@ -35,7 +35,9 @@ A production-ready .NET library that provides **fluent, type-safe builders** wit
 |------|----------|------|
 | **Start using it now** | [Getting Started](getting-started.md) | 5 min |
 | **Understand the design** | [Introduction](introduction.md) | 10 min |
+| **Factory Pattern** | [Factory Documentation](Src/BuilderHacker/FACTORY.md) | 10 min |
 | **See code examples** | [Quick Reference](Src/BuilderHacker/QUICK_REFERENCE.md) | 5 min |
+| **HTML buider guide** | [Html Builder](Src/BuilderHacker/HTML_BUILDER_GUIDE.md) | 10 min |
 | **Understand architecture** | [Architecture Diagram](Src/BuilderHacker/ARCHITECTURE_DIAGRAM.md) | 15 min |
 | **Read the full story** | [Executive Summary](Src/BuilderHacker/SUMMARY.md) | 20 min |
 | **Implement multi-framework** | [Multi-Framework Roadmap](Src/BuilderHacker/MULTIFRAMEWORK_ROADMAP.md) | 30 min |

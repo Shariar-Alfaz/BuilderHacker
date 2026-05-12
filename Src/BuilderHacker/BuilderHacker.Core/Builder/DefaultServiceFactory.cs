@@ -9,6 +9,10 @@ namespace BuilderHacker.Core.Builder
     /// Default implementation of <see cref="IServiceFactory"/>.
     /// Resolves services from the registered <see cref="IServiceProvider"/>.
     /// </summary>
+    /// <remarks>
+    /// This factory provides a centralized way to resolve registered services and their
+    /// concrete implementations using dependency injection.
+    /// </remarks>
     public class DefaultServiceFactory : IServiceFactory
     {
         private readonly IServiceProvider _serviceProvider;
@@ -37,7 +41,7 @@ namespace BuilderHacker.Core.Builder
         /// The resolved service instance.
         /// </returns>
         /// <exception cref="InvalidOperationException">
-        /// Thrown when the requested service is not registered.
+        /// Thrown when the requested service is not registered in the service provider.
         /// </exception>
         public TService Create<TService>()
             where TService : class
@@ -53,21 +57,20 @@ namespace BuilderHacker.Core.Builder
         }
 
         /// <summary>
-        /// Resolves a specific implementation of a service.
+        /// Resolves a specific implementation of a service interface.
         /// </summary>
         /// <typeparam name="TService">
         /// The service contract type.
         /// </typeparam>
         /// <typeparam name="TImplementation">
-        /// The concrete implementation type.
+        /// The concrete implementation type that implements <typeparamref name="TService"/>.
         /// </typeparam>
         /// <returns>
         /// The resolved implementation instance.
         /// </returns>
         /// <exception cref="InvalidOperationException">
-        /// Thrown when the requested implementation is not registered.
+        /// Thrown when no matching implementation is registered for the requested service type.
         /// </exception>
-
         public TImplementation Create<TService, TImplementation>()
             where TService : class
             where TImplementation : class, TService
@@ -98,7 +101,7 @@ namespace BuilderHacker.Core.Builder
         }
 
         /// <summary>
-        /// Resolves a service from the service provider.
+        /// Resolves a service instance from the underlying service provider.
         /// </summary>
         /// <typeparam name="TInnerService">
         /// The type of service to resolve.
@@ -107,7 +110,7 @@ namespace BuilderHacker.Core.Builder
         /// The resolved service instance.
         /// </returns>
         /// <exception cref="InvalidOperationException">
-        /// Thrown when the service is not registered.
+        /// Thrown when the requested service is not registered in the service provider.
         /// </exception>
         private TInnerService GetService<TInnerService>()
         {

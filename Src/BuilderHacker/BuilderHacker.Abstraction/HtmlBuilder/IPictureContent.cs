@@ -1,11 +1,13 @@
 namespace BuilderHacker.Abstraction.HtmlBuilder
 {
     /// <summary>
-    /// Represents the content of a <picture> HTML element for use in HTML generation or manipulation.
+    /// Represents the content of an HTML &lt;picture&gt; element used in HTML generation or manipulation.
     /// </summary>
-    /// <remarks>Implementations of this interface provide the ability to define or interact with the content
-    /// within a <picture> element, typically for scenarios involving dynamic HTML construction or parsing. This
-    /// interface extends IHtmlNode, allowing integration with other HTML node types.</remarks>
+    /// <remarks>
+    /// Implementations of this interface define or interact with the content inside a &lt;picture&gt; element,
+    /// typically for dynamic HTML construction or parsing scenarios.
+    /// This interface extends <see cref="IHtmlNode"/>, allowing integration with other HTML node types.
+    /// </remarks>
     public interface IPictureContent : IHtmlNode
     {
     }

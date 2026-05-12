@@ -69,3 +69,4 @@ Src/**/Obj/
 
 ## DocFX output
 _site/
+api/

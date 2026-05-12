@@ -10,17 +10,14 @@ namespace BuilderHacker.Core.HtmlBuilder.Base;
 public class Element : HtmlNode
 {
     private readonly string _tag;
-
     private readonly bool _isSelfClosing;
 
-
     /// <summary>
-    /// Initializes a new instance of the Element class with the specified tag name, self-closing flag, and optional
-    /// child nodes.
+    /// Initializes a new instance of the Element class with the specified tag name, self-closing flag, and optional child nodes.
     /// </summary>
-    /// <param name="tag">The name of the HTML tag to represent. Cannot be null or empty.</param>
-    /// <param name="isSelfClosing">true to create a self-closing element; otherwise, false.</param>
-    /// <param name="children">An optional array of child nodes to add to the element. Can be empty.</param>
+    /// <param name="tag">The name of the HTML tag to represent (e.g., div, span). Cannot be null or empty.</param>
+    /// <param name="isSelfClosing">true to create a self-closing element; otherwise false.</param>
+    /// <param name="children">Optional child nodes to add to the element.</param>
     public Element(string tag, bool isSelfClosing = false, params IHtmlNode[] children)
     {
         _tag = tag;
@@ -33,8 +30,8 @@ public class Element : HtmlNode
     /// <summary>
     /// Initializes a new instance of the Element class with the specified tag name and optional child nodes.
     /// </summary>
-    /// <param name="tag">The name of the HTML tag to represent. Cannot be null.</param>
-    /// <param name="children">An optional array of child nodes to add to the element. Can be empty.</param>
+    /// <param name="tag">The name of the HTML tag to represent (e.g., div, span).</param>
+    /// <param name="children">Optional child nodes to add to the element.</param>
     public Element(string tag, params IHtmlNode[] children)
     {
         _tag = tag;
@@ -45,22 +42,31 @@ public class Element : HtmlNode
     }
 
     /// <summary>
-    /// Generates the HTML markup for the current node and its child nodes as a string.
+    /// Generates the HTML markup for the current node and its child nodes.
     /// </summary>
-    /// <remarks>If the node is self-closing, the output will use self-closing tag syntax. Otherwise, the
-    /// output will include both opening and closing tags, with the rendered content of all child nodes inserted between
-    /// them.</remarks>
-    /// <returns>A string containing the rendered HTML markup for this node, including its attributes and any child nodes.</returns>
+    /// <remarks>
+    /// Self-closing elements are rendered using <tag /> syntax.
+    /// Normal elements include opening and closing tags with child content in between.
+    /// </remarks>
+    /// <returns>A string containing the rendered HTML markup.</returns>
     protected override string RenderNode()
     {
         var sb = new StringBuilder();
-        sb.Append(!_isSelfClosing ? $"<{_tag} {RenderAttributes()}>" : $"<{_tag} {RenderAttributes()} />");
+
+        var attrs = RenderAttributes();
+
+        if (_isSelfClosing)
+        {
+            sb.Append($"<{_tag}{attrs} />");
+            return sb.ToString();
+        }
+
+        sb.Append($"<{_tag}{attrs}>");
 
         foreach (var child in Children)
             sb.Append(child.Render());
 
-        if (!_isSelfClosing)
-            sb.Append($"</{_tag}>");
+        sb.Append($"</{_tag}>");
 
         return sb.ToString();
     }

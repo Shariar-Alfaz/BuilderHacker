@@ -3,7 +3,7 @@
 namespace BuilderHacker.Core.HtmlBuilder.Base.ListElement
 {
     /// <summary>
-    /// Represents an HTML <li> (list item) element that can contain child nodes.
+    /// Represents an HTML &lt;li&gt; (list item) element that can contain child nodes.
     /// </summary>
     /// <remarks>Use the Li class to create list items within ordered or unordered HTML lists. Child nodes can
     /// include text, other elements, or nested lists, allowing for flexible list structures.</remarks>

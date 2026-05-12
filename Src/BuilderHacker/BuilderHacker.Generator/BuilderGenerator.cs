@@ -50,7 +50,7 @@ namespace BuilderHacker.Generator
         }
 
         /// <summary>
-        /// Checks if a syntax node is a class declaration with attributes - early filter for performance.
+        /// Determines whether a syntax node is a candidate for builder generation.
         /// </summary>
         private static bool IsSyntaxTargetForGeneration(SyntaxNode node)
         {
@@ -59,8 +59,7 @@ namespace BuilderHacker.Generator
         }
 
         /// <summary>
-        /// Retrieves semantic information for a class declaration.
-        /// Returns null if the class doesn't have the GenerateBuilderHacker attribute.
+        /// Extracts semantic model information for a class declaration and checks for generator attribute usage.
         /// </summary>
         private static (ClassDeclarationSyntax source, SemanticModel model, bool createPartial) GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
         {
@@ -90,8 +89,7 @@ namespace BuilderHacker.Generator
         }
 
         /// <summary>
-        /// Generates the builder class source code based on the target class.
-        /// Only generates methods for non-static properties that define a setter.
+        /// Executes source generation and emits builder class source code.
         /// </summary>
         private static void ExecuteGeneration(SourceProductionContext context, ClassDeclarationSyntax classDeclarationSyntax, SemanticModel model, bool createPartial)
         {
@@ -105,13 +103,9 @@ namespace BuilderHacker.Generator
             var className = symbol.Name;
             var @namespace = symbol.ContainingNamespace.ToDisplayString();
 
-            // Use dictionary to track properties by name, preferring the most derived version
-            // This handles the 'new' keyword shadowing case correctly
             var propertiesByName = new Dictionary<string, IPropertySymbol>();
             var allProps = GetAllProperties(symbol).ToList();
 
-            // Process properties from most derived to base
-            // only keeping the first occurrence (most-derived) of each property name
             foreach (var prop in allProps)
             {
                 if (prop.SetMethod == null || prop.IsStatic)
@@ -120,7 +114,6 @@ namespace BuilderHacker.Generator
                 if (!createPartial && !CanBeSetFromStandaloneBuilder(prop))
                     continue;
 
-                // Only add if we haven't seen this property name yet (most-derived version wins)
                 if (!propertiesByName.ContainsKey(prop.Name))
                 {
                     propertiesByName[prop.Name] = prop;
@@ -134,7 +127,6 @@ namespace BuilderHacker.Generator
 
             var sb = new StringBuilder();
 
-            // Use string.Format() instead of interpolation for potential future .NET Framework support
             sb.AppendLine("using BuilderHacker.Abstraction.Engine;");
             sb.AppendLine(string.Format("namespace {0}", @namespace));
             sb.AppendLine("{");
@@ -172,6 +164,9 @@ namespace BuilderHacker.Generator
             context.AddSource(string.Format("{0}.Builder.g.cs", className), sb.ToString());
         }
 
+        /// <summary>
+        /// Appends generated builder methods and Build() method to source output.
+        /// </summary>
         private static void AppendBuilderMembers(StringBuilder sb, string className, IEnumerable<IPropertySymbol> properties, string memberIndent, string bodyIndent, string targetExpression, string buildExpression, bool useNewKeyword)
         {
             foreach (var prop in properties)
@@ -197,6 +192,9 @@ namespace BuilderHacker.Generator
             sb.AppendLine(string.Format("{0}public {1} Build() => {2};", memberIndent, className, buildExpression));
         }
 
+        /// <summary>
+        /// Tries to extract CreatePartial flag from attribute syntax.
+        /// </summary>
         private static bool TryGetCreatePartialValue(AttributeSyntax attributeSyntax, out bool createPartial)
         {
             createPartial = false;
@@ -222,6 +220,9 @@ namespace BuilderHacker.Generator
             return false;
         }
 
+        /// <summary>
+        /// Reads boolean literal expression from attribute argument.
+        /// </summary>
         private static bool TryReadBooleanLiteral(ExpressionSyntax expression, out bool value)
         {
             var literal = expression as LiteralExpressionSyntax;
@@ -245,8 +246,7 @@ namespace BuilderHacker.Generator
         }
 
         /// <summary>
-        /// Gets all properties from the symbol and its base types.
-        /// Walks the inheritance hierarchy to collect properties from base classes.
+        /// Retrieves all properties from a type including base types.
         /// </summary>
         private static IEnumerable<IPropertySymbol> GetAllProperties(INamedTypeSymbol symbol)
         {
@@ -267,6 +267,9 @@ namespace BuilderHacker.Generator
             }
         }
 
+        /// <summary>
+        /// Determines whether a property can be assigned from a standalone builder.
+        /// </summary>
         private static bool CanBeSetFromStandaloneBuilder(IPropertySymbol prop)
         {
             var setter = prop.SetMethod;
