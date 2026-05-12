@@ -18,7 +18,7 @@ A production-ready .NET library that provides **fluent, type-safe builders** wit
 🏗️ **Enterprise Architecture**
 - Separated concerns: Generator isolated from Core
 - Multi-framework by design (netstandard2.0)
-- Production-ready with 67+ passing tests
+- Production-ready with a comprehensive passing test suite
 - Comprehensive security & performance audits
 
 🔒 **Battle-Tested**
@@ -171,7 +171,7 @@ BuilderHacker/
 
 ## Performance & Quality
 
-✅ **67+ Tests Passing** - Comprehensive test coverage  
+✅ **Comprehensive Tests Passing** - Broad test coverage  
 ✅ **Security Audited** - No vulnerabilities  
 ✅ **Performance Benchmarked** - Zero-cost abstractions  
 ✅ **Production Ready** - Used in enterprise applications  

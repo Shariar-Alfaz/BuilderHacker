@@ -17,10 +17,12 @@
     "content": [
       {
         "files": [
-          "**/*.{md,yml}"
+          "**/*.md",
+          "**/toc.yml"
         ],
         "exclude": [
-          "_site/**"
+          "_site/**",
+          ".github/**"
         ]
       }
     ],
