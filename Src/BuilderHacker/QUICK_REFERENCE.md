@@ -20,10 +20,14 @@ public partial class User
     public int Age { get; set; }
 }
 
-var user = User.Builder()
+// Default generated standalone builder (Create() by default):
+var user = UserBuilder.Create()
     .Name("Alice")
     .Age(30)
     .Build();
+
+// Partial-mode alternative (if you used [GenerateBuilderHacker(true)]):
+// var user = User.Builder().Name("Alice").Age(30).Build();
 ```
 
 ### Option 2: EntityBuilder (All .NET) - Works Everywhere

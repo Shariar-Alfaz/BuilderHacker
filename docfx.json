@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "Src/BuilderHacker",
+          "files": [
+            "**/*.csproj"
+          ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      },
+      {
+        "files": [
+          "Src/logo.png"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern",
+      "templates/logo"
+    ],
+    "globalMetadata": {
+      "_appName": "BuilderHacker",
+      "_appTitle": "BuilderHacker",
+      "_appLogoPath": "Src/logo.png",
+      "_enableSearch": true,
+      "pdf": true
+    }
+  }
+}
