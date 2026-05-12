@@ -153,7 +153,7 @@ var builder = MyEntityBuilder.Create();
 // Partial-mode alternative (if you used [GenerateBuilderHacker(true)]):
 // var builder = MyEntity.Builder();
 // OR use EntityBuilder directly
-var builder = EntityBuilder<MyEntity>.Create();
+var entityBuilder = EntityBuilder<MyEntity>.Create();
 ```
 
 ### .NET 5.0 / .NET Core 3.1 / .NET Core 2.0-3.0
