@@ -41,10 +41,14 @@ public partial class Product
 After build, use generated API:
 
 ```csharp
-var product = Product.Builder()
+// Default generated standalone builder (Create() by default):
+var product = ProductBuilder.Create()
     .Name("Widget")
     .Price(19.99m)
     .Build();
+
+// Partial-mode alternative (use `[GenerateBuilderHacker(true)]`):
+// var product = Product.Builder().Name("Widget").Price(19.99m).Build();
 ```
 
 ---
@@ -56,6 +60,17 @@ var product = Product.Builder()
 
 ---
 
+## Builder Factory Pattern
+
+If you resolve builders through dependency injection, see the factory guide:
+
+- Full factory guide: https://shariar-alfaz.github.io/BuilderHacker/Src/BuilderHacker/FACTORY.html
+
+This is the recommended pattern when you want to keep builder creation centralized and testable.
+
+---
+
 ## Source & Issues
 
 - Repository: https://github.com/Shariar-Alfaz/BuilderHacker
+- Documentation: https://shariar-alfaz.github.io/BuilderHacker/

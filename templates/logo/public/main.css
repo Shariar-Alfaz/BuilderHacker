@@ -1,0 +1,11 @@
+/* Keep the DocFX navbar logo compact. */
+.navbar-brand #logo {
+  max-height: 28px;
+  width: auto;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

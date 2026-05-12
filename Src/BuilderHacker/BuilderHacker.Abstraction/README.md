@@ -52,6 +52,20 @@ public partial class User
 
 ---
 
+## Builder Factory Pattern
+
+This package defines the factory interfaces used by the runtime and generated builder workflows.
+
+- `IBuilderHackerFactory`
+- `IBuilder<T>`
+
+Full guide:
+
+- https://shariar-alfaz.github.io/BuilderHacker/Src/BuilderHacker/FACTORY.html
+
+---
+
 ## Source & Issues
 
 - Repository: https://github.com/Shariar-Alfaz/BuilderHacker
+- Documentation: https://shariar-alfaz.github.io/BuilderHacker/

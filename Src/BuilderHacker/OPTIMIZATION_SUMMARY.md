@@ -111,10 +111,14 @@ public partial class User
     public int Age { get; set; }
 }
 
-var user = User.Builder()
-    .Name("John")
+// Default generated standalone builder (Create() by default):
+var user = UserBuilder.Create()
+    .Name("Alice")
     .Age(30)
     .Build();
+
+// Partial-mode alternative:
+// var user = User.Builder().Name("Alice").Age(30).Build();
 ```
 
 ### .NET Framework / .NET Core 2.0-5.0
