@@ -161,12 +161,14 @@ namespace BuilderHacker.Core.HtmlBuilder.Base
         protected virtual string RenderNode()
         {
             var sb = new StringBuilder();
-            sb.Append('<').Append(TagName).Append(RenderAttributes()).Append('>');
+            var tagName = TagName;
+
+            sb.Append('<').Append(tagName).Append(RenderAttributes()).Append('>');
 
             foreach (var child in Children)
                 sb.Append(child.Render());
 
-            sb.Append("</").Append(TagName).Append('>');
+            sb.Append("</").Append(tagName).Append('>');
             return sb.ToString();
         }
 

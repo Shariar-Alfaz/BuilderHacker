@@ -57,21 +57,22 @@ public class Element : HtmlNode
     protected override string RenderNode()
     {
         var sb = new StringBuilder();
+        var tagName = TagName;
 
         var attrs = RenderAttributes();
 
         if (_isSelfClosing)
         {
-            sb.Append('<').Append(_tag).Append(attrs).Append(" />");
+            sb.Append('<').Append(tagName).Append(attrs).Append(" />");
             return sb.ToString();
         }
 
-        sb.Append('<').Append(_tag).Append(attrs).Append('>');
+        sb.Append('<').Append(tagName).Append(attrs).Append('>');
 
         foreach (var child in Children)
             sb.Append(child.Render());
 
-        sb.Append("</").Append(_tag).Append('>');
+        sb.Append("</").Append(tagName).Append('>');
 
         return sb.ToString();
     }

@@ -38,7 +38,7 @@ namespace BuilderHacker.Console
             System.Console.WriteLine($"Per iteration:     {avgMs:F4} ms");
             System.Console.WriteLine($"Ops/second:        {opsPerSecond:F0}");
             System.Console.WriteLine($"Total chars:       {totalLength:N0}");
-            System.Console.WriteLine($"Avg bytes/op:      {totalLength / iterations:N0}");
+            System.Console.WriteLine($"Avg chars/op:      {totalLength / iterations:N0}");
         }
 
         static BuilderHacker.Abstraction.HtmlBuilder.IHtmlNode BuildSampleTree()
