@@ -1,5 +1,8 @@
 using BuilderHacker.Core.HtmlBuilder;
 using BuilderHacker.Core.HtmlBuilder.Base.ListElement;
+using HtmlAgilityPack;
+using System;
+using System.Linq;
 using Xunit;
 
 namespace BuilderHacker.Tests.Core
@@ -21,6 +24,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<span", html);
             Assert.Contains("Hello", html);
             Assert.Contains("</span>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -32,6 +36,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("href=\"https://example.com\"", html);
             Assert.Contains("target=\"_blank\"", html);
             Assert.Contains("Click here", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -43,6 +48,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<b", html);
             Assert.Contains("Bold text", html);
             Assert.Contains("</b>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -54,6 +60,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<i", html);
             Assert.Contains("Italic text", html);
             Assert.Contains("</i>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -65,6 +72,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<u", html);
             Assert.Contains("Underlined text", html);
             Assert.Contains("</u>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -75,6 +83,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<br", html);
             Assert.Contains("/>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -86,6 +95,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<button", html);
             Assert.Contains("Click me", html);
             Assert.Contains("</button>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -97,6 +107,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<strong", html);
             Assert.Contains("Important", html);
             Assert.Contains("</strong>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -108,6 +119,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<sub", html);
             Assert.Contains("subscript", html);
             Assert.Contains("</sub>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -119,6 +131,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<sup", html);
             Assert.Contains("superscript", html);
             Assert.Contains("</sup>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -130,6 +143,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<code", html);
             Assert.Contains("var x = 5;", html);
             Assert.Contains("</code>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -141,6 +155,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<label", html);
             Assert.Contains("Username", html);
             Assert.Contains("</label>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -153,6 +168,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("type=\"email\"", html);
             Assert.Contains("value=\"user@example.com\"", html);
             Assert.Contains("/>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -165,6 +181,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("src=\"image.jpg\"", html);
             Assert.Contains("alt=\"Description\"", html);
             Assert.Contains("/>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -176,6 +193,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<textarea", html);
             Assert.Contains("Default content", html);
             Assert.Contains("</textarea>", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -191,6 +209,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<div", html);
             Assert.Contains("Content", html);
             Assert.Contains("</div>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -202,6 +221,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<p", html);
             Assert.Contains("This is a paragraph.", html);
             Assert.Contains("</p>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -213,6 +233,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<section", html);
             Assert.Contains("Section content", html);
             Assert.Contains("</section>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -224,6 +245,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<address", html);
             Assert.Contains("123 Main St", html);
             Assert.Contains("</address>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -235,6 +257,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<article", html);
             Assert.Contains("<p", html);
             Assert.Contains("Article content", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -246,6 +269,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<aside", html);
             Assert.Contains("Sidebar", html);
             Assert.Contains("</aside>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -257,6 +281,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<blockquote", html);
             Assert.Contains("cite=\"https://example.com\"", html);
             Assert.Contains("Quote", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -268,6 +293,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<canvas", html);
             Assert.Contains("width=\"800\"", html);
             Assert.Contains("height=\"600\"", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -278,6 +304,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<hr", html);
             Assert.Contains("/>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -290,6 +317,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<input", html);
             Assert.Contains("<button", html);
             Assert.Contains("</form>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -301,6 +329,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<nav", html);
             Assert.Contains("href=\"home.html\"", html);
             Assert.Contains("Home", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -311,6 +340,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<main", html);
             Assert.Contains("<p", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -321,6 +351,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<footer", html);
             Assert.Contains("© 2024", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -331,6 +362,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<header", html);
             Assert.Contains("Header", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -351,6 +383,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("Item 1", html);
             Assert.Contains("Item 2", html);
             Assert.Contains("</ul>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -367,6 +400,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("First", html);
             Assert.Contains("Second", html);
             Assert.Contains("</ol>", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -431,6 +465,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("Total", html);
             Assert.Contains("Employees", html);
             Assert.Contains("</table>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -442,6 +477,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<th", html);
             Assert.Contains("Header", html);
             Assert.Contains("</th>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -453,6 +489,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<td", html);
             Assert.Contains("Data", html);
             Assert.Contains("</td>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -463,6 +500,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<caption", html);
             Assert.Contains("Employee Table", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -478,6 +516,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<h1", html);
             Assert.Contains("Main Title", html);
             Assert.Contains("</h1>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -488,6 +527,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<h2", html);
             Assert.Contains("Subtitle", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -498,6 +538,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<h6", html);
             Assert.Contains("Small Heading", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -513,6 +554,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<title", html);
             Assert.Contains("My Website", html);
             Assert.Contains("</title>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -524,6 +566,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<meta", html);
             Assert.Contains("name=\"viewport\"", html);
             Assert.Contains("content=\"width=device-width, initial-scale=1.0\"", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -535,6 +578,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<link", html);
             Assert.Contains("href=\"styles.css\"", html);
             Assert.Contains("rel=\"stylesheet\"", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -546,6 +590,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<style", html);
             Assert.Contains("body { margin: 0; }", html);
             Assert.Contains("</style>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -557,6 +602,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<script", html);
             Assert.Contains("console.log('hello');", html);
             Assert.Contains("</script>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -567,6 +613,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<script", html);
             Assert.Contains("src=\"app.js\"", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -582,6 +629,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<custom-element", html);
             Assert.Contains("Content", html);
             Assert.Contains("</custom-element>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -592,6 +640,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<my-component", html);
             Assert.Contains("/>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -607,6 +656,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<head", html);
             Assert.Contains("<title", html);
             Assert.Contains("<body", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -617,6 +667,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<body", html);
             Assert.Contains("<p", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -627,6 +678,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<head", html);
             Assert.Contains("<title", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -640,6 +692,7 @@ namespace BuilderHacker.Tests.Core
             var html = div.Render();
 
             Assert.Contains("data-id=\"123\"", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -649,6 +702,7 @@ namespace BuilderHacker.Tests.Core
             var html = div.Render();
 
             Assert.Contains("class=\"container\"", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -658,6 +712,7 @@ namespace BuilderHacker.Tests.Core
             var html = div.Render();
 
             Assert.Contains("style=\"color: red;\"", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -672,6 +727,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("class=\"box\"", html);
             Assert.Contains("style=\"background: blue;\"", html);
             Assert.Contains("id=\"main\"", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -699,6 +755,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<main", html);
             Assert.Contains("<section", html);
             Assert.Contains("<footer", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -716,6 +773,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.NotNull(html);
             Assert.Contains("Deep content", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -729,6 +787,7 @@ namespace BuilderHacker.Tests.Core
             var html = text.Render();
 
             Assert.Equal("Simple text", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -738,6 +797,7 @@ namespace BuilderHacker.Tests.Core
             var html = text.Render();
 
             Assert.Equal("Hello & goodbye", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -747,6 +807,7 @@ namespace BuilderHacker.Tests.Core
             var html = text.Render();
 
             Assert.Contains("multiple words", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -761,6 +822,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("<div", html);
             Assert.Contains("</div>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -771,6 +833,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.NotNull(html);
             Assert.Contains("<div", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -780,6 +843,7 @@ namespace BuilderHacker.Tests.Core
             var html = text.Render();
 
             Assert.Equal("", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -792,6 +856,7 @@ namespace BuilderHacker.Tests.Core
 
             Assert.Contains("id=\"second\"", html);
             Assert.DoesNotContain("id=\"first\"", html);
+            html.ShouldBeValidHtml();
         }
 
         #endregion
@@ -816,6 +881,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<del", html);
             Assert.Contains("<ins", html);
             Assert.Contains("<s", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -843,6 +909,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<q", html);
             Assert.Contains("cite=\"https://example.com\"", html);
             Assert.Contains("<cite", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -854,6 +921,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("line1", html);
             Assert.Contains("<wbr", html);
             Assert.Contains("/>", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -872,6 +940,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<summary", html);
             Assert.Contains("<dialog", html);
             Assert.Contains("<search", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -890,6 +959,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("src=\"video.mp4\"", html);
             Assert.Contains("<source", html);
             Assert.Contains("<picture", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -907,6 +977,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("type=\"application/pdf\"", html);
             Assert.Contains("<object", html);
             Assert.Contains("<param", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -924,6 +995,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("max=\"10\"", html);
             Assert.Contains("<progress", html);
             Assert.Contains("max=\"100\"", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -938,6 +1010,7 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("<dt", html);
             Assert.Contains("<dd", html);
             Assert.Contains("BuilderHacker", html);
+            html.ShouldBeValidHtml();
         }
 
         [Fact]
@@ -958,6 +1031,8 @@ namespace BuilderHacker.Tests.Core
                 )
             ).Render();
 
+
+            html.ShouldBeValidHtml();
             Assert.Contains("<fieldset", html);
             Assert.Contains("<legend", html);
             Assert.Contains("<select", html);
@@ -966,7 +1041,48 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("label=\"Group A\"", html);
             Assert.Contains("<datalist", html);
             Assert.Contains("<output", html);
+          
         }
         #endregion
+
+        #region Valid HtmlTest
+       
+
+        [Fact]
+        public void Check_Validation()
+        {
+            var page = UI.HtmlDocument(
+                    UI.Head(
+                        UI.Title("Test")),
+                                        UI.Body(
+                            UI.Div(
+                                UI.TextNode("Hello")
+                                ).Style("color:black;").Attr("test", "true")
+                            )
+
+                    ).Render();
+            var doc = new HtmlDocument();
+            doc.LoadHtml(page);
+            Assert.False(doc.ParseErrors.Any(), $"HTML Parse Errors: {string.Join(", ", doc.ParseErrors.Select(x => x.Reason))}");
+        }
+
+        #endregion
+    }
+
+    public static class HtmlValidationExtensions
+    {
+        public static void ShouldBeValidHtml(this string html)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            var errors = string.Join(
+                Environment.NewLine,
+                doc.ParseErrors.Select(x => x.Reason)
+            );
+
+            Assert.False(doc.ParseErrors.Any(),
+                $"HTML Parse Errors:{Environment.NewLine}{errors}");
+        }
     }
 }
