@@ -44,6 +44,8 @@ namespace BuilderHacker.Core.HtmlBuilder.Base
     public abstract class HtmlNode : IHtmlNode
     {
 
+        private string _tagName;
+
         /// <summary>
         /// Gets the collection of HTML attributes assigned to the node.
         /// </summary>
@@ -83,6 +85,11 @@ namespace BuilderHacker.Core.HtmlBuilder.Base
             Attributes[key] = value;
             return this;
         }
+
+        /// <summary>
+        /// Gets the HTML tag name used by the default renderer.
+        /// </summary>
+        protected virtual string TagName => _tagName ??= GetType().Name.ToLowerInvariant();
 
 
         /// <summary>
@@ -154,12 +161,14 @@ namespace BuilderHacker.Core.HtmlBuilder.Base
         protected virtual string RenderNode()
         {
             var sb = new StringBuilder();
-            sb.Append($"<{GetType().Name.ToLower()}{RenderAttributes()}>");
+            var tagName = TagName;
+
+            sb.Append('<').Append(tagName).Append(RenderAttributes()).Append('>');
 
             foreach (var child in Children)
                 sb.Append(child.Render());
 
-            sb.Append($"</{GetType().Name.ToLower()}>");
+            sb.Append("</").Append(tagName).Append('>');
             return sb.ToString();
         }
 

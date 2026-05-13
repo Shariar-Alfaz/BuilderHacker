@@ -15,7 +15,7 @@
     <RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>builder;builder-pattern;factory-pattern;html-builder;source-generator;roslyn;code-generation;dotnet;csharp</PackageTags>
-    <Version>1.1.1</Version>
+    <Version>1.1.2</Version>
     <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	  <Copyright>
@@ -23,6 +23,11 @@
 	  </Copyright>
 	  <IncludeSymbols>true</IncludeSymbols>
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	  <PackageReleaseNotes>
+		  - Added HTML validation helper
+		  - Improved performance of rendering engine
+		  - Fixed tag nesting bug in Div builder
+	  </PackageReleaseNotes>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
