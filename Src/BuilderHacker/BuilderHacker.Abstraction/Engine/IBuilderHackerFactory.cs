@@ -9,7 +9,7 @@ namespace BuilderHacker.Abstraction.Engine
         /// Creates a new builder instance for type T.
         /// </summary>
         /// <typeparam name="T">The type of entity to build.</typeparam>
-        /// <returns>An instance of IBuilder<T>.</returns>
+        /// <returns>An instance of <see cref="IBuilder{T}"/>.</returns>
         IBuilder<T> CreateBuilder<T>();
 
         /// <summary>
