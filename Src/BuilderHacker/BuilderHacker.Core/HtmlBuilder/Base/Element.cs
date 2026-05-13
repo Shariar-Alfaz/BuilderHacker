@@ -13,6 +13,11 @@ public class Element : HtmlNode
     private readonly bool _isSelfClosing;
 
     /// <summary>
+    /// Gets the HTML tag name for this element.
+    /// </summary>
+    protected override string TagName => _tag;
+
+    /// <summary>
     /// Initializes a new instance of the Element class with the specified tag name, self-closing flag, and optional child nodes.
     /// </summary>
     /// <param name="tag">The name of the HTML tag to represent (e.g., div, span). Cannot be null or empty.</param>
@@ -57,16 +62,16 @@ public class Element : HtmlNode
 
         if (_isSelfClosing)
         {
-            sb.Append($"<{_tag}{attrs} />");
+            sb.Append('<').Append(_tag).Append(attrs).Append(" />");
             return sb.ToString();
         }
 
-        sb.Append($"<{_tag}{attrs}>");
+        sb.Append('<').Append(_tag).Append(attrs).Append('>');
 
         foreach (var child in Children)
             sb.Append(child.Render());
 
-        sb.Append($"</{_tag}>");
+        sb.Append("</").Append(_tag).Append('>');
 
         return sb.ToString();
     }
