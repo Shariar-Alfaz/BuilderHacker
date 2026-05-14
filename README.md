@@ -3,7 +3,7 @@
 
 [![.NET](https://img.shields.io/badge/.NET-Standard%202.0%20%7C%20.NET%2010-blue)](https://dotnet.microsoft.com/)
 [![Build](https://img.shields.io/badge/build-passing-brightgreen)](./)
-[![License](https://img.shields.io/badge/license-unlicense-lightgrey)](./LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 BuilderHacker is a .NET builder generator and runtime builder library.
 
