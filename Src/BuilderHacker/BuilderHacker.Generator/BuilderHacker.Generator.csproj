@@ -24,7 +24,6 @@
 		<PackageTags>builder;builder-pattern;source-generator;roslyn;dotnet;csharp</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>logo.png</PackageIcon>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -55,7 +54,6 @@
 
 		<None Include="..\..\logo.png" Pack="true" PackagePath="\" />
 		<None Include="README.md" Pack="true" PackagePath="\" />
-		<None Include="..\..\..\LICENSE" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 	<ItemGroup>

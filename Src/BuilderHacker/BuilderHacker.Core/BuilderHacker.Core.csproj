@@ -9,7 +9,7 @@
 
 		<PackageId>SAProduction.BuilderHacker.Core</PackageId>
 		<Title>BuilderHacker Core</Title>
-		<Version>1.1.7</Version>
+		<Version>1.1.8</Version>
 
 		<Authors>Shariar Alfaz</Authors>
 		<Company>SA Production</Company>
@@ -21,7 +21,7 @@
 		<RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		
 		<PackageIcon>logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags>builder;builder-pattern;factory-pattern;html-builder;source-generator;roslyn;code-generation;dotnet;csharp</PackageTags>
@@ -50,7 +50,6 @@
 	<ItemGroup>
 		<None Include="..\..\logo.png" Pack="true" PackagePath="\" />
 		<None Include="README.md" Pack="true" PackagePath="\" />
-		<None Include="..\..\..\LICENSE" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 	<ItemGroup>
