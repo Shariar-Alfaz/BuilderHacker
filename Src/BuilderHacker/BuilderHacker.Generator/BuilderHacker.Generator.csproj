@@ -1,55 +1,68 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    
-    <PackageId>SAProduction.BuilderHacker.Generator</PackageId>
-    <Title>BuilderHacker Generator</Title>
-    <Version>1.1.7</Version>
-    <Authors>Shariar Alfaz</Authors>
-    <Company>SA Production</Company>
-    <Copyright>Copyright © 2026 SA Production</Copyright>
-    <Description>Roslyn-based code generator for BuilderHacker - automatically generates builder pattern implementations for your classes.</Description>
-    <PackageProjectUrl>https://shariar-alfaz.github.io/BuilderHacker/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>builder;builder-pattern;source-generator;roslyn;dotnet;csharp</PackageTags>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageIcon>logo.png</PackageIcon>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
 
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Deterministic>true</Deterministic>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 
-	  <DebugType>portable</DebugType>
-	  <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
+		<PackageId>SAProduction.BuilderHacker.Generator</PackageId>
+		<Title>BuilderHacker Generator</Title>
+		<Version>1.1.8</Version>
 
-  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-  </PropertyGroup>
+		<Authors>Shariar Alfaz</Authors>
+		<Company>SA Production</Company>
+		<Copyright>Copyright © 2026 SA Production</Copyright>
 
-  <ItemGroup>
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    
-    <None Include="..\..\logo.png" Pack="true" PackagePath="\" />
-    <None Include="README.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
+		<Description>Roslyn-based code generator for BuilderHacker - automatically generates builder pattern implementations for your classes.</Description>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.3.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300" PrivateAssets="All" />
-  </ItemGroup>
+		<PackageProjectUrl>https://shariar-alfaz.github.io/BuilderHacker/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BuilderHacker.Abstraction\BuilderHacker.Abstraction.csproj" />
-  </ItemGroup>
+		<PackageTags>builder;builder-pattern;source-generator;roslyn;dotnet;csharp</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>logo.png</PackageIcon>
+
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+		<Deterministic>true</Deterministic>
+
+		<!-- FIX FOR SYMBOLS -->
+		<DebugType>portable</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+		<!-- IMPORTANT FOR SOURCE GENERATORS -->
+		<IsRoslynComponent>true</IsRoslynComponent>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- FIX: use built-in analyzer packaging (DO NOT manually copy DLL) -->
+		<None Include="$(OutputPath)$(AssemblyName).dll"
+			  Pack="true"
+			  PackagePath="analyzers/dotnet/cs"
+			  Visible="false" />
+
+		<None Include="..\..\logo.png" Pack="true" PackagePath="\" />
+		<None Include="README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.3.0" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\BuilderHacker.Abstraction\BuilderHacker.Abstraction.csproj" />
+	</ItemGroup>
 
 </Project>

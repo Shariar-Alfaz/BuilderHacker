@@ -3,34 +3,44 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
+
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
 		<PackageId>SAProduction.BuilderHacker.Core</PackageId>
 		<Title>BuilderHacker Core</Title>
-		<Version>1.1.7</Version>
+		<Version>1.1.8</Version>
+
 		<Authors>Shariar Alfaz</Authors>
 		<Company>SA Production</Company>
 		<Copyright>Copyright © 2026 SA Production</Copyright>
+
 		<Description>Core functionality for BuilderHacker - a code generator for builder pattern implementation.</Description>
 
 		<PackageProjectUrl>https://shariar-alfaz.github.io/BuilderHacker/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-
+		
 		<PackageIcon>logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags>builder;builder-pattern;factory-pattern;html-builder;source-generator;roslyn;code-generation;dotnet;csharp</PackageTags>
 
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
 		<Deterministic>true</Deterministic>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+		<!-- IMPORTANT FIXES -->
 		<DebugType>portable</DebugType>
 		<DebugSymbols>true</DebugSymbols>
+
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+		<!-- IMPORTANT for CI + SourceLink correctness -->
+		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
