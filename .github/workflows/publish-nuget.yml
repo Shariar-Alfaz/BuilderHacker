@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # SourceLink needs full history to track commit hashes
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -37,13 +39,13 @@ jobs:
 
       - name: Pack
         run: |
-          dotnet pack Src/BuilderHacker/BuilderHacker.Abstraction/BuilderHacker.Abstraction.csproj -c Release --no-build -o ./artifacts
-          dotnet pack Src/BuilderHacker/BuilderHacker.Core/BuilderHacker.Core.csproj -c Release --no-build -o ./artifacts
-          dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release --no-build -o ./artifacts
+          dotnet pack Src/BuilderHacker/BuilderHacker.Abstraction/BuilderHacker.Abstraction.csproj -c Release --no-build -o ./artifacts /p:EmbedUntrackedSources=true
+          dotnet pack Src/BuilderHacker/BuilderHacker.Core/BuilderHacker.Core.csproj -c Release --no-build -o ./artifacts /p:EmbedUntrackedSources=true
+          dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release --no-build -o ./artifacts /p:EmbedUntrackedSources=true
 
       - name: Push to NuGet
         run: |
-          find ./artifacts -name "*.nupkg" ! -name "*.snupkg" -exec dotnet nuget push {} \
+          dotnet nuget push "./artifacts/*.nupkg" \
             --source "https://api.nuget.org/v3/index.json" \
             --api-key "${{ secrets.NUGET_API_KEY }}" \
-            --skip-duplicate \;
+            --skip-duplicate
