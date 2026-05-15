@@ -1,37 +1,46 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Deterministic>true</Deterministic>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>SAProduction.BuilderHacker.Abstraction</PackageId>
-    <Title>BuilderHacker Abstraction</Title>
-    <Description>Abstraction layer for BuilderHacker - a code generator for builder pattern implementation.</Description>
-	  <Authors>Shariar Alfaz</Authors>
-	  <Company>SA Production</Company>
-    <PackageProjectUrl>https://shariar-alfaz.github.io/BuilderHacker/</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-	<PackageTags>builder;builder-pattern;factory-pattern;html-builder;source-generator;roslyn;code-generation;dotnet;csharp</PackageTags>
-	<Version>1.1.4</Version>
-	<PackageIcon>logo.png</PackageIcon>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	  <Copyright>
-		  Copyright © 2026 SA Production
-	  </Copyright>
-	  <IncludeSymbols>true</IncludeSymbols>
-	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	  <PackageReleaseNotes>
-		  - Fixed analyzer compliance by enabling EnforceExtendedAnalyzerRules for source generator packaging
-	  </PackageReleaseNotes>
-	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
-  <ItemGroup>
-    <None Include="..\..\logo.png" Pack="true" PackagePath="\" />
-    <None Include="README.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
+		<PackageId>SAProduction.BuilderHacker.Abstraction</PackageId>
+		<Title>BuilderHacker Abstraction</Title>
+		<Version>1.1.5</Version>
+		<Authors>Shariar Alfaz</Authors>
+		<Company>SA Production</Company>
+		<Copyright>Copyright © 2026 SA Production</Copyright>
+		<Description>Abstraction layer for BuilderHacker - provides the attributes and interfaces required for the code generator.</Description>
+
+		<PackageProjectUrl>https://shariar-alfaz.github.io/BuilderHacker/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>builder;builder-pattern;source-generator;dotnet;csharp</PackageTags>
+
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Deterministic>true</Deterministic>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\logo.png" Pack="true" PackagePath="\" />
+		<None Include="README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300" PrivateAssets="All" />
+	</ItemGroup>
 
 </Project>
