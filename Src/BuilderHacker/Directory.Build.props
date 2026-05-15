@@ -1,14 +1,24 @@
 <Project>
-  <PropertyGroup>
-    <Deterministic>true</Deterministic>
-    <ContinuousIntegrationBuild Condition="'$(ContinuousIntegrationBuild)' == ''">false</ContinuousIntegrationBuild>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <PathMap>$(MSBuildProjectDirectory)=/src/$(MSBuildProjectName)</PathMap>
-	  <TargetFrameworkMonikerAssemblyAttributesPath>$([System.IO.Path]::Combine('$(IntermediateOutputPath)','$(TargetFrameworkMoniker).AssemblyAttributes$(DefaultLanguageSourceExtension)'))</TargetFrameworkMonikerAssemblyAttributesPath>
-	
-	 
-  </PropertyGroup>
-	<ItemGroup>
-		<EmbeddedFiles Include="$(GeneratedAssemblyInfoFile)"/>
-	</ItemGroup>
+
+	<PropertyGroup>
+		<Deterministic>true</Deterministic>
+
+		<!-- Enable CI-safe builds -->
+		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+
+		<!-- SourceLink / reproducible builds -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+		<!-- Ensure correct path mapping for debugging -->
+		<PathMap>$(MSBuildProjectDirectory)=/src/$(MSBuildProjectName)</PathMap>
+
+		<!-- IMPORTANT: required for .snupkg to work -->
+		<DebugType>portable</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+
+	<!-- REMOVE risky / unnecessary embedding -->
+	<!-- (Do NOT include GeneratedAssemblyInfoFile as EmbeddedFiles) -->
+
 </Project>
