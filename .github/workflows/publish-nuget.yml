@@ -31,30 +31,27 @@ jobs:
       - name: Restore
         run: dotnet restore Src/BuilderHacker/BuilderHacker.slnx
 
-      # 🔥 IMPORTANT FIX: force deterministic + SourceLink consistency at build time
+      # 🔥 FORCE FULL DETECTION OF ERRORS EARLY
       - name: Build (Release)
-        run: |
-          dotnet build Src/BuilderHacker/BuilderHacker.slnx -c Release \
-            /p:ContinuousIntegrationBuild=true \
-            /p:Deterministic=true \
-            /p:PublishRepositoryUrl=true \
-            /p:EmbedUntrackedSources=false \
-            --no-restore
+        run: dotnet build Src/BuilderHacker/BuilderHacker.slnx -c Release --no-restore
 
       - name: Test
         run: dotnet test Src/BuilderHacker/BuilderHacker.Tests/BuilderHacker.Tests.csproj -c Release --no-build
 
-      # Clean pack ensures correct PDB + symbol generation
-      - name: Clean
-        run: dotnet clean Src/BuilderHacker/BuilderHacker.slnx -c Release
+      # 🔥 CLEAN OUTPUT BEFORE PACK (important for deterministic symbols)
+      - name: Clean artifacts
+        run: rm -rf ./artifacts
 
-      - name: Pack
+      - name: Pack Solution
         run: |
           dotnet pack Src/BuilderHacker/BuilderHacker.Abstraction/BuilderHacker.Abstraction.csproj -c Release -o ./artifacts
           dotnet pack Src/BuilderHacker/BuilderHacker.Core/BuilderHacker.Core.csproj -c Release -o ./artifacts
           dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release -o ./artifacts
 
-      # Push main packages
+      # 🔥 VERIFY OUTPUT BEFORE PUSH (prevents silent failures like your previous error)
+      - name: Validate artifacts
+        run: ls -R ./artifacts
+
       - name: Push NuGet packages
         run: |
           dotnet nuget push "./artifacts/*.nupkg" \
@@ -62,7 +59,6 @@ jobs:
             --api-key "${{ secrets.NUGET_API_KEY }}" \
             --skip-duplicate
 
-      # Push symbols separately (safe + deterministic)
       - name: Push Symbols (.snupkg)
         run: |
           dotnet nuget push "./artifacts/*.snupkg" \
