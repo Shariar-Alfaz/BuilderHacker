@@ -26,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # IMPORTANT for correct git-based docs links
+          fetch-depth: 0   # REQUIRED for SourceLink + doc source navigation
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -34,26 +34,43 @@ jobs:
           dotnet-version: |
             10.0.x
 
-      #  FIX: ensure deterministic doc builds (important for API links consistency)
+      # 🔥 FIX 1: ensure stable tool install
       - name: Install DocFX
         run: |
           dotnet tool install -g docfx || dotnet tool update -g docfx
           echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
-      #  FIX: clean build context before doc generation
-      - name: Clean
-        run: rm -rf _site obj bin
+      # 🔥 FIX 2: ensure clean state (more aggressive cleanup)
+      - name: Clean workspace
+        run: |
+          rm -rf _site
+          rm -rf obj
+          rm -rf bin
+          rm -rf api
 
+      # 🔥 FIX 3: validate docfx file exists (prevents silent failures)
+      - name: Validate DocFX config
+        run: |
+          if [ ! -f "docfx.json" ]; then
+            echo "docfx.json not found in repo root!"
+            exit 1
+          fi
+
+      # 🔥 FIX 4: build docs with explicit verbosity (debug CI issues faster)
       - name: Build Docs
-        run: docfx docfx.json
+        run: docfx docfx.json --logLevel Info
 
-      #  FIX: verify output exists before upload
+      # 🔥 FIX 5: ensure output exists
       - name: Validate output
         run: |
           if [ ! -d "_site" ]; then
-            echo "DocFX output _site folder not found!"
+            echo "❌ DocFX output _site folder not found!"
             exit 1
           fi
+
+      # 🔥 FIX 6: prevent accidental empty deployment
+      - name: List output
+        run: ls -R _site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
