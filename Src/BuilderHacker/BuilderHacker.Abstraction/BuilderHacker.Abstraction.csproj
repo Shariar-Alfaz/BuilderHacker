@@ -8,7 +8,7 @@
 
 		<PackageId>SAProduction.BuilderHacker.Abstraction</PackageId>
 		<Title>BuilderHacker Abstraction</Title>
-		<Version>1.1.10</Version>
+		<Version>1.1.11</Version>
 
 		<Authors>Shariar Alfaz</Authors>
 		<Company>SA Production</Company>
@@ -34,24 +34,13 @@
 
 		<!-- SourceLink -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>false</EmbedUntrackedSources>
-
-		<!-- Deterministic -->
-		<Deterministic>true</Deterministic>
-		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 
 		<!-- Documentation -->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
 		<!-- Symbols -->
-		<DebugType>portable</DebugType>
 		<DebugSymbols>true</DebugSymbols>
-
-		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
-		<!-- Better SourceLink -->
-		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
 
 		<!-- Recommended -->
 		<Nullable>enable</Nullable>
