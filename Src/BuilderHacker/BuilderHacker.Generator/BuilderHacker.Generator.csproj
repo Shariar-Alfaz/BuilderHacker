@@ -35,21 +35,14 @@
 		<!-- SourceLink -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 
-		<!-- Deterministic -->
-		<Deterministic>true</Deterministic>
-		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-
 		<!-- Symbols -->
 		<DebugType>portable</DebugType>
 		<DebugSymbols>true</DebugSymbols>
 
-		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Roslyn -->
 		<IsRoslynComponent>true</IsRoslynComponent>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<IncludeSource>true</IncludeSource>
 
 		<!-- Recommended -->
 		<Nullable>enable</Nullable>

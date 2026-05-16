@@ -34,19 +34,12 @@
 
 		<!-- SourceLink -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-
-		<!-- Deterministic -->
-		<Deterministic>true</Deterministic>
-		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 
 		<!-- Documentation -->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
 		<!-- Symbols -->
 		<DebugSymbols>true</DebugSymbols>
-		<IncludeSymbols>true</IncludeSymbols>
-		<IncludeSource>true</IncludeSource>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Recommended -->
