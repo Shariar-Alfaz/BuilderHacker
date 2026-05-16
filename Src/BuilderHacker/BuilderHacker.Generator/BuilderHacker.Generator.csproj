@@ -9,7 +9,7 @@
 
 		<PackageId>SAProduction.BuilderHacker.Generator</PackageId>
 		<Title>BuilderHacker Generator</Title>
-		<Version>1.1.10</Version>
+		<Version>1.1.11</Version>
 
 		<Authors>Shariar Alfaz</Authors>
 		<Company>SA Production</Company>
@@ -34,7 +34,6 @@
 
 		<!-- SourceLink -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>false</EmbedUntrackedSources>
 
 		<!-- Deterministic -->
 		<Deterministic>true</Deterministic>
@@ -49,9 +48,8 @@
 
 		<!-- Roslyn -->
 		<IsRoslynComponent>true</IsRoslynComponent>
-
-		<!-- Better SourceLink -->
-		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSource>true</IncludeSource>
 
 		<!-- Recommended -->
 		<Nullable>enable</Nullable>
