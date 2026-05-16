@@ -8,7 +8,7 @@
 
 		<PackageId>SAProduction.BuilderHacker.Abstraction</PackageId>
 		<Title>BuilderHacker Abstraction</Title>
-		<Version>1.1.9</Version>
+		<Version>1.1.10</Version>
 
 		<Authors>Shariar Alfaz</Authors>
 		<Company>SA Production</Company>
@@ -39,10 +39,6 @@
 		<!-- Deterministic -->
 		<Deterministic>true</Deterministic>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-
-		<PathMap>
-			$(MSBuildProjectDirectory)=/src/$(MSBuildProjectName)
-		</PathMap>
 
 		<!-- Documentation -->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
