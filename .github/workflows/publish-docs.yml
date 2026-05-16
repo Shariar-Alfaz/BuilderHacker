@@ -3,10 +3,10 @@ name: Publish Docs
 on:
   push:
     branches:
-      - production # production branch
+      - production
 
 permissions:
-  actions: read
+  contents: read
   pages: write
   id-token: write
 
@@ -19,25 +19,41 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # IMPORTANT for correct git-based docs links
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: |
+            10.0.x
 
-      - name: Install docfx
+      #  FIX: ensure deterministic doc builds (important for API links consistency)
+      - name: Install DocFX
         run: |
           dotnet tool install -g docfx || dotnet tool update -g docfx
           echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
 
-      - name: Build docs with DocFX
+      #  FIX: clean build context before doc generation
+      - name: Clean
+        run: rm -rf _site obj bin
+
+      - name: Build Docs
+        run: docfx docfx.json
+
+      #  FIX: verify output exists before upload
+      - name: Validate output
         run: |
-          # run docfx in repository root (assumes docfx.json is at the repo root)
-          docfx docfx.json
+          if [ ! -d "_site" ]; then
+            echo "DocFX output _site folder not found!"
+            exit 1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

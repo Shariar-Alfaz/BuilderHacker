@@ -9,7 +9,7 @@
 
 		<PackageId>SAProduction.BuilderHacker.Generator</PackageId>
 		<Title>BuilderHacker Generator</Title>
-		<Version>1.1.9</Version>
+		<Version>1.1.10</Version>
 
 		<Authors>Shariar Alfaz</Authors>
 		<Company>SA Production</Company>
@@ -39,7 +39,6 @@
 		<!-- Deterministic -->
 		<Deterministic>true</Deterministic>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-		<PathMap>$(MSBuildProjectDirectory)=/src/$(MSBuildProjectName)</PathMap>
 
 		<!-- Symbols -->
 		<DebugType>portable</DebugType>

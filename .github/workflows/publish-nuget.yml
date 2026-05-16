@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # required for SourceLink
+          fetch-depth: 0   # REQUIRED for SourceLink
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -31,20 +31,30 @@ jobs:
       - name: Restore
         run: dotnet restore Src/BuilderHacker/BuilderHacker.slnx
 
+      # 🔥 IMPORTANT FIX: force deterministic + SourceLink consistency at build time
       - name: Build (Release)
-        run: dotnet build Src/BuilderHacker/BuilderHacker.slnx -c Release --no-restore
+        run: |
+          dotnet build Src/BuilderHacker/BuilderHacker.slnx -c Release \
+            /p:ContinuousIntegrationBuild=true \
+            /p:Deterministic=true \
+            /p:PublishRepositoryUrl=true \
+            /p:EmbedUntrackedSources=false \
+            --no-restore
 
       - name: Test
         run: dotnet test Src/BuilderHacker/BuilderHacker.Tests/BuilderHacker.Tests.csproj -c Release --no-build
 
-      # IMPORTANT: clean pack step (fixes symbols + deterministic issues)
-      - name: Pack (with symbols)
+      # Clean pack ensures correct PDB + symbol generation
+      - name: Clean
+        run: dotnet clean Src/BuilderHacker/BuilderHacker.slnx -c Release
+
+      - name: Pack
         run: |
           dotnet pack Src/BuilderHacker/BuilderHacker.Abstraction/BuilderHacker.Abstraction.csproj -c Release -o ./artifacts
           dotnet pack Src/BuilderHacker/BuilderHacker.Core/BuilderHacker.Core.csproj -c Release -o ./artifacts
           dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release -o ./artifacts
 
-      #  FIX: push BOTH nupkg + snupkg separately
+      # Push main packages
       - name: Push NuGet packages
         run: |
           dotnet nuget push "./artifacts/*.nupkg" \
@@ -52,6 +62,7 @@ jobs:
             --api-key "${{ secrets.NUGET_API_KEY }}" \
             --skip-duplicate
 
+      # Push symbols separately (safe + deterministic)
       - name: Push Symbols (.snupkg)
         run: |
           dotnet nuget push "./artifacts/*.snupkg" \

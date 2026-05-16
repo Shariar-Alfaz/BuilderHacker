@@ -1,24 +1,21 @@
 <Project>
 
 	<PropertyGroup>
+		<!-- Deterministic builds -->
 		<Deterministic>true</Deterministic>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 
-		<!-- Enable CI-safe builds -->
-		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
-
-		<!-- SourceLink / reproducible builds -->
-		<EmbedUntrackedSources>false</EmbedUntrackedSources>
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-
-		<!-- Ensure correct path mapping for debugging -->
 		<PathMap>$(MSBuildProjectDirectory)=/src/$(MSBuildProjectName)</PathMap>
 
-		<!-- IMPORTANT: required for .snupkg to work -->
-		<DebugType>portable</DebugType>
-		<DebugSymbols>true</DebugSymbols>
-	</PropertyGroup>
+		<!-- SourceLink -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>false</EmbedUntrackedSources>
 
-	<!-- REMOVE risky / unnecessary embedding -->
-	<!-- (Do NOT include GeneratedAssemblyInfoFile as EmbeddedFiles) -->
+		<!-- Debug -->
+		<DebugType>portable</DebugType>
+
+		<!-- NuGet -->
+		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
+	</PropertyGroup>
 
 </Project>
