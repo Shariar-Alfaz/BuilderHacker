@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # SourceLink needs full history to track commit hashes
+          fetch-depth: 0  # required for SourceLink
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -31,21 +31,30 @@ jobs:
       - name: Restore
         run: dotnet restore Src/BuilderHacker/BuilderHacker.slnx
 
-      - name: Build
+      - name: Build (Release)
         run: dotnet build Src/BuilderHacker/BuilderHacker.slnx -c Release --no-restore
 
       - name: Test
         run: dotnet test Src/BuilderHacker/BuilderHacker.Tests/BuilderHacker.Tests.csproj -c Release --no-build
 
-      - name: Pack
+      # IMPORTANT: clean pack step (fixes symbols + deterministic issues)
+      - name: Pack (with symbols)
         run: |
-          dotnet pack Src/BuilderHacker/BuilderHacker.Abstraction/BuilderHacker.Abstraction.csproj -c Release --no-build -o ./artifacts /p:EmbedUntrackedSources=true
-          dotnet pack Src/BuilderHacker/BuilderHacker.Core/BuilderHacker.Core.csproj -c Release --no-build -o ./artifacts /p:EmbedUntrackedSources=true
-          dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release --no-build -o ./artifacts /p:EmbedUntrackedSources=true
+          dotnet pack Src/BuilderHacker/BuilderHacker.Abstraction/BuilderHacker.Abstraction.csproj -c Release -o ./artifacts
+          dotnet pack Src/BuilderHacker/BuilderHacker.Core/BuilderHacker.Core.csproj -c Release -o ./artifacts
+          dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release -o ./artifacts
 
-      - name: Push to NuGet
+      #  FIX: push BOTH nupkg + snupkg separately
+      - name: Push NuGet packages
         run: |
           dotnet nuget push "./artifacts/*.nupkg" \
+            --source "https://api.nuget.org/v3/index.json" \
+            --api-key "${{ secrets.NUGET_API_KEY }}" \
+            --skip-duplicate
+
+      - name: Push Symbols (.snupkg)
+        run: |
+          dotnet nuget push "./artifacts/*.snupkg" \
             --source "https://api.nuget.org/v3/index.json" \
             --api-key "${{ secrets.NUGET_API_KEY }}" \
             --skip-duplicate
