@@ -1041,12 +1041,12 @@ namespace BuilderHacker.Tests.Core
             Assert.Contains("label=\"Group A\"", html);
             Assert.Contains("<datalist", html);
             Assert.Contains("<output", html);
-          
+
         }
         #endregion
 
         #region Valid HtmlTest
-       
+
 
         [Fact]
         public void Check_Validation()

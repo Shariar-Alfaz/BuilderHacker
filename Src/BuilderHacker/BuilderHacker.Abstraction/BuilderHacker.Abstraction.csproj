@@ -8,52 +8,74 @@
 
 		<PackageId>SAProduction.BuilderHacker.Abstraction</PackageId>
 		<Title>BuilderHacker Abstraction</Title>
-		<Version>1.1.8</Version>
+		<Version>1.1.9</Version>
 
 		<Authors>Shariar Alfaz</Authors>
 		<Company>SA Production</Company>
 		<Copyright>Copyright © 2026 SA Production</Copyright>
 
-		<Description>Abstraction layer for BuilderHacker - provides the attributes and interfaces required for the code generator.</Description>
+		<Description>
+			Abstraction layer for BuilderHacker - provides the attributes and interfaces required for the code generator.
+		</Description>
 
 		<PackageProjectUrl>https://shariar-alfaz.github.io/BuilderHacker/</PackageProjectUrl>
+
 		<RepositoryUrl>https://github.com/Shariar-Alfaz/BuilderHacker</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+
 		<PackageIcon>logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageTags>builder;builder-pattern;source-generator;dotnet;csharp</PackageTags>
 
+		<PackageTags>
+			builder;builder-pattern;factory-pattern;html-builder;source-generator;roslyn;code-generation;dotnet;csharp
+		</PackageTags>
+
+		<!-- SourceLink -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<EmbedUntrackedSources>false</EmbedUntrackedSources>
 
+		<!-- Deterministic -->
 		<Deterministic>true</Deterministic>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+
+		<PathMap>
+			$(MSBuildProjectDirectory)=/src/$(MSBuildProjectName)
+		</PathMap>
+
+		<!-- Documentation -->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-		<!-- IMPORTANT FIX -->
+		<!-- Symbols -->
 		<DebugType>portable</DebugType>
 		<DebugSymbols>true</DebugSymbols>
 
-		<!-- ENSURE SYMBOL PACKAGE SUPPORT -->
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-		<!-- IMPORTANT: helps NuGet symbol packing in CI -->
+		<!-- Better SourceLink -->
 		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
-	</PropertyGroup>
 
-	<!-- CI safe flag -->
-	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
-		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<!-- Recommended -->
+		<Nullable>enable</Nullable>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\logo.png" Pack="true" PackagePath="\" />
-		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\logo.png"
+			  Pack="true"
+			  PackagePath="\" />
+
+		<None Include="README.md"
+			  Pack="true"
+			  PackagePath="\" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub"
+						  Version="10.0.300"
+						  PrivateAssets="All" />
 	</ItemGroup>
 
 </Project>

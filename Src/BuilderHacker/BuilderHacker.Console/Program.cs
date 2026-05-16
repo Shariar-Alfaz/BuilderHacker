@@ -1,5 +1,4 @@
 using BuilderHacker.Core.HtmlBuilder;
-using System;
 using System.Diagnostics;
 
 namespace BuilderHacker.Console
