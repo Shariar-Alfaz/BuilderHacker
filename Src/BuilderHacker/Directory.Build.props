@@ -9,13 +9,9 @@
 
 		<!-- SourceLink -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>false</EmbedUntrackedSources>
-
-		<!-- Debug -->
-		<DebugType>portable</DebugType>
-
-		<!-- NuGet -->
-		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<IncludeSource>true</IncludeSource>
 	</PropertyGroup>
 
 </Project>

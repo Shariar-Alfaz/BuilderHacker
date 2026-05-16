@@ -31,14 +31,14 @@ jobs:
       - name: Restore
         run: dotnet restore Src/BuilderHacker/BuilderHacker.slnx
 
-      # 🔥 FORCE FULL DETECTION OF ERRORS EARLY
+      #  FORCE FULL DETECTION OF ERRORS EARLY
       - name: Build (Release)
         run: dotnet build Src/BuilderHacker/BuilderHacker.slnx -c Release --no-restore
 
       - name: Test
         run: dotnet test Src/BuilderHacker/BuilderHacker.Tests/BuilderHacker.Tests.csproj -c Release --no-build
 
-      # 🔥 CLEAN OUTPUT BEFORE PACK (important for deterministic symbols)
+      #  CLEAN OUTPUT BEFORE PACK (important for deterministic symbols)
       - name: Clean artifacts
         run: rm -rf ./artifacts
 
@@ -48,7 +48,7 @@ jobs:
           dotnet pack Src/BuilderHacker/BuilderHacker.Core/BuilderHacker.Core.csproj -c Release -o ./artifacts
           dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release -o ./artifacts
 
-      # 🔥 VERIFY OUTPUT BEFORE PUSH (prevents silent failures like your previous error)
+      #  VERIFY OUTPUT BEFORE PUSH (prevents silent failures like your previous error)
       - name: Validate artifacts
         run: ls -R ./artifacts
 

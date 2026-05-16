@@ -9,7 +9,7 @@
 
 		<PackageId>SAProduction.BuilderHacker.Core</PackageId>
 		<Title>BuilderHacker Core</Title>
-		<Version>1.1.10</Version>
+		<Version>1.1.11</Version>
 
 		<Authors>Shariar Alfaz</Authors>
 		<Company>SA Production</Company>
@@ -35,11 +35,6 @@
 
 		<!-- SourceLink -->
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>false</EmbedUntrackedSources>
-
-		<!-- Deterministic -->
-		<Deterministic>true</Deterministic>
-		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 
 		<!-- Docs -->
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -48,11 +43,8 @@
 		<DebugType>portable</DebugType>
 		<DebugSymbols>true</DebugSymbols>
 
-		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-		<!-- Better SourceLink -->
-		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
 
 		<!-- Recommended -->
 		<Nullable>enable</Nullable>
