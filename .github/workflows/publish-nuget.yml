@@ -13,7 +13,7 @@ env:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout
@@ -24,44 +24,56 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: |
-            10.0.x
-            6.0.x
+          dotnet-version: 10.0.x
 
       - name: Restore
         run: dotnet restore Src/BuilderHacker/BuilderHacker.slnx
 
       #  FORCE FULL DETECTION OF ERRORS EARLY
       - name: Build (Release)
-        run: dotnet build Src/BuilderHacker/BuilderHacker.slnx -c Release --no-restore
+        run: dotnet build Src/BuilderHacker/BuilderHacker.slnx -c Release --no-restore -p:ContinuousIntegrationBuild=true -p:Deterministic=true -p:GeneratePackageOnBuild=false
 
       - name: Test
         run: dotnet test Src/BuilderHacker/BuilderHacker.Tests/BuilderHacker.Tests.csproj -c Release --no-build
 
       #  CLEAN OUTPUT BEFORE PACK (important for deterministic symbols)
       - name: Clean artifacts
-        run: rm -rf ./artifacts
+        shell: pwsh
+        run: |
+          if (Test-Path ./artifacts) {
+            Remove-Item ./artifacts -Recurse -Force
+          }
 
       - name: Pack Solution
+        shell: pwsh
         run: |
-          dotnet pack Src/BuilderHacker/BuilderHacker.Abstraction/BuilderHacker.Abstraction.csproj -c Release -o ./artifacts
-          dotnet pack Src/BuilderHacker/BuilderHacker.Core/BuilderHacker.Core.csproj -c Release -o ./artifacts
-          dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release -o ./artifacts
+          dotnet pack Src/BuilderHacker/BuilderHacker.Abstraction/BuilderHacker.Abstraction.csproj -c Release --no-build -o ./artifacts -p:ContinuousIntegrationBuild=true -p:Deterministic=true
+          dotnet pack Src/BuilderHacker/BuilderHacker.Core/BuilderHacker.Core.csproj -c Release --no-build -o ./artifacts -p:ContinuousIntegrationBuild=true -p:Deterministic=true
+          dotnet pack Src/BuilderHacker/BuilderHacker.Generator/BuilderHacker.Generator.csproj -c Release --no-build -o ./artifacts -p:ContinuousIntegrationBuild=true -p:Deterministic=true
 
       #  VERIFY OUTPUT BEFORE PUSH (prevents silent failures like your previous error)
       - name: Validate artifacts
-        run: ls -R ./artifacts
+        shell: pwsh
+        run: |
+          $packages = @(Get-ChildItem ./artifacts -Filter *.nupkg)
+          $symbols = @(Get-ChildItem ./artifacts -Filter *.snupkg)
+
+          if ($packages.Count -ne 3) {
+            throw "Expected 3 NuGet packages, found $($packages.Count)."
+          }
+
+          if ($symbols.Count -ne 3) {
+            throw "Expected 3 symbol packages, found $($symbols.Count)."
+          }
+
+          Get-ChildItem ./artifacts | Format-Table Name, Length
 
       - name: Push NuGet packages
+        shell: pwsh
         run: |
-          dotnet nuget push "./artifacts/*.nupkg" \
-            --source "https://api.nuget.org/v3/index.json" \
-            --api-key "${{ secrets.NUGET_API_KEY }}" \
-            --skip-duplicate
+          dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
 
       - name: Push Symbols (.snupkg)
+        shell: pwsh
         run: |
-          dotnet nuget push "./artifacts/*.snupkg" \
-            --source "https://api.nuget.org/v3/index.json" \
-            --api-key "${{ secrets.NUGET_API_KEY }}" \
-            --skip-duplicate
+          dotnet nuget push "./artifacts/*.snupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
